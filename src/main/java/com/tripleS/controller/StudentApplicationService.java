@@ -141,15 +141,18 @@ public class StudentApplicationService {
 		model.asMap().put("relatives", relatives);
 		if(model.asMap().get("entityDetails") == null) {
 			model.asMap().put("entityDetails", new EntityDetails());
+			model.asMap().put("entityAction", "Add Member");
 		} else {
 			model.asMap().put("entityDetails", model.asMap().get("entityDetails"));
+			model.asMap().put("entityAction", "Update Member");
 		}
+		
 		return "familyDetails";
 	}
 	
 	@RequestMapping(value="/bankAccountDetails", method = RequestMethod.GET)
 	public String bankAccountDetails(Model model){
-		logger.info("In the family details Get Request...File No is " + ((StudentFile) model.asMap().get("studentFile")).getFileNo());
+		logger.info("In the bank account details Get Request...File No is " + ((StudentFile) model.asMap().get("studentFile")).getFileNo());
 		return "bankAccountDetails";
 	}
 	
