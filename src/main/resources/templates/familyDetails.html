@@ -11,7 +11,7 @@
 				<div>
 					<h2>Family Details</h2>
 
-					<form id="studentBasicForm" role="form"
+					<form id="familyDetailsForm" role="form"
 						th:action="@{/studentApplication/familyDetails}" method="post">
 						<input type="hidden" th:value="${fileNo}" name="fileNo" />
 						<table class="table table-hover">
@@ -60,14 +60,18 @@
 									<td><label
 										th:text="*{relatives[__${rowStat.index}__].salaryPerMonth}">20000</label></td>
 									<td>
-										<button type="submit" name="editEntityDetails" title="Edit Member"
-											th:value="*{relatives[__${rowStat.index}__].id}" class="fa fa-pencil-square-o fa-lg iconButton"></button>
+										<button type="submit" name="editEntityDetails"
+											title="Edit Member"
+											th:value="*{relatives[__${rowStat.index}__].id}"
+											class="fa fa-pencil-square-o fa-lg iconButton"></button>
 									</td>
 									<td>
 										<!-- <button type="submit" name="removeEntityDetails"
 											th:value="${rowStat.index}">Remove Member</button> -->
-										<button type="submit" name="removeEntityDetails" title="Remove Member"
-											th:value="*{relatives[__${rowStat.index}__].id}" class="fa fa-trash-o fa-lg iconButton"></button>
+										<button type="submit" name="removeEntityDetails"
+											title="Remove Member"
+											th:value="*{relatives[__${rowStat.index}__].id}"
+											class="fa fa-trash-o fa-lg iconButton"></button>
 									</td>
 								</tr>
 							</tbody>
@@ -200,160 +204,151 @@
 							</div>
 						</div>
 						<!-- <div th:each="employer,rowIndex : ${entityDetails.relatives}"> -->
-							<div class="form-group row" id="fourthRowLabel">
+						<div class="form-group row" id="fourthRowLabel">
 
-								<div class="col-sm-4">
-									<label
-										th:if="${#fields.hasErrors('entityDetails.relatives[0].type')}"
-										th:errors="${entityDetails.relatives[0].type}"
-										class="validation-message"></label>
-								</div>
-
-								<div class="col-sm-4">
-									<label
-										th:if="${#fields.hasErrors('entityDetails.relatives[0].firstName')}"
-										th:errors="${entityDetails.relatives[0].firstName}"
-										class="validation-message"></label>
-								</div>
-
-								<div class="col-sm-4">
-									<label
-										th:if="${#fields.hasErrors('entityDetails.relatives[0].entityAddressDetails.addressLine1')}"
-										th:errors="${entityDetails.relatives[0].entityAddressDetails.addressLine1}"
-										class="validation-message"></label>
-								</div>
-
+							<div class="col-sm-4">
+								<label
+									th:if="${#fields.hasErrors('entityDetails.relatives[0].type')}"
+									th:errors="${entityDetails.relatives[0].type}"
+									class="validation-message"></label>
 							</div>
-							<div class="form-group row" id="fourthRow">
-								<div class="col-sm-4">
-									<div class="row">
-										<div class="col-sm-11">
-											<input type="text"
-												th:field="${entityDetails.relatives[0].type}"
-												placeholder="School/Company" class="form-control"
-												maxlength="100" />
-										</div>
-										<label class="required-field"></label>
+
+							<div class="col-sm-4">
+								<label
+									th:if="${#fields.hasErrors('entityDetails.relatives[0].firstName')}"
+									th:errors="${entityDetails.relatives[0].firstName}"
+									class="validation-message"></label>
+							</div>
+
+							<div class="col-sm-4">
+								<label
+									th:if="${#fields.hasErrors('entityDetails.relatives[0].entityAddressDetails.addressLine1')}"
+									th:errors="${entityDetails.relatives[0].entityAddressDetails.addressLine1}"
+									class="validation-message"></label>
+							</div>
+
+						</div>
+						<div class="form-group row" id="fourthRow">
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text"
+											th:field="${entityDetails.relatives[0].type}"
+											placeholder="School/Company" class="form-control"
+											maxlength="100" />
 									</div>
+									<label class="required-field"></label>
 								</div>
-								<div class="col-sm-4">
-									<div class="row">
-										<div class="col-sm-11">
-											<input type="text"
-												th:field="${entityDetails.relatives[0].firstName}"
-												placeholder="Name of School/Company" class="form-control"
-												maxlength="100" />
-											<input type="hidden"
-												th:field="${entityDetails.relatives[0].id}" />
-										</div>
-										<label class="required-field"></label>
+							</div>
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text"
+											th:field="${entityDetails.relatives[0].firstName}"
+											placeholder="Name of School/Company" class="form-control"
+											maxlength="100" /> <input type="hidden"
+											th:field="${entityDetails.relatives[0].id}" />
 									</div>
+									<label class="required-field"></label>
 								</div>
-								<div class="col-sm-4">
-									<div class="row">
-										<div class="col-sm-11">
-											<input type="text"
-												th:field="${entityDetails.relatives[0].entityAddressDetails.addressLine1}"
-												placeholder="Address of School/Company" class="form-control"
-												maxlength="1000" />
-											<input type="hidden"
-												th:field="${entityDetails.relatives[0].entityAddressDetails.id}" />
-										</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text"
+											th:field="${entityDetails.relatives[0].entityAddressDetails.addressLine1}"
+											placeholder="Address of School/Company" class="form-control"
+											maxlength="1000" /> <input type="hidden"
+											th:field="${entityDetails.relatives[0].entityAddressDetails.id}" />
 									</div>
 								</div>
 							</div>
+						</div>
 
-							<div class="form-group row" id="fifthRowLabel">
-								<div class="col-sm-3">
-									<label
-										th:if="${#fields.hasErrors('entityDetails.relatives[0].entityAddressDetails.country')}"
-										th:errors="${entityDetails.relatives[0].entityAddressDetails.country}"
-										class="validation-message"></label>
-								</div>
+						<div class="form-group row" id="fifthRowLabel">
+							<div class="col-sm-3">
+								<label
+									th:if="${#fields.hasErrors('entityDetails.relatives[0].entityAddressDetails.country')}"
+									th:errors="${entityDetails.relatives[0].entityAddressDetails.country}"
+									class="validation-message"></label>
+							</div>
 
-								<div class="col-sm-3">
-									<label
-										th:if="${#fields.hasErrors('entityDetails.relatives[0].entityAddressDetails.state')}"
-										th:errors="${entityDetails.relatives[0].entityAddressDetails.state}"
-										class="validation-message"></label>
-								</div>
+							<div class="col-sm-3">
+								<label
+									th:if="${#fields.hasErrors('entityDetails.relatives[0].entityAddressDetails.state')}"
+									th:errors="${entityDetails.relatives[0].entityAddressDetails.state}"
+									class="validation-message"></label>
+							</div>
 
-								<div class="col-sm-3">
-									<label
-										th:if="${#fields.hasErrors('entityDetails.relatives[0].entityAddressDetails.city')}"
-										th:errors="${entityDetails.relatives[0].entityAddressDetails.city}"
-										class="validation-message"></label>
-								</div>
+							<div class="col-sm-3">
+								<label
+									th:if="${#fields.hasErrors('entityDetails.relatives[0].entityAddressDetails.city')}"
+									th:errors="${entityDetails.relatives[0].entityAddressDetails.city}"
+									class="validation-message"></label>
+							</div>
 
-								<div class="col-sm-3">
-									<label
-										th:if="${#fields.hasErrors('entityDetails.relatives[0].entityAddressDetails.pincode')}"
-										th:errors="${entityDetails.relatives[0].entityAddressDetails.pincode}"
-										class="validation-message"></label>
+							<div class="col-sm-3">
+								<label
+									th:if="${#fields.hasErrors('entityDetails.relatives[0].entityAddressDetails.pincode')}"
+									th:errors="${entityDetails.relatives[0].entityAddressDetails.pincode}"
+									class="validation-message"></label>
+							</div>
+						</div>
+						<div class="form-group row" id="fifthRow">
+							<div class="col-sm-3">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text"
+											th:field="${entityDetails.relatives[0].entityAddressDetails.country}"
+											placeholder="Country" class="form-control" maxlength="50" />
+									</div>
+									<label class="required-field"></label>
 								</div>
 							</div>
-							<div class="form-group row" id="fifthRow">
-								<div class="col-sm-3">
-									<div class="row">
-										<div class="col-sm-11">
-											<input type="text"
-												th:field="${entityDetails.relatives[0].entityAddressDetails.country}"
-												placeholder="Country" class="form-control" maxlength="50" />
-										</div>
-										<label class="required-field"></label>
+							<div class="col-sm-3">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text"
+											th:field="${entityDetails.relatives[0].entityAddressDetails.state}"
+											placeholder="State" class="form-control" maxlength="50" />
 									</div>
+									<label class="required-field"></label>
 								</div>
-								<div class="col-sm-3">
-									<div class="row">
-										<div class="col-sm-11">
-											<input type="text"
-												th:field="${entityDetails.relatives[0].entityAddressDetails.state}"
-												placeholder="State" class="form-control" maxlength="50" />
-										</div>
-										<label class="required-field"></label>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="row">
-										<div class="col-sm-11">
-											<input type="text"
-												th:field="${entityDetails.relatives[0].entityAddressDetails.city}"
-												placeholder="City" class="form-control" maxlength="50" />
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="row">
-										<div class="col-sm-11">
-											<input type="text"
-												th:field="${entityDetails.relatives[0].entityAddressDetails.pincode}"
-												placeholder="Pincode" class="form-control" maxlength="6" />
-										</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text"
+											th:field="${entityDetails.relatives[0].entityAddressDetails.city}"
+											placeholder="City" class="form-control" maxlength="50" />
 									</div>
 								</div>
 							</div>
+							<div class="col-sm-3">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text"
+											th:field="${entityDetails.relatives[0].entityAddressDetails.pincode}"
+											placeholder="Pincode" class="form-control" maxlength="6" />
+									</div>
+								</div>
+							</div>
+						</div>
 						<!-- </div> -->
 						<div class="form-group row" id="sixthRow">
 							<div class="col-sm-2">
-								<button type="submit" th:text="${entityAction}" name="addEntityDetails">Add
-									Member</button>
+								<button type="submit" th:text="${entityAction}"
+									name="addEntityDetails">Add Member</button>
 							</div>
 						</div>
 						<div class="form-group row" id="seventhRow">
 							<div class="col-sm-6"></div>
+							<div class="col-sm-2"></div>
+							<div class="col-sm-2"></div>
 							<div class="col-sm-2">
-								<button type="button" id="btnClear"
-									class="form-control btn btn-secondary">Clear</button>
-							</div>
-							<div class="col-sm-2">
-								<button type="submit" id="btnSave" name="saveFamilyDetails"
-									class="form-control btn btn-primary">Save</button>
-							</div>
-							<div class="col-sm-2">
-								<button type="submit" id="btnSaveContinue"
-									name="saveContinueFamilyDetails"
-									class="form-control btn btn-primary">Save &amp;
-									Continue</button>
+								<button type="submit" id="btnContinue"
+									name="continueFromFamilyDetails"
+									class="form-control btn btn-primary">Continue</button>
 							</div>
 						</div>
 					</form>

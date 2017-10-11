@@ -152,7 +152,8 @@ public class StudentApplicationService {
 	
 	@RequestMapping(value="/bankAccountDetails", method = RequestMethod.GET)
 	public String bankAccountDetails(Model model){
-		logger.info("In the bank account details Get Request...File No is " + ((StudentFile) model.asMap().get("studentFile")).getFileNo());
+		int fileNo = (int) model.asMap().get("fileNo");
+		logger.info("In the bank account details Get Request...File No is " + model.asMap().get("fileNo"));
 		return "bankAccountDetails";
 	}
 	
@@ -274,31 +275,16 @@ public class StudentApplicationService {
         return modelAndView;
     }
     
-    @RequestMapping(value = "/familyDetails", method=RequestMethod.POST, params={"saveContinueFamilyDetails"})
-    public ModelAndView saveContinueFamilyDetails(@Valid StudentFile studentFile, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    @RequestMapping(value = "/familyDetails", params={"continueFromFamilyDetails"})
+    public ModelAndView continueFromFamilyDetails(final int fileNo, RedirectAttributes redirectAttributes) {
     	ModelAndView modelAndView = new ModelAndView();
-    	if (bindingResult.hasErrors()) {
-        	logger.error("Found validation errors");
-        	modelAndView.addObject("studentFile", studentFile);
-			modelAndView.setViewName("basicDetails");
-		} else {
-			logger.info("Found no validation errors");
-	    	if(studentFile.getId() > 0) {
-	    		logger.info("Existing File ID: " + studentFile.getId());
-	    		studentFile = studentFileService.update(studentFile);
-	    		logger.info("File ID After Update: " + studentFile.getId());
-	    		logger.info(studentFile.getEntityDetails().getFirstName() + "'s family details updated successfully");
-		        notifyService.addInfoMessage(studentFile.getEntityDetails().getFirstName() + "'s basic details updated successfully!!");
-	    	} else {
-		        studentFile = studentFileService.save(studentFile);
-		        logger.info("New File No: " + studentFile.getFileNo());
-		        logger.info(studentFile.getEntityDetails().getFirstName() + "'s family details saved successfully");
-		        notifyService.addInfoMessage(studentFile.getEntityDetails().getFirstName() + "'s family details saved successfully!!");
-	    	}
-	        //modelAndView.addObject("studentFile", studentFile);
-	        redirectAttributes.addFlashAttribute("studentFile", studentFile);
-	        modelAndView.setViewName("redirect:/studentApplication/bankAccountDetails");
-		}
+    	if(fileNo > 0) {
+    		logger.info("Existing File No: " + fileNo);
+    		redirectAttributes.addFlashAttribute("fileNo", fileNo);
+            modelAndView.setViewName("redirect:/studentApplication/bankAccountDetails");
+    	} else {
+	        // handle exception
+    	}
         return modelAndView;
     }
     
