@@ -121,4 +121,10 @@ public class EntityAddressDetails {
 		this.entityDetails = entityDetails;
 	}
 	
+	@Override
+	public String toString() {
+		return "EntityAddressDetails [id=" + id + ", type=" + type + ", addressLine1=" + addressLine1
+				+ ", addressLine2=" + addressLine2 + ", city=" + city + ", state=" + state + ", country=" + country
+				+ ", pincode=" + pincode + "]";
+	}
 }

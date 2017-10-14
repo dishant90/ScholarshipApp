@@ -96,7 +96,6 @@ public class EntityDetails {
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="applicant")
 	private List<EntityDetails> relatives;
-    //private List<EntityDetails> relatives = new ArrayList<EntityDetails>();
 	
 	public StudentDetails getStudentDetails() {
 		return studentDetails;
@@ -234,5 +233,10 @@ public class EntityDetails {
 	public void setEntityAddressDetails(EntityAddressDetails entityAddressDetails) {
 		this.entityAddressDetails = entityAddressDetails;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "EntityDetails [id=" + id + ", type=" + type + ", category=" + category + ", firstName=" + firstName
+				+ ", lastName=" + lastName + "]";
+	}
 }

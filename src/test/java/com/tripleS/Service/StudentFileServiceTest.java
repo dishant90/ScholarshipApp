@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.tripleS.controller.StudentApplicationService;
+import com.tripleS.controller.StudentApplicationController;
+import com.tripleS.model.EntityDetails;
 import com.tripleS.repository.StudentFileRepository;
+import com.tripleS.service.EntityDetailsService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -22,6 +24,9 @@ public class StudentFileServiceTest {
 	
 	@Autowired
     StudentFileRepository studentFileRepository;
+	
+	@Autowired
+	private EntityDetailsService entityDetailsService;
 	
 	@Test
 	public void maxStudentFilesTest() {
@@ -38,6 +43,12 @@ public class StudentFileServiceTest {
 				assert(true);
 			}
 		}
-		
+	}
+	
+	@Test
+	public void getEntityDetailsTest() {
+		// find applicant by file #
+		EntityDetails applicant = entityDetailsService.findApplicant(1);
+		logger.info(applicant.toString());
 	}
 }

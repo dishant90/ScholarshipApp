@@ -11,11 +11,9 @@
 	<body>
 		<div class="col-sm-2 sidenav nav-fill" th:fragment="caseMenu">
 			<nav class="nav flex-column nav-pills nav-fill">
-				<!-- <a class="nav-link active" href="#" th:href="@{/studentApplication/basicDetails/} + ${studentFile.fileNo}">Basic Details</a>
-				<a class="nav-link" href="#" th:href="@{/studentApplication/familyDetails/} + ${studentFile.fileNo}">Family Details</a> -->
 				<a class="nav-link active" href="#" th:href="@{/studentApplication/basicDetails/} + ${fileNo}">Basic Details</a>
 				<a class="nav-link" href="#" th:href="@{/studentApplication/familyDetails/} + ${fileNo}">Family Details</a>
-				<a class="nav-link" href="#studentBankAccountDetailsTab">Bank Account Details</a>
+				<a class="nav-link" href="#" th:href="@{/studentApplication/bankAccountDetails/} + ${fileNo}">Bank Account Details</a>
 				<a class="nav-link disabled" href="#">Disabled</a>
 			</nav>
 		</div>

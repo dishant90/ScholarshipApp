@@ -15,21 +15,219 @@
 						method="post">
 						<input type="hidden" th:value="${fileNo}" name="fileNo" />
 
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>To be used</th>
+									<th>Account Number</th>
+									<th>Bank Name</th>
+									<th>Branch</th>
+									<th>IFSC Code</th>
+									<th>Account Holder Name 1</th>
+									<th>Account Holder Name 2</th>
+									<th>Account Holder Name 3</th>
+									<th></th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="row,rowStat : ${entityBankDetailsList}">
+									<td><label
+										th:text="*{entityBankDetailsList[__${rowStat.index}__].isCurrent}">Radio
+											Button</label></td>
+									<td><label
+										th:text="*{entityBankDetailsList[__${rowStat.index}__].bankAccountNo}">10
+											digit Account # </label></td>
+									<td><label
+										th:text="*{entityBankDetailsList[__${rowStat.index}__].bankName}">SBI</label></td>
+									<td><label
+										th:text="*{entityBankDetailsList[__${rowStat.index}__].branch}">Mumbai</label></td>
+									<td><label
+										th:text="*{entityBankDetailsList[__${rowStat.index}__].ifscCode}">SBI0001</label></td>
+									<td><label
+										th:text="*{entityBankDetailsList[__${rowStat.index}__].accountHolderName1}">Name
+											1</label></td>
+									<td><label
+										th:text="*{entityBankDetailsList[__${rowStat.index}__].accountHolderName2}">Name
+											1</label></td>
+									<td><label
+										th:text="*{entityBankDetailsList[__${rowStat.index}__].accountHolderName3}">Name
+											1</label></td>
+									<td>
+										<button type="submit" name="editEntityBankDetails"
+											title="Edit Account Details"
+											th:value="*{entityBankDetailsList[__${rowStat.index}__].id}"
+											class="fa fa-pencil-square-o fa-lg iconButton"></button>
+									</td>
+									<td>
+										<button type="submit" name="removeEntityBankDetails"
+											title="Remove Account Details"
+											th:value="*{entityBankDetailsList[__${rowStat.index}__].id}"
+											class="fa fa-trash-o fa-lg iconButton"></button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<div class="form-group row" id="firstRowLabel">
+
+							<div class="col-sm-6">
+								<label
+									th:if="${#fields.hasErrors('entityBankDetails.bankAccountNo')}"
+									th:errors="${entityBankDetails.bankAccountNo}"
+									class="validation-message"></label>
+							</div>
+
+							<div class="col-sm-6">
+								<label
+									th:if="${#fields.hasErrors('entityBankDetails.bankName')}"
+									th:errors="${entityBankDetails.bankName}"
+									class="validation-message"></label>
+							</div>
+						</div>
+						<div class="form-group row" id="firstRow">
+							<div class="col-sm-6">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text"
+											th:field="${entityBankDetails.bankAccountNo}"
+											placeholder="Bank Account No" class="form-control"
+											maxlength="25" /> <input type="hidden"
+											th:field="${entityBankDetails.id}" />
+									</div>
+									<label class="required-field"></label>
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text" th:field="${entityBankDetails.bankName}"
+											placeholder="Bank Name" class="form-control" maxlength="100" />
+									</div>
+									<label class="required-field"></label>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group row" id="secondRowLabel">
+							<div class="col-sm-6">
+								<label th:if="${#fields.hasErrors('entityBankDetails.branch')}"
+									th:errors="${entityBankDetails.branch}"
+									class="validation-message"></label>
+							</div>
+
+							<div class="col-sm-6">
+								<label
+									th:if="${#fields.hasErrors('entityBankDetails.ifscCode')}"
+									th:errors="${entityBankDetails.ifscCode}"
+									class="validation-message"></label>
+							</div>
+						</div>
+						<div class="form-group row" id="secondRow">
+							<div class="col-sm-6">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text" th:field="${entityBankDetails.branch}"
+											placeholder="Branch" class="form-control" maxlength="100" />
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text" th:field="${entityBankDetails.ifscCode}"
+											placeholder="IFSC Code" class="form-control" maxlength="25" />
+									</div>
+									<label class="required-field"></label>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group row" id="thirdRowLabel">
+
+							<div class="col-sm-4">
+								<label
+									th:if="${#fields.hasErrors('entityBankDetails.accountHolderName1')}"
+									th:errors="${entityBankDetails.accountHolderName1}"
+									class="validation-message"></label>
+							</div>
+
+							<div class="col-sm-4">
+								<label
+									th:if="${#fields.hasErrors('entityBankDetails.accountHolderName2')}"
+									th:errors="${entityBankDetails.accountHolderName2}"
+									class="validation-message"></label>
+							</div>
+
+							<div class="col-sm-4">
+								<label
+									th:if="${#fields.hasErrors('entityBankDetails.accountHolderName3')}"
+									th:errors="${entityBankDetails.accountHolderName3}"
+									class="validation-message"></label>
+							</div>
+						</div>
+						<div class="form-group row" id="thirdRow">
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text"
+											th:field="${entityBankDetails.accountHolderName1}"
+											placeholder="First Account Holder's Name"
+											class="form-control" maxlength="300" /> <input type="hidden"
+											th:field="${entityBankDetails.id}" />
+									</div>
+									<label class="required-field"></label>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text"
+											th:field="${entityBankDetails.accountHolderName2}"
+											placeholder="Second Account Holder's Name"
+											class="form-control" maxlength="300" />
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text"
+											th:field="${entityBankDetails.accountHolderName3}"
+											placeholder="Third Account Holder's Name"
+											class="form-control" maxlength="300" />
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group row" id="fourthRow">
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11">
+										<label>Is this account to be used in the payments?</label>
+										<input type="checkbox"
+											th:field="${entityBankDetails.isCurrent}"
+											placeholder="Is this account to be used in the payments?"
+											class="form-control" />
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group row" id="fifthRow">
+							<div class="col-sm-4">
+								<button type="submit" th:text="${bankAction}"
+									name="addUpdateBankAccountDetails">Add/Update Bank
+									Account Details</button>
+							</div>
+						</div>
 						<div class="form-group row" id="sixthRow">
 							<div class="col-sm-6"></div>
+							<div class="col-sm-2"></div>
+							<div class="col-sm-2"></div>
 							<div class="col-sm-2">
-								<button type="button" id="btnClear"
-									class="form-control btn btn-secondary">Clear</button>
-							</div>
-							<div class="col-sm-2">
-								<button type="submit" id="btnSave" name="saveFamilyDetails"
-									class="form-control btn btn-primary">Save</button>
-							</div>
-							<div class="col-sm-2">
-								<button type="submit" id="btnSaveContinue"
-									name="saveContinueFamilyDetails"
-									class="form-control btn btn-primary">Save &amp;
-									Continue</button>
+								<button type="submit" id="btnContinue"
+									name="continueFromBasicDetails"
+									class="form-control btn btn-primary">Continue</button>
 							</div>
 						</div>
 					</form>

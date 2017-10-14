@@ -44,4 +44,8 @@ public class StudentFileServiceImpl implements StudentFileService {
 		return studentFile;
 	}
 
+	@Override
+	public boolean existsByFileNo(int fileNo) {
+		return studentFileRepository.existsByFileNo(fileNo);
+	}
 }

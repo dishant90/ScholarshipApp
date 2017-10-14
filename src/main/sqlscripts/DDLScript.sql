@@ -243,3 +243,9 @@ ALTER TABLE entity_details ADD COLUMN qualification VARCHAR(100);
 
 -- 26th Sept 2017
 SET FOREIGN_KEY_CHECKS = 1;
+
+-- 12th Oct 2017
+ALTER TABLE entity_bank_details MODIFY COLUMN id INT AUTO_INCREMENT;
+
+-- 13th Oct 2017
+ALTER TABLE entity_bank_details MODIFY COLUMN is_current BIT(1);

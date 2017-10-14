@@ -66,8 +66,6 @@
 											class="fa fa-pencil-square-o fa-lg iconButton"></button>
 									</td>
 									<td>
-										<!-- <button type="submit" name="removeEntityDetails"
-											th:value="${rowStat.index}">Remove Member</button> -->
 										<button type="submit" name="removeEntityDetails"
 											title="Remove Member"
 											th:value="*{relatives[__${rowStat.index}__].id}"
@@ -334,11 +332,10 @@
 								</div>
 							</div>
 						</div>
-						<!-- </div> -->
 						<div class="form-group row" id="sixthRow">
-							<div class="col-sm-2">
+							<div class="col-sm-4">
 								<button type="submit" th:text="${entityAction}"
-									name="addEntityDetails">Add Member</button>
+									name="addUpdateEntityDetails">Add/Update Member</button>
 							</div>
 						</div>
 						<div class="form-group row" id="seventhRow">
