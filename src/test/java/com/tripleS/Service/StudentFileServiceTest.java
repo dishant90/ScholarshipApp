@@ -48,7 +48,7 @@ public class StudentFileServiceTest {
 	@Test
 	public void getEntityDetailsTest() {
 		// find applicant by file #
-		EntityDetails applicant = entityDetailsService.findApplicant(1);
+		EntityDetails applicant = entityDetailsService.findApplicant("1");
 		logger.info(applicant.toString());
 	}
 }

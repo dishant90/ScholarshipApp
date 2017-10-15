@@ -2,6 +2,7 @@ package com.tripleS.service;
 
 import java.util.Date;
 
+import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,7 +18,7 @@ public class StudentFileServiceImpl implements StudentFileService {
     StudentFileRepository studentFileRepository;
 	
 	@Override
-	public StudentFile findByFileNo(int fileNo) {
+	public StudentFile findByFileNo(String fileNo) {
 		return studentFileRepository.findByFileNo(fileNo);
 	}
 
@@ -30,11 +31,11 @@ public class StudentFileServiceImpl implements StudentFileService {
 	@Override
 	public StudentFile save(StudentFile studentFile) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		int maxFileNo = 0;
-		if(studentFileRepository.getMaxFileNo() != null) {
-			maxFileNo = studentFileRepository.getMaxFileNo().intValue();	
-    	}
-        studentFile.setFileNo(maxFileNo + 1);
+		String generatedFileId = generateFileId();
+		while(studentFileRepository.existsByFileNo(generatedFileId)) {
+		generatedFileId = generateFileId();
+		}
+        studentFile.setFileNo(generatedFileId);
         studentFile.setFileStatus("New");
         studentFile.setCreatedBy(auth.getName());
         studentFile.setCreatedDate(new Date());
@@ -45,7 +46,11 @@ public class StudentFileServiceImpl implements StudentFileService {
 	}
 
 	@Override
-	public boolean existsByFileNo(int fileNo) {
+	public boolean existsByFileNo(String fileNo) {
 		return studentFileRepository.existsByFileNo(fileNo);
+	}
+	private String generateFileId(){
+		String fileId = new String(RandomStringUtils.randomAlphanumeric(8).toUpperCase());
+		return fileId;
 	}
 }

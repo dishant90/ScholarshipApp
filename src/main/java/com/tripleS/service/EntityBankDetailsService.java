@@ -4,7 +4,7 @@ import java.util.List;
 import com.tripleS.model.EntityBankDetails;
 
 public interface EntityBankDetailsService {
-	List<EntityBankDetails> findByFileNo(int fileNo);
+	List<EntityBankDetails> findByFileNo(String fileNo);
 	EntityBankDetails save(EntityBankDetails entityBankDetails);
 	void delete(int id);
 	EntityBankDetails findById(int id);
