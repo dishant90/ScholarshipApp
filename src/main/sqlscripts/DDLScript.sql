@@ -249,3 +249,6 @@ ALTER TABLE entity_bank_details MODIFY COLUMN id INT AUTO_INCREMENT;
 
 -- 13th Oct 2017
 ALTER TABLE entity_bank_details MODIFY COLUMN is_current BIT(1);
+
+-- 15th Oct 2017
+ALTER TABLE student_file MODIFY COLUMN file_no VARCHAR(10);
