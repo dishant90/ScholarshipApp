@@ -30,7 +30,7 @@ public class EntityBankDetailsServiceImpl implements EntityBankDetailsService {
 	
 	
 	@Override
-	public List<EntityBankDetails> findByFileNo(int fileNo) {
+	public List<EntityBankDetails> findByFileNo(String fileNo) {
 		EntityDetails applicant = entityDetailsService.findApplicant(fileNo);
 		return entityBankDetailsRepository.findByEntityDetails(applicant);
 	}

@@ -27,13 +27,13 @@ public class EntityDetailsServiceImpl implements EntityDetailsService {
 	EntityAddressDetailsRepository entityAddressDetailsRepository;
 	
 	@Override
-	public List<EntityDetails> findRelativesByFileNo(int fileNo) {
+	public List<EntityDetails> findRelativesByFileNo(String fileNo) {
 		EntityDetails applicant = findApplicant(fileNo);
 		return applicant.getRelatives();
 	}
 
 	@Override
-	public EntityDetails findApplicant(int fileNo) {
+	public EntityDetails findApplicant(String fileNo) {
 		EntityDetails applicant = entityDetailsRepository.findById(studentFileRepository.findByFileNo(fileNo).getEntityDetails().getId());
 		return applicant;
 	}

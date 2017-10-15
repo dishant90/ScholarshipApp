@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,7 +75,7 @@ public class StudentApplicationController {
 
 	@RequestMapping(value = "/familyDetails", method = RequestMethod.GET)
 	public String familyDetails(Model model) {
-		int fileNo = (int) model.asMap().get("fileNo");
+		String fileNo = (String) model.asMap().get("fileNo");
 		logger.info("In the family details Get Request...File No is " + fileNo);
 		model = getFamilyDetailsByFileNo(fileNo, model);
 		return "familyDetails";
@@ -82,15 +83,15 @@ public class StudentApplicationController {
 
 	@RequestMapping(value = "/bankAccountDetails", method = RequestMethod.GET)
 	public String bankAccountDetails(Model model) {
-		int fileNo = (int) model.asMap().get("fileNo");
+		String fileNo = (String) model.asMap().get("fileNo");
 		logger.info("In the bank account details Get Request...File No is " + fileNo);
 		model = getBankAccountDetailsByFileNo(fileNo, model);
 		return "bankAccountDetails";
 	}
 
 	@RequestMapping(value = "/basicDetails/{fileNo}", method = RequestMethod.GET)
-	public String basicDetails(@PathVariable("fileNo") int fileNo, Model model) {
-		if (fileNo > 0) {
+	public String basicDetails(@PathVariable("fileNo") String fileNo, Model model) {
+		if (!fileNo.isEmpty()) {
 			logger.info("Path Variable... File No is " + fileNo);
 			StudentFile studentFile = studentFileService.findByFileNo(fileNo);
 			if (studentFile != null) {
@@ -106,8 +107,8 @@ public class StudentApplicationController {
 	}
 
 	@RequestMapping(value = "/familyDetails/{fileNo}", method = RequestMethod.GET)
-	public String familyDetails(@PathVariable("fileNo") int fileNo, Model model) {
-		if (fileNo > 0) {
+	public String familyDetails(@PathVariable("fileNo") String fileNo, Model model) {
+		if (!fileNo.isEmpty()) {
 			logger.info("Path Variable... File No is " + fileNo);
 			if (studentFileService.existsByFileNo(fileNo)) {
 				model = getFamilyDetailsByFileNo(fileNo, model);
@@ -121,8 +122,8 @@ public class StudentApplicationController {
 	}
 
 	@RequestMapping(value = "/bankAccountDetails/{fileNo}", method = RequestMethod.GET)
-	public String bankAccountDetails(@PathVariable("fileNo") int fileNo, Model model) {
-		if (fileNo > 0) {
+	public String bankAccountDetails(@PathVariable("fileNo") String fileNo, Model model) {
+		if (!fileNo.isEmpty()) {
 			logger.info("Path Variable... File No is " + fileNo);
 			if (studentFileService.existsByFileNo(fileNo)) {
 				model = getBankAccountDetailsByFileNo(fileNo, model);
@@ -136,7 +137,7 @@ public class StudentApplicationController {
 	}
 
 	@RequestMapping(value = "/familyDetails", params = { "addUpdateEntityDetails" })
-	public String addRelativeRow(final int fileNo, EntityDetails entityDetails, RedirectAttributes redirectAttributes) {
+	public String addRelativeRow(final String fileNo, EntityDetails entityDetails, RedirectAttributes redirectAttributes) {
 		logger.info("File No is " + fileNo);
 
 		entityDetails.setApplicant(entityDetailsService.findApplicant(fileNo));
@@ -160,7 +161,7 @@ public class StudentApplicationController {
 	}
 
 	@RequestMapping(value = "/bankAccountDetails", params = { "addUpdateBankAccountDetails" })
-	public String addBankAccountRow(final int fileNo, @Validated EntityBankDetails entityBankDetails, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+	public String addBankAccountRow(final String fileNo, @Validated EntityBankDetails entityBankDetails, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
 		if (bindingResult.hasErrors()) {
 			logger.info("Found validations errors on Bank Details page for " + fileNo);
 			if (studentFileService.existsByFileNo(fileNo)) {
@@ -284,9 +285,9 @@ public class StudentApplicationController {
 	}
 
 	@RequestMapping(value = "/familyDetails", params = { "continueFromFamilyDetails" })
-	public ModelAndView continueFromFamilyDetails(final int fileNo, RedirectAttributes redirectAttributes) {
+	public ModelAndView continueFromFamilyDetails(final String fileNo, RedirectAttributes redirectAttributes) {
 		ModelAndView modelAndView = new ModelAndView();
-		if (fileNo > 0) {
+		if (!fileNo.isEmpty()) {
 			logger.info("Existing File No: " + fileNo);
 			redirectAttributes.addFlashAttribute("fileNo", fileNo);
 			modelAndView.setViewName("redirect:/studentApplication/bankAccountDetails");
@@ -296,7 +297,7 @@ public class StudentApplicationController {
 		return modelAndView;
 	}
 
-	private Model getFamilyDetailsByFileNo(int fileNo, Model model) {
+	private Model getFamilyDetailsByFileNo(String fileNo, Model model) {
 		List<EntityDetails> relatives = entityDetailsService.findRelativesByFileNo(fileNo);
 		model.asMap().put("relatives", relatives);
 		if (model.asMap().get("entityDetails") == null) {
@@ -309,7 +310,7 @@ public class StudentApplicationController {
 		return model;
 	}
 
-	private Model getBankAccountDetailsByFileNo(int fileNo, Model model) {
+	private Model getBankAccountDetailsByFileNo(String fileNo, Model model) {
 		List<EntityBankDetails> entityBankDetailsList = entityBankDetailsService.findByFileNo(fileNo);
 		model.asMap().put("entityBankDetailsList", entityBankDetailsList);
 		if (model.asMap().get("entityBankDetails") == null) {
@@ -322,7 +323,7 @@ public class StudentApplicationController {
 		return model;
 	}
 
-	private String invalidFileNoRedirection(int fileNo) {
+	private String invalidFileNoRedirection(String fileNo) {
 		logger.error("Invalid case number: " + fileNo);
 		notifyService.addErrorMessage("Invalid case number: " + fileNo);
 		return "fragments/home";
