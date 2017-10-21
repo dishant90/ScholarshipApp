@@ -8,9 +8,6 @@ import com.tripleS.model.StudentFile;
 
 public interface StudentFileRepository extends JpaRepository<StudentFile, Integer> {
 	
-	@Query("Select MAX(s.fileNo) from StudentFile s")
-	Integer getMaxFileNo();
-
 	StudentFile findByFileNo(String fileNo);
 	
 	@Query("SELECT CASE WHEN COUNT(s) > 0 THEN true ELSE false END FROM StudentFile s WHERE s.fileNo = :fileNo")

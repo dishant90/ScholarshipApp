@@ -9,7 +9,12 @@
 			<div th:replace="fragments/caseMenu :: caseMenu">&nbsp;</div>
 			<div class="col-sm-10 text-left" id="studentFamilyDetailsTab">
 				<div>
-					<h2>Bank Account Details</h2>
+					<div class="header">
+						<div class="displayLeft">Bank Account Details</div>
+						<div class="displayRight" th:if="${fileNo}">File #
+							<label class="blueText" th:text="${fileNo}">File No Value</label>
+						</div>
+					</div>
 					<form id="bankAcountDetailsForm" role="form"
 						th:action="@{/studentApplication/bankAccountDetails}"
 						method="post">

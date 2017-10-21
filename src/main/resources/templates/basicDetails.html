@@ -1,339 +1,393 @@
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-	<head th:replace="fragments/home :: htmlhead">	</head>
-	<body>
-		<div th:replace="fragments/home :: header">&nbsp;</div>
-		<div class="container-fluid text-center">    
-			<div class="row content">
-				<div th:replace="fragments/caseMenu :: caseMenu">&nbsp;</div>
-				<div class="col-sm-10 text-left" id="studentBasicDetailsTab"> 
-					<div>
-						<h2>Student Basic Details</h2>
-						<form id="studentBasicForm" role="form" th:action="@{/studentApplication/basicDetails}"
-								th:object="${studentFile}" method="post">
-							<div class="form-group row" id="firstRowLabel">
-								<div class="col-sm-4">
-									<label th:if="${#fields.hasErrors('entityDetails.firstName')}" th:errors="*{entityDetails.firstName}"
-										class="validation-message"></label>
-								</div>
-								<div class="col-sm-4">
-									<label th:if="${#fields.hasErrors('entityDetails.middleName')}" th:errors="*{entityDetails.middleName}"
-										class="validation-message"></label>
-								</div>
-								<div class="col-sm-4">
-									<label th:if="${#fields.hasErrors('entityDetails.lastName')}" th:errors="*{entityDetails.lastName}"
-										class="validation-message"></label>
-								</div>
-							</div>
-							<div class="form-group row" id="firstRow">
-								<div class="col-sm-4">
-									<div class="row">
-										<div class="col-sm-11">
-											<input type="text" th:field="*{entityDetails.firstName}" placeholder="First Name"
-											class="form-control" maxlength="100" />
-										</div>
-										<label class="required-field"></label>
-										<input type="hidden" th:field="*{id}" />
-										<input type="hidden" th:field="*{fileNo}" />
-										<input type="hidden" th:field="*{fileStatus}" />
-										<input type="hidden" th:field="*{createdBy}" />
-										<input type="hidden" th:field="*{createdDate}" />
-										<input type="hidden" th:field="*{entityDetails.id}" />
-										<input type="hidden" th:field="*{entityDetails.type}" />
-										<input type="hidden" th:field="*{entityDetails.entityAddressDetails.id}" />
-										<input type="hidden" th:field="*{entityDetails.studentDetails.id}" />
-									</div>
-								</div>
-								<div class="col-sm-4">
-									<div class="row">
-										<div class="col-sm-11">
-											<input type="text" th:field="*{entityDetails.middleName}" placeholder="Middle Name"
-												class="form-control" maxlength="100" />										
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-4">
-									<div class="row">
-										<div class="col-sm-11">
-											<input type="text" th:field="*{entityDetails.lastName}" placeholder="Last Name"
-												class="form-control" maxlength="100" />										
-										</div>
-									</div>
-								</div>
-							</div>
-							
-							<div class="form-group row" id="secondRowLabel">
-								<div class="col-sm-6">
-									<label th:if="${#fields.hasErrors('entityDetails.emailID')}" th:errors="*{entityDetails.emailID}"
-										class="validation-message"></label>
-								</div>
-								<div class="col-sm-6">
-									<label th:if="${#fields.hasErrors('entityDetails.mobileNo')}" th:errors="*{entityDetails.mobileNo}"
-										class="validation-message"></label>
-								</div>
-							</div>
-							<div class="form-group row" id="secondRow">
-								<div class="col-sm-6">
-									<div class="row">
-										<div class="col-sm-11">
-											<input th:field="*{entityDetails.emailID}" placeholder="Email Address"
-												class="form-control" type="text" maxlength="100" />
-										</div>
-										<label class="required-field"></label>
-									</div>
-								</div>
-								<div class="col-sm-6">
-									<div class="row">
-										<div class="col-sm-11">
-											<input th:field="*{entityDetails.mobileNo}" placeholder="Mobile Number"
-												class="form-control" type="tel" maxlength="10" />
-										</div>
-										<label class="required-field"></label>
-									</div>
-								</div>
-							</div>
-							<div class="form-group row" id="thirdRowLabel">
-								<div class="col-sm-6">
-									<label th:if="${#fields.hasErrors('entityDetails.alternateContactNo')}" th:errors="*{entityDetails.alternateContactNo}"
-										class="validation-message"></label>
-								</div>
-								<div class="col-sm-6">
-									<label th:if="${#fields.hasErrors('entityDetails.telephoneNo')}" th:errors="*{entityDetails.telephoneNo}"
-										class="validation-message"></label>
-								</div>
-							</div>
-							<div class="form-group row" id="thirdRow">
-								<div class="col-sm-6">
-									<div class="row">
-										<div class="col-sm-11">
-											<input th:field="*{entityDetails.alternateContactNo}" placeholder="Alternate Contact Number"
-												class="form-control" type="tel" maxlength="10" />
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-6">
-									<div class="row">
-										<div class="col-sm-11">
-											<input type="text" th:field="*{entityDetails.telephoneNo}" placeholder="Residence Telephone Number"
-												class="form-control" maxlength="15" />
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="form-group row" id="fourthRowLabel">
-								<div class="col-sm-6">
-									<label th:if="${#fields.hasErrors('entityDetails.entityAddressDetails.addressLine1')}" 
-										th:errors="*{entityDetails.entityAddressDetails.addressLine1}"
-										class="validation-message"></label>
-								</div>
-								<div class="col-sm-6">
-									<label th:if="${#fields.hasErrors('entityDetails.entityAddressDetails.addressLine2')}" 
-										th:errors="*{entityDetails.entityAddressDetails.addressLine2}"
-										class="validation-message"></label>
-								</div>
-							</div>
-							<div class="form-group row" id="fourthRow">
-								<div class="col-sm-6">
-									<div class="row">
-										<div class="col-sm-11">
-											<input th:field="*{entityDetails.entityAddressDetails.addressLine1}" placeholder="Address Line 1"
-												class="form-control" type="text" maxlength="1000" />
-										</div>
-										<label class="required-field"></label>
-									</div>
-								</div>
-								<div class="col-sm-6">
-									<div class="row">
-										<div class="col-sm-11">
-											<input th:field="*{entityDetails.entityAddressDetails.addressLine2}" placeholder="Address Line 2"
-												class="form-control" type="text" maxlength="1000" />
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="form-group row" id="fifthRowLabel">
-								<div class="col-sm-3">
-									<label th:if="${#fields.hasErrors('entityDetails.entityAddressDetails.country')}"
-										th:errors="*{entityDetails.entityAddressDetails.country}"
-										class="validation-message"></label>
-								</div>
-								<div class="col-sm-3">
-									<label th:if="${#fields.hasErrors('entityDetails.entityAddressDetails.state')}"
-										th:errors="*{entityDetails.entityAddressDetails.state}"
-										class="validation-message"></label>
-								</div>
-								<div class="col-sm-3">
-									<label th:if="${#fields.hasErrors('entityDetails.entityAddressDetails.city')}"
-										th:errors="*{entityDetails.entityAddressDetails.city}"
-										class="validation-message"></label>
-								</div>
-								<div class="col-sm-3">
-									<label th:if="${#fields.hasErrors('entityDetails.entityAddressDetails.pincode')}"
-										th:errors="*{entityDetails.entityAddressDetails.pincode}"
-										class="validation-message"></label>
-								</div>
-							</div>
-							<div class="form-group row" id="fifthRow">
-								<div class="col-sm-3">
-									<div class="row">
-										<div class="col-sm-11">
-											<input type="text" th:field="*{entityDetails.entityAddressDetails.country}" 
-												placeholder="Country" class="form-control" maxlength="50" />
-										</div>
-										<label class="required-field"></label>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="row">
-										<div class="col-sm-11">
-											<input type="text" th:field="*{entityDetails.entityAddressDetails.state}"
-												placeholder="State" class="form-control" maxlength="50" />										
-										</div>
-										<label class="required-field"></label>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="row">
-										<div class="col-sm-11">
-											<input type="text" th:field="*{entityDetails.entityAddressDetails.city}"
-												placeholder="City" class="form-control" maxlength="50" />										
-										</div>
-										<label class="required-field"></label>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="row">
-										<div class="col-sm-11">
-											<input type="text" th:field="*{entityDetails.entityAddressDetails.pincode}"
-												placeholder="Pincode" class="form-control" maxlength="6" />										
-										</div>
-										<label class="required-field"></label>
-									</div>
-								</div>
-							</div>
-							<div class="form-group row" id="sixthRowLabel">
-								<div class="col-sm-3">
-									<label th:if="${#fields.hasErrors('entityDetails.studentDetails.dateOfBirth')}"
-										th:errors="*{entityDetails.studentDetails.dateOfBirth}"
-										class="validation-message"></label>
-								</div>
-								<div class="col-sm-3">
-									<label th:if="${#fields.hasErrors('entityDetails.studentDetails.placeOfBirth')}"
-										th:errors="*{entityDetails.studentDetails.placeOfBirth}"
-										class="validation-message"></label>
-								</div>
-								<div class="col-sm-3">
-									<label th:if="${#fields.hasErrors('entityDetails.studentDetails.religion')}"
-										th:errors="*{entityDetails.studentDetails.religion}"
-										class="validation-message"></label>
-								</div>
-								<div class="col-sm-3">
-									<label th:if="${#fields.hasErrors('entityDetails.studentDetails.motherTongue')}"
-										th:errors="*{entityDetails.studentDetails.motherTongue}"
-										class="validation-message"></label>
-								</div>
-							</div>
-							<div class="form-group row" id="sixthRow">
-								<div class="col-sm-3">
-									<div class="row">
-										<div class="col-sm-11">
-											<input th:field="*{entityDetails.studentDetails.dateOfBirth}" 
-												placeholder="Date of Birth" class="form-control dobMask" type="text" />
-												<!-- placeholder="Date of Birth" class="form-control" onfocus="(this.type='date')" onfocusout="(this.type='text')"/> -->
-										</div>
-										<label class="required-field"></label>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="row">
-										<div class="col-sm-11">
-											<input type="text" th:field="*{entityDetails.studentDetails.placeOfBirth}"
-												placeholder="Place of Birth" class="form-control" maxlength="100" />										
-										</div>
-										<label class="required-field"></label>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="row">
-										<div class="col-sm-11">
-											<input type="text" th:field="*{entityDetails.studentDetails.religion}"
-												placeholder="Religion" class="form-control" maxlength="50" />										
-										</div>
-										<label class="required-field"></label>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<div class="row">
-										<div class="col-sm-11">
-											<input type="text" th:field="*{entityDetails.studentDetails.motherTongue}"
-												placeholder="Mother Tongue" class="form-control" maxlength="100" />										
-										</div>
-										<label class="required-field"></label>
-									</div>
-								</div>
-							</div>
-							<div class="form-group row" id="seventhRow">
-								<div class="col-sm-6">
-									<textarea th:field="*{entityDetails.studentDetails.aimInLife}" 
-										placeholder="Aim in Life" class="form-control" maxlength="1000" rows="5" 
-										onkeyup="countChar(this,charNumAimInLife)">
-									</textarea>
-									<div id="charNumAimInLife" class="charNum"></div>
-								</div>
-								<div class="col-sm-6">
-									<textarea th:field="*{entityDetails.studentDetails.describePrizeDetails}" 
-										placeholder="If you have won any prize, please describe" class="form-control" 
-										maxlength="1000" rows="5" onkeyup="countChar(this,charNumDescribePrizeDetails)">
-									</textarea>
-									<div id="charNumDescribePrizeDetails" class="charNum"></div>
-								</div>
-							</div>
-							<div class="form-group row" id="eighthRow">
-								<div class="col-sm-6">
-									<textarea th:field="*{entityDetails.studentDetails.describeIfOtherFamilyMembersGotHelp}" 
-										placeholder="If other family members have got help, please describe" class="form-control"
-										maxlength="1000" rows="5" onkeyup="countChar(this,charNumDescribeIfOtherFamilyMembersGotHelp)">
-									</textarea>
-									<div id="charNumDescribeIfOtherFamilyMembersGotHelp" class="charNum"></div>
-								</div>
-								<div class="col-sm-6">
-									<textarea th:field="*{entityDetails.studentDetails.describeOtherProblemsInFamily}" 
-										placeholder="If you have other problems in family, please describe" class="form-control" 
-										maxlength="1000" rows="5" onkeyup="countChar(this,charNumDescribeOtherProblemsInFamily)">
-									</textarea>
-									<div id="charNumDescribeOtherProblemsInFamily" class="charNum"></div>
-								</div>
-							</div>
-							<div class="form-group row" id="ninthRow">
-								<div class="col-sm-12">
-									<textarea th:field="*{entityDetails.studentDetails.describeJobBusinessDetails}" 
-										placeholder="If you have job or doing business, please describe" class="form-control"
-										maxlength="1000" rows="3" onkeyup="countChar(this,charNumDescribeJobBusinessDetails)">
-									</textarea>
-									<div id="charNumDescribeJobBusinessDetails" class="charNum"></div>
-								</div>
-							</div>
-							<div class="form-group row" id="tenthRow">
-								<div class="col-sm-6">
-
-								</div>
-								<div class="col-sm-2">
-									<button type="button" id="btnClear" class="form-control btn btn-secondary">Clear</button>
-								</div>
-								<div class="col-sm-2">
-									<button type="submit" id="btnSave" name="saveBasicDetails" class="form-control btn btn-primary">Save</button>
-								</div>
-								<div class="col-sm-2">
-									<button type="submit" id="btnSaveContinue" name="saveContinueBasicDetails" class="form-control btn btn-primary">Save &amp; Continue</button>
-								</div>
-							</div>
-						</form>
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/home :: htmlhead">
+</head>
+<body>
+	<div th:replace="fragments/home :: header">&nbsp;</div>
+	<div class="container-fluid text-center">
+		<div class="row content">
+			<div th:replace="fragments/caseMenu :: caseMenu">&nbsp;</div>
+			<div class="col-sm-10 text-left" id="studentBasicDetailsTab">
+				<div>
+					<div class="header">
+						<div class="displayLeft" th:text="#{basicDetails.header}"></div>
+						<div class="displayRight" th:if="${fileNo}">
+							File # <label class="blueText" th:text="${fileNo}">File No Value</label>
+						</div>
 					</div>
+					<form id="studentBasicForm" role="form"
+						th:action="@{/studentApplication/basicDetails}"
+						th:object="${studentFile}" method="post">
+						<div class="form-group row" id="firstRowLabel">
+							<div class="col-sm-4">
+								<label th:if="${#fields.hasErrors('entityDetails.firstName')}"
+									th:errors="*{entityDetails.firstName}"
+									class="validation-message"></label>
+							</div>
+							<div class="col-sm-4">
+								<label th:if="${#fields.hasErrors('entityDetails.middleName')}"
+									th:errors="*{entityDetails.middleName}"
+									class="validation-message"></label>
+							</div>
+							<div class="col-sm-4">
+								<label th:if="${#fields.hasErrors('entityDetails.lastName')}"
+									th:errors="*{entityDetails.lastName}"
+									class="validation-message"></label>
+							</div>
+						</div>
+						<div class="form-group row" id="firstRow">
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text" th:field="*{entityDetails.firstName}"
+											th:placeholder="#{basicDetails.entityDetails.firstName.placeHolder}" class="form-control" maxlength="100" />
+									</div>
+									<label class="required-field"></label> <input type="hidden"
+										th:field="*{id}" /> <input type="hidden" th:field="*{fileNo}" />
+									<input type="hidden" th:field="*{fileStatus}" /> <input
+										type="hidden" th:field="*{createdBy}" /> <input type="hidden"
+										th:field="*{createdDate}" /> <input type="hidden"
+										th:field="*{entityDetails.id}" /> <input type="hidden"
+										th:field="*{entityDetails.type}" /> <input type="hidden"
+										th:field="*{entityDetails.entityAddressDetails.id}" /> <input
+										type="hidden" th:field="*{entityDetails.studentDetails.id}" />
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text" th:field="*{entityDetails.middleName}"
+											placeholder="Middle Name" class="form-control"
+											maxlength="100" />
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text" th:field="*{entityDetails.lastName}"
+											placeholder="Last Name" class="form-control" maxlength="100" />
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group row" id="secondRowLabel">
+							<div class="col-sm-6">
+								<label th:if="${#fields.hasErrors('entityDetails.emailID')}"
+									th:errors="*{entityDetails.emailID}" class="validation-message"></label>
+							</div>
+							<div class="col-sm-6">
+								<label th:if="${#fields.hasErrors('entityDetails.mobileNo')}"
+									th:errors="*{entityDetails.mobileNo}"
+									class="validation-message"></label>
+							</div>
+						</div>
+						<div class="form-group row" id="secondRow">
+							<div class="col-sm-6">
+								<div class="row">
+									<div class="col-sm-11">
+										<input th:field="*{entityDetails.emailID}"
+											placeholder="Email Address" class="form-control" type="text"
+											maxlength="100" />
+									</div>
+									<label class="required-field"></label>
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="row">
+									<div class="col-sm-11">
+										<input th:field="*{entityDetails.mobileNo}"
+											placeholder="Mobile Number" class="form-control" type="tel"
+											maxlength="10" />
+									</div>
+									<label class="required-field"></label>
+								</div>
+							</div>
+						</div>
+						<div class="form-group row" id="thirdRowLabel">
+							<div class="col-sm-6">
+								<label
+									th:if="${#fields.hasErrors('entityDetails.alternateContactNo')}"
+									th:errors="*{entityDetails.alternateContactNo}"
+									class="validation-message"></label>
+							</div>
+							<div class="col-sm-6">
+								<label th:if="${#fields.hasErrors('entityDetails.telephoneNo')}"
+									th:errors="*{entityDetails.telephoneNo}"
+									class="validation-message"></label>
+							</div>
+						</div>
+						<div class="form-group row" id="thirdRow">
+							<div class="col-sm-6">
+								<div class="row">
+									<div class="col-sm-11">
+										<input th:field="*{entityDetails.alternateContactNo}"
+											placeholder="Alternate Contact Number" class="form-control"
+											type="tel" maxlength="10" />
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text" th:field="*{entityDetails.telephoneNo}"
+											placeholder="Residence Telephone Number" class="form-control"
+											maxlength="15" />
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group row" id="fourthRowLabel">
+							<div class="col-sm-6">
+								<label
+									th:if="${#fields.hasErrors('entityDetails.entityAddressDetails.addressLine1')}"
+									th:errors="*{entityDetails.entityAddressDetails.addressLine1}"
+									class="validation-message"></label>
+							</div>
+							<div class="col-sm-6">
+								<label
+									th:if="${#fields.hasErrors('entityDetails.entityAddressDetails.addressLine2')}"
+									th:errors="*{entityDetails.entityAddressDetails.addressLine2}"
+									class="validation-message"></label>
+							</div>
+						</div>
+						<div class="form-group row" id="fourthRow">
+							<div class="col-sm-6">
+								<div class="row">
+									<div class="col-sm-11">
+										<input
+											th:field="*{entityDetails.entityAddressDetails.addressLine1}"
+											placeholder="Address Line 1" class="form-control" type="text"
+											maxlength="1000" />
+									</div>
+									<label class="required-field"></label>
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="row">
+									<div class="col-sm-11">
+										<input
+											th:field="*{entityDetails.entityAddressDetails.addressLine2}"
+											placeholder="Address Line 2" class="form-control" type="text"
+											maxlength="1000" />
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group row" id="fifthRowLabel">
+							<div class="col-sm-3">
+								<label
+									th:if="${#fields.hasErrors('entityDetails.entityAddressDetails.country')}"
+									th:errors="*{entityDetails.entityAddressDetails.country}"
+									class="validation-message"></label>
+							</div>
+							<div class="col-sm-3">
+								<label
+									th:if="${#fields.hasErrors('entityDetails.entityAddressDetails.state')}"
+									th:errors="*{entityDetails.entityAddressDetails.state}"
+									class="validation-message"></label>
+							</div>
+							<div class="col-sm-3">
+								<label
+									th:if="${#fields.hasErrors('entityDetails.entityAddressDetails.city')}"
+									th:errors="*{entityDetails.entityAddressDetails.city}"
+									class="validation-message"></label>
+							</div>
+							<div class="col-sm-3">
+								<label
+									th:if="${#fields.hasErrors('entityDetails.entityAddressDetails.pincode')}"
+									th:errors="*{entityDetails.entityAddressDetails.pincode}"
+									class="validation-message"></label>
+							</div>
+						</div>
+						<div class="form-group row" id="fifthRow">
+							<div class="col-sm-3">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text"
+											th:field="*{entityDetails.entityAddressDetails.country}"
+											placeholder="Country" class="form-control" maxlength="50" />
+									</div>
+									<label class="required-field"></label>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text"
+											th:field="*{entityDetails.entityAddressDetails.state}"
+											placeholder="State" class="form-control" maxlength="50" />
+									</div>
+									<label class="required-field"></label>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text"
+											th:field="*{entityDetails.entityAddressDetails.city}"
+											placeholder="City" class="form-control" maxlength="50" />
+									</div>
+									<label class="required-field"></label>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text"
+											th:field="*{entityDetails.entityAddressDetails.pincode}"
+											placeholder="Pincode" class="form-control" maxlength="6" />
+									</div>
+									<label class="required-field"></label>
+								</div>
+							</div>
+						</div>
+						<div class="form-group row" id="sixthRowLabel">
+							<div class="col-sm-3">
+								<label
+									th:if="${#fields.hasErrors('entityDetails.studentDetails.dateOfBirth')}"
+									th:errors="*{entityDetails.studentDetails.dateOfBirth}"
+									class="validation-message"></label>
+							</div>
+							<div class="col-sm-3">
+								<label
+									th:if="${#fields.hasErrors('entityDetails.studentDetails.placeOfBirth')}"
+									th:errors="*{entityDetails.studentDetails.placeOfBirth}"
+									class="validation-message"></label>
+							</div>
+							<div class="col-sm-3">
+								<label
+									th:if="${#fields.hasErrors('entityDetails.studentDetails.religion')}"
+									th:errors="*{entityDetails.studentDetails.religion}"
+									class="validation-message"></label>
+							</div>
+							<div class="col-sm-3">
+								<label
+									th:if="${#fields.hasErrors('entityDetails.studentDetails.motherTongue')}"
+									th:errors="*{entityDetails.studentDetails.motherTongue}"
+									class="validation-message"></label>
+							</div>
+						</div>
+						<div class="form-group row" id="sixthRow">
+							<div class="col-sm-3">
+								<div class="row">
+									<div class="col-sm-11">
+										<input th:field="*{entityDetails.studentDetails.dateOfBirth}"
+											placeholder="Date of Birth" class="form-control dobMask"
+											type="text" />
+										<!-- placeholder="Date of Birth" class="form-control" onfocus="(this.type='date')" onfocusout="(this.type='text')"/> -->
+									</div>
+									<label class="required-field"></label>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text"
+											th:field="*{entityDetails.studentDetails.placeOfBirth}"
+											placeholder="Place of Birth" class="form-control"
+											maxlength="100" />
+									</div>
+									<label class="required-field"></label>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text"
+											th:field="*{entityDetails.studentDetails.religion}"
+											placeholder="Religion" class="form-control" maxlength="50" />
+									</div>
+									<label class="required-field"></label>
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text"
+											th:field="*{entityDetails.studentDetails.motherTongue}"
+											placeholder="Mother Tongue" class="form-control"
+											maxlength="100" />
+									</div>
+									<label class="required-field"></label>
+								</div>
+							</div>
+						</div>
+						<div class="form-group row" id="seventhRow">
+							<div class="col-sm-6">
+								<textarea th:field="*{entityDetails.studentDetails.aimInLife}"
+									placeholder="Aim in Life" class="form-control" maxlength="1000"
+									rows="5" onkeyup="countChar(this,charNumAimInLife)">
+									</textarea>
+								<div id="charNumAimInLife" class="charNum"></div>
+							</div>
+							<div class="col-sm-6">
+								<textarea
+									th:field="*{entityDetails.studentDetails.describePrizeDetails}"
+									placeholder="If you have won any prize, please describe"
+									class="form-control" maxlength="1000" rows="5"
+									onkeyup="countChar(this,charNumDescribePrizeDetails)">
+									</textarea>
+								<div id="charNumDescribePrizeDetails" class="charNum"></div>
+							</div>
+						</div>
+						<div class="form-group row" id="eighthRow">
+							<div class="col-sm-6">
+								<textarea
+									th:field="*{entityDetails.studentDetails.describeIfOtherFamilyMembersGotHelp}"
+									placeholder="If other family members have got help, please describe"
+									class="form-control" maxlength="1000" rows="5"
+									onkeyup="countChar(this,charNumDescribeIfOtherFamilyMembersGotHelp)">
+									</textarea>
+								<div id="charNumDescribeIfOtherFamilyMembersGotHelp"
+									class="charNum"></div>
+							</div>
+							<div class="col-sm-6">
+								<textarea
+									th:field="*{entityDetails.studentDetails.describeOtherProblemsInFamily}"
+									placeholder="If you have other problems in family, please describe"
+									class="form-control" maxlength="1000" rows="5"
+									onkeyup="countChar(this,charNumDescribeOtherProblemsInFamily)">
+									</textarea>
+								<div id="charNumDescribeOtherProblemsInFamily" class="charNum"></div>
+							</div>
+						</div>
+						<div class="form-group row" id="ninthRow">
+							<div class="col-sm-12">
+								<textarea
+									th:field="*{entityDetails.studentDetails.describeJobBusinessDetails}"
+									placeholder="If you have job or doing business, please describe"
+									class="form-control" maxlength="1000" rows="3"
+									onkeyup="countChar(this,charNumDescribeJobBusinessDetails)">
+									</textarea>
+								<div id="charNumDescribeJobBusinessDetails" class="charNum"></div>
+							</div>
+						</div>
+						<div class="form-group row" id="tenthRow">
+							<div class="col-sm-6"></div>
+							<div class="col-sm-2">
+								<button type="button" id="btnClear"
+									class="form-control btn btn-secondary">Clear</button>
+							</div>
+							<div class="col-sm-2">
+								<button type="submit" id="btnSave" name="saveBasicDetails"
+									class="form-control btn btn-primary">Save</button>
+							</div>
+							<div class="col-sm-2">
+								<button type="submit" id="btnSaveContinue"
+									name="saveContinueBasicDetails"
+									class="form-control btn btn-primary">Save &amp;
+									Continue</button>
+							</div>
+						</div>
+					</form>
 				</div>
 			</div>
-			<div th:replace="fragments/home :: modalFragment">&nbsp;</div>
-			<div th:replace="fragments/home :: notifyMessages">&nbsp;</div>
 		</div>
-		<div th:replace="fragments/home :: javascriptFiles">&nbsp;</div>
-	</body>
+		<div th:replace="fragments/home :: modalFragment">&nbsp;</div>
+		<div th:replace="fragments/home :: notifyMessages">&nbsp;</div>
+	</div>
+	<div th:replace="fragments/home :: javascriptFiles">&nbsp;</div>
+</body>
 </html>

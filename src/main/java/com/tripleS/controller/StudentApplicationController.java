@@ -163,7 +163,7 @@ public class StudentApplicationController {
 	@RequestMapping(value = "/bankAccountDetails", params = { "addUpdateBankAccountDetails" })
 	public String addBankAccountRow(final String fileNo, @Validated EntityBankDetails entityBankDetails, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
 		if (bindingResult.hasErrors()) {
-			logger.info("Found validations errors on Bank Details page for " + fileNo);
+			logger.info("Found validation errors on Bank Details page for " + fileNo);
 			if (studentFileService.existsByFileNo(fileNo)) {
 				model = getBankAccountDetailsByFileNo(fileNo, model);
 				return "bankAccountDetails";
@@ -188,7 +188,7 @@ public class StudentApplicationController {
 	}
 
 	@RequestMapping(value = "/familyDetails", params = { "editEntityDetails" })
-	public String editRelativeRow(final int fileNo, EntityDetails entityDetails, RedirectAttributes redirectAttributes,
+	public String editRelativeRow(final String fileNo, EntityDetails entityDetails, RedirectAttributes redirectAttributes,
 			final HttpServletRequest req) {
 		final Integer rowId = Integer.valueOf(req.getParameter("editEntityDetails"));
 		entityDetails = entityDetailsService.findById(rowId);
@@ -198,7 +198,7 @@ public class StudentApplicationController {
 	}
 
 	@RequestMapping(value = "/bankAccountDetails", params = { "editEntityBankDetails" })
-	public String editBankAccountRow(final int fileNo, EntityBankDetails entityBankDetails,
+	public String editBankAccountRow(final String fileNo, EntityBankDetails entityBankDetails,
 			RedirectAttributes redirectAttributes, final HttpServletRequest req) {
 		final Integer rowId = Integer.valueOf(req.getParameter("editEntityBankDetails"));
 		entityBankDetails = entityBankDetailsService.findById(rowId);
@@ -208,7 +208,7 @@ public class StudentApplicationController {
 	}
 
 	@RequestMapping(value = "/familyDetails", params = { "removeEntityDetails" })
-	public String removeRelativeRow(final int fileNo, EntityDetails entityDetails,
+	public String removeRelativeRow(final String fileNo, EntityDetails entityDetails,
 			RedirectAttributes redirectAttributes, final HttpServletRequest req) {
 		final Integer rowId = Integer.valueOf(req.getParameter("removeEntityDetails"));
 		entityDetailsService.delete(rowId);
@@ -217,7 +217,7 @@ public class StudentApplicationController {
 	}
 
 	@RequestMapping(value = "/bankAccountDetails", params = { "removeEntityBankDetails" })
-	public String removeBankAccountRow(final int fileNo, EntityBankDetails entityBankDetails,
+	public String removeBankAccountRow(final String fileNo, EntityBankDetails entityBankDetails,
 			RedirectAttributes redirectAttributes, final HttpServletRequest req) {
 		final Integer rowId = Integer.valueOf(req.getParameter("removeEntityBankDetails"));
 		entityDetailsService.delete(rowId);

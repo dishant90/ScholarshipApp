@@ -30,25 +30,13 @@ public class StudentFileServiceTest {
 	
 	@Test
 	public void maxStudentFilesTest() {
-		Integer fileCount = studentFileRepository.getMaxFileNo();
-		if(fileCount == null) {
-			logger.info("No file has been created yet --> File Count null");
-			assert(true);
-		} else if(fileCount != null) {
-			if(fileCount.intValue() == 0) {
-				logger.info("No file has been created yet --> File Count Zero");
-				assert(true);
-			} else {
-				logger.info("Files have been created --> File Count is " + fileCount.intValue());
-				assert(true);
-			}
-		}
+		
 	}
 	
 	@Test
 	public void getEntityDetailsTest() {
 		// find applicant by file #
-		EntityDetails applicant = entityDetailsService.findApplicant("1");
-		logger.info(applicant.toString());
+		//EntityDetails applicant = entityDetailsService.findApplicant("1");
+		//logger.info(applicant.toString());
 	}
 }

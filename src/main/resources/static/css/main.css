@@ -82,3 +82,21 @@ ul#messages li.error {
     overflow: hidden;
     outline:none;	
 }
+
+.header {
+	font-weight: 500;
+	font-size: xx-large;
+	overflow:hidden
+}
+
+.displayLeft {
+	float: left;
+}
+
+.displayRight {
+	float: right;
+}
+
+.blueText {
+	color: blue;
+}

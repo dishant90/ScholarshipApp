@@ -31,11 +31,11 @@ public class StudentFileServiceImpl implements StudentFileService {
 	@Override
 	public StudentFile save(StudentFile studentFile) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String generatedFileId = generateFileId();
-		while(studentFileRepository.existsByFileNo(generatedFileId)) {
-		generatedFileId = generateFileId();
+		String generatedFileNo = generateFileNo();
+		while(studentFileRepository.existsByFileNo(generatedFileNo)) {
+		generatedFileNo = generateFileNo();
 		}
-        studentFile.setFileNo(generatedFileId);
+        studentFile.setFileNo(generatedFileNo);
         studentFile.setFileStatus("New");
         studentFile.setCreatedBy(auth.getName());
         studentFile.setCreatedDate(new Date());
@@ -49,8 +49,8 @@ public class StudentFileServiceImpl implements StudentFileService {
 	public boolean existsByFileNo(String fileNo) {
 		return studentFileRepository.existsByFileNo(fileNo);
 	}
-	private String generateFileId(){
-		String fileId = new String(RandomStringUtils.randomAlphanumeric(8).toUpperCase());
-		return fileId;
+	private String generateFileNo(){
+		String fileNo = new String(RandomStringUtils.randomAlphanumeric(8).toUpperCase());
+		return fileNo;
 	}
 }
