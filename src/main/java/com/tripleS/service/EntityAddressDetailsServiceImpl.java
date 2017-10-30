@@ -16,7 +16,5 @@ public class EntityAddressDetailsServiceImpl implements EntityAddressDetailsServ
 	public void delete(EntityAddressDetails entityAddressDetails) {
 		entityAddressDetailsRepository.delete(entityAddressDetails);
 	}
-	
-	
 
 }

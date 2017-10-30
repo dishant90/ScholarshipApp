@@ -1,13 +1,8 @@
 package com.tripleS.service;
 
-import java.util.Date;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
 import com.tripleS.model.EntityAddressDetails;
 import com.tripleS.model.EntityDetails;
 import com.tripleS.repository.EntityAddressDetailsRepository;
@@ -18,14 +13,14 @@ import com.tripleS.repository.StudentFileRepository;
 public class EntityDetailsServiceImpl implements EntityDetailsService {
 
 	@Autowired
-    EntityDetailsRepository entityDetailsRepository;
-	
+	EntityDetailsRepository entityDetailsRepository;
+
 	@Autowired
-    StudentFileRepository studentFileRepository;
-	
+	StudentFileRepository studentFileRepository;
+
 	@Autowired
 	EntityAddressDetailsRepository entityAddressDetailsRepository;
-	
+
 	@Override
 	public List<EntityDetails> findRelativesByFileNo(String fileNo) {
 		EntityDetails applicant = findApplicant(fileNo);
@@ -34,7 +29,8 @@ public class EntityDetailsServiceImpl implements EntityDetailsService {
 
 	@Override
 	public EntityDetails findApplicant(String fileNo) {
-		EntityDetails applicant = entityDetailsRepository.findById(studentFileRepository.findByFileNo(fileNo).getEntityDetails().getId());
+		EntityDetails applicant = entityDetailsRepository
+				.findById(studentFileRepository.findByFileNo(fileNo).getEntityDetails().getId());
 		return applicant;
 	}
 
@@ -47,17 +43,17 @@ public class EntityDetailsServiceImpl implements EntityDetailsService {
 	public void delete(int id) {
 		EntityDetails entityDetails = entityDetailsRepository.findById(id);
 		List<EntityDetails> relatives = entityDetails.getRelatives();
-		if(relatives != null)
-			if(relatives.size() > 0) {
-				for(int i = 0; i < relatives.size(); i++) {
-					if(relatives.get(i).getEntityAddressDetails() != null) {
+		if (relatives != null)
+			if (relatives.size() > 0) {
+				for (int i = 0; i < relatives.size(); i++) {
+					if (relatives.get(i).getEntityAddressDetails() != null) {
 						EntityAddressDetails entityAddressDetails = relatives.get(i).getEntityAddressDetails();
 						entityAddressDetailsRepository.delete(entityAddressDetails);
 					}
 					entityDetailsRepository.delete(relatives.get(i));
 				}
 			}
-		if(entityDetailsRepository.findById(id) != null)
+		if (entityDetailsRepository.findById(id) != null)
 			entityDetailsRepository.delete(id);
 	}
 

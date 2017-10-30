@@ -2,13 +2,10 @@ package com.tripleS.controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +24,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tripleS.model.EntityBankDetails;
 import com.tripleS.model.EntityDetails;
+import com.tripleS.model.ResidenceDetails;
 import com.tripleS.model.StudentFile;
 import com.tripleS.service.EntityBankDetailsService;
 import com.tripleS.service.EntityDetailsService;
 import com.tripleS.service.NotificationService;
+import com.tripleS.service.ResidenceDetailsService;
 import com.tripleS.service.StudentFileService;
 
 @Controller
@@ -47,6 +46,9 @@ public class StudentApplicationController {
 
 	@Autowired
 	private EntityBankDetailsService entityBankDetailsService;
+
+	@Autowired
+	private ResidenceDetailsService residenceDetailsService;
 
 	@Autowired
 	private NotificationService notifyService;
@@ -87,6 +89,14 @@ public class StudentApplicationController {
 		logger.info("In the bank account details Get Request...File No is " + fileNo);
 		model = getBankAccountDetailsByFileNo(fileNo, model);
 		return "bankAccountDetails";
+	}
+
+	@RequestMapping(value = "/residenceDetails", method = RequestMethod.GET)
+	public String residenceDetails(Model model) {
+		String fileNo = (String) model.asMap().get("fileNo");
+		logger.info("In the residence details Get Request...File No is " + fileNo);
+		model = getResidenceDetailsByFileNo(fileNo, model);
+		return "residenceDetails";
 	}
 
 	@RequestMapping(value = "/basicDetails/{fileNo}", method = RequestMethod.GET)
@@ -135,9 +145,25 @@ public class StudentApplicationController {
 			return invalidFileNoRedirection(fileNo);
 		}
 	}
+	
+	@RequestMapping(value = "/residenceDetails/{fileNo}", method = RequestMethod.GET)
+	public String residenceDetails(@PathVariable("fileNo") String fileNo, Model model) {
+		if (!fileNo.isEmpty()) {
+			logger.info("Path Variable... File No is " + fileNo);
+			if (studentFileService.existsByFileNo(fileNo)) {
+				model = getResidenceDetailsByFileNo(fileNo, model);
+				return "residenceDetails";
+			} else {
+				return invalidFileNoRedirection(fileNo);
+			}
+		} else {
+			return invalidFileNoRedirection(fileNo);
+		}
+	}
 
 	@RequestMapping(value = "/familyDetails", params = { "addUpdateEntityDetails" })
-	public String addRelativeRow(final String fileNo, EntityDetails entityDetails, RedirectAttributes redirectAttributes) {
+	public String addRelativeRow(final String fileNo, EntityDetails entityDetails,
+			RedirectAttributes redirectAttributes) {
 		logger.info("File No is " + fileNo);
 
 		entityDetails.setApplicant(entityDetailsService.findApplicant(fileNo));
@@ -161,7 +187,8 @@ public class StudentApplicationController {
 	}
 
 	@RequestMapping(value = "/bankAccountDetails", params = { "addUpdateBankAccountDetails" })
-	public String addBankAccountRow(final String fileNo, @Validated EntityBankDetails entityBankDetails, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+	public String addBankAccountRow(final String fileNo, @Validated EntityBankDetails entityBankDetails,
+			BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
 		if (bindingResult.hasErrors()) {
 			logger.info("Found validation errors on Bank Details page for " + fileNo);
 			if (studentFileService.existsByFileNo(fileNo)) {
@@ -188,8 +215,8 @@ public class StudentApplicationController {
 	}
 
 	@RequestMapping(value = "/familyDetails", params = { "editEntityDetails" })
-	public String editRelativeRow(final String fileNo, EntityDetails entityDetails, RedirectAttributes redirectAttributes,
-			final HttpServletRequest req) {
+	public String editRelativeRow(final String fileNo, EntityDetails entityDetails,
+			RedirectAttributes redirectAttributes, final HttpServletRequest req) {
 		final Integer rowId = Integer.valueOf(req.getParameter("editEntityDetails"));
 		entityDetails = entityDetailsService.findById(rowId);
 		redirectAttributes.addFlashAttribute("fileNo", fileNo);
@@ -226,7 +253,7 @@ public class StudentApplicationController {
 	}
 
 	@RequestMapping(value = "/basicDetails", method = RequestMethod.POST, params = { "saveContinueBasicDetails" })
-	public ModelAndView saveContinueStudentFile(@Valid StudentFile studentFile, BindingResult bindingResult,
+	public ModelAndView saveBasicDetailsAndContinue(@Valid StudentFile studentFile, BindingResult bindingResult,
 			RedirectAttributes redirectAttributes) {
 		ModelAndView modelAndView = new ModelAndView();
 		if (bindingResult.hasErrors()) {
@@ -256,13 +283,12 @@ public class StudentApplicationController {
 	}
 
 	@RequestMapping(value = "/basicDetails", method = RequestMethod.POST, params = { "saveBasicDetails" })
-	public ModelAndView saveStudentFile(@Valid StudentFile studentFile, BindingResult bindingResult,
+	public ModelAndView saveBasicDetails(@Valid StudentFile studentFile, BindingResult bindingResult,
 			RedirectAttributes redirectAttributes) {
 		ModelAndView modelAndView = new ModelAndView();
 		if (bindingResult.hasErrors()) {
 			logger.error("Found validation errors");
 			modelAndView.addObject("studentFile", studentFile);
-			modelAndView.setViewName("basicDetails");
 		} else {
 			logger.info("Found no validation errors");
 			if (studentFile.getId() > 0) {
@@ -279,11 +305,12 @@ public class StudentApplicationController {
 				notifyService.addInfoMessage(
 						studentFile.getEntityDetails().getFirstName() + "'s basic details saved successfully!!");
 			}
-			modelAndView.setViewName("basicDetails");
+			modelAndView.addObject("fileNo", studentFile.getFileNo());
 		}
+		modelAndView.setViewName("basicDetails");
 		return modelAndView;
 	}
-
+	
 	@RequestMapping(value = "/familyDetails", params = { "continueFromFamilyDetails" })
 	public ModelAndView continueFromFamilyDetails(final String fileNo, RedirectAttributes redirectAttributes) {
 		ModelAndView modelAndView = new ModelAndView();
@@ -292,7 +319,79 @@ public class StudentApplicationController {
 			redirectAttributes.addFlashAttribute("fileNo", fileNo);
 			modelAndView.setViewName("redirect:/studentApplication/bankAccountDetails");
 		} else {
-			// handle exception
+			modelAndView.setViewName(invalidFileNoRedirection(fileNo));
+		}
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/bankAccountDetails", params = { "continueFromBankDetails" })
+	public ModelAndView continueFromBankDetails(final String fileNo, RedirectAttributes redirectAttributes) {
+		ModelAndView modelAndView = new ModelAndView();
+		if (!fileNo.isEmpty()) {
+			logger.info("Existing File No: " + fileNo);
+			redirectAttributes.addFlashAttribute("fileNo", fileNo);
+			modelAndView.setViewName("redirect:/studentApplication/residenceDetails");
+		} else {
+			modelAndView.setViewName(invalidFileNoRedirection(fileNo));
+		}
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/residenceDetails", method = RequestMethod.POST, params = { "saveContinueResidenceDetails" })
+	public ModelAndView saveResidenceDetailsAndContinue(@Valid ResidenceDetails residenceDetails, BindingResult bindingResult,
+			RedirectAttributes redirectAttributes,final String fileNo) {
+		ModelAndView modelAndView = new ModelAndView();
+		if (bindingResult.hasErrors()) {
+			logger.error("Found validation errors");
+			modelAndView.addObject("residenceDetails", residenceDetails);
+			modelAndView.setViewName("residenceDetails");
+		} else {
+			logger.info("Found no validation errors");
+			if (residenceDetails.getId() > 0) {
+				logger.info("Existing Residence ID: " + residenceDetails.getId());
+				residenceDetails.setEntityDetails(entityDetailsService.findApplicant(fileNo));
+				residenceDetails = residenceDetailsService.save(residenceDetails);
+				logger.info("Residence Details After Update: " + residenceDetails.toString());
+				logger.info("Residence details updated successfully");
+				notifyService.addInfoMessage("Residence details updated successfully");
+			} else {
+				residenceDetails.setEntityDetails(entityDetailsService.findApplicant(fileNo));
+				residenceDetails = residenceDetailsService.save(residenceDetails);
+				logger.info("New record created in ResidenceDetails: " + residenceDetails.toString());
+				logger.info("Residence details saved successfully");
+				notifyService.addInfoMessage("Residence details saved successfully");
+			}
+			redirectAttributes.addFlashAttribute("fileNo", fileNo);
+			modelAndView.setViewName("redirect:/studentApplication/curriculumRecord");
+		}
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/residenceDetails", method = RequestMethod.POST, params = { "saveResidenceDetails" })
+	public ModelAndView saveResidenceDetails(@Valid ResidenceDetails residenceDetails, BindingResult bindingResult,
+			RedirectAttributes redirectAttributes,final String fileNo) {
+		ModelAndView modelAndView = new ModelAndView();
+		if (bindingResult.hasErrors()) {
+			logger.error("Found validation errors");
+			modelAndView.addObject("residenceDetails", residenceDetails);
+		} else {
+			logger.info("Found no validation errors");
+			if (residenceDetails.getId() > 0) {
+				logger.info("Existing Residence ID: " + residenceDetails.getId());
+				residenceDetails.setEntityDetails(entityDetailsService.findApplicant(fileNo));
+				residenceDetails = residenceDetailsService.save(residenceDetails);
+				logger.info("Residence Details After Update: " + residenceDetails.toString());
+				logger.info("Residence details updated successfully");
+				notifyService.addInfoMessage("Residence details updated successfully");
+			} else {
+				residenceDetails.setEntityDetails(entityDetailsService.findApplicant(fileNo));
+				residenceDetails = residenceDetailsService.save(residenceDetails);
+				logger.info("New record created in ResidenceDetails: " + residenceDetails.toString());
+				logger.info("Residence details saved successfully");
+				notifyService.addInfoMessage("Residence details saved successfully");
+			}
+			modelAndView.addObject("fileNo", fileNo);
+			modelAndView.setViewName("residenceDetails");
 		}
 		return modelAndView;
 	}
@@ -320,6 +419,15 @@ public class StudentApplicationController {
 			model.asMap().put("entityBankDetails", model.asMap().get("entityBankDetails"));
 			model.asMap().put("bankAction", "Update Bank Account Details");
 		}
+		return model;
+	}
+
+	private Model getResidenceDetailsByFileNo(String fileNo, Model model) {
+		ResidenceDetails residenceDetails = residenceDetailsService.findByFileNo(fileNo);
+		if(residenceDetails == null){
+			residenceDetails = new ResidenceDetails();
+		}
+		model.asMap().put("residenceDetails", residenceDetails);
 		return model;
 	}
 

@@ -1,11 +1,8 @@
 package com.tripleS.model;
 
 import java.util.Date;
-
 import javax.persistence.*;
 import javax.validation.Valid;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name="student_file")

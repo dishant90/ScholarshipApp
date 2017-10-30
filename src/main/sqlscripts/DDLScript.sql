@@ -252,3 +252,39 @@ ALTER TABLE entity_bank_details MODIFY COLUMN is_current BIT(1);
 
 -- 15th Oct 2017
 ALTER TABLE student_file MODIFY COLUMN file_no VARCHAR(10);
+
+-- 22nd Oct 2017
+ALTER TABLE residence_details MODIFY COLUMN have_water_supply BIT(1);
+ALTER TABLE residence_details MODIFY COLUMN have_bathroom BIT(1);
+ALTER TABLE residence_details MODIFY COLUMN have_toilet BIT(1);
+ALTER TABLE residence_details MODIFY COLUMN have_cot_bed BIT(1);
+ALTER TABLE residence_details MODIFY COLUMN have_cup_board BIT(1);
+ALTER TABLE residence_details MODIFY COLUMN have_cooking_gas BIT(1);
+ALTER TABLE residence_details MODIFY COLUMN have_television BIT(1);
+ALTER TABLE residence_details MODIFY COLUMN have_refrigerator BIT(1);
+ALTER TABLE residence_details MODIFY COLUMN have_vehicle BIT(1);
+ALTER TABLE residence_details MODIFY COLUMN have_washing_machine BIT(1);
+ALTER TABLE residence_details MODIFY COLUMN have_oven BIT(1);
+ALTER TABLE residence_details MODIFY COLUMN have_computer BIT(1);
+ALTER TABLE residence_details MODIFY COLUMN id INT AUTO_INCREMENT;
+ALTER TABLE residence_details ADD COLUMN vehicle_description VARCHAR(50);
+
+ALTER TABLE residence_details DROP FOREIGN KEY residence_details_ibfk_1;
+ALTER TABLE residence_details DROP COLUMN entity_id;
+ALTER TABLE entity_details ADD COLUMN residence_id INT;
+ALTER TABLE entity_details 
+	ADD FOREIGN KEY entity_residence_details_fk (residence_id)
+	REFERENCES residence_details (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+    
+-- 29th Oct 2017
+ALTER TABLE entity_details DROP FOREIGN KEY entity_details_ibfk_2;
+ALTER TABLE entity_details DROP COLUMN residence_id;
+ALTER TABLE residence_details ADD COLUMN entity_id INT;
+ALTER TABLE residence_details 
+	ADD FOREIGN KEY entity_residence_details_fk (entity_id)
+	REFERENCES entity_details (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+ 

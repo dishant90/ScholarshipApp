@@ -1,0 +1,305 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/home :: htmlhead">
+</head>
+<body>
+	<div th:replace="fragments/home :: header">&nbsp;</div>
+	<div class="container-fluid text-center">
+		<div class="row content">
+			<div th:replace="fragments/caseMenu :: caseMenu">&nbsp;</div>
+			<div class="col-sm-10 text-left" id="studentResidenceDetailsTab">
+				<div>
+					<div class="header">
+						<div class="displayLeft">Residence Details</div>
+						<div class="displayRight" th:if="${fileNo}">File #
+							<label class="blueText" th:text="${fileNo}">File No Value</label>
+						</div>
+					</div>
+					<form id="residenceDetailsForm" role="form"
+						th:action="@{/studentApplication/residenceDetails}"
+						method="post">
+						<input type="hidden" th:value="${fileNo}" name="fileNo" />
+
+						
+
+						<div class="form-group row" id="firstRowLabel">
+
+							<div class="col-sm-4">
+								<label
+									th:if="${#fields.hasErrors('residenceDetails.residenceOwnership')}"
+									th:errors="${residenceDetails.residenceOwnership}"
+									class="validation-message"></label>
+							</div>
+
+							<div class="col-sm-4">
+								<label
+									th:if="${#fields.hasErrors('residenceDetails.residenceRentAmount')}"
+									th:errors="${residenceDetails.residenceRentAmount}"
+									class="validation-message"></label>
+							</div>
+
+							<div class="col-sm-4">
+								<label
+									th:if="${#fields.hasErrors('residenceDetails.residenceOwnershipOtherDescription')}"
+									th:errors="${residenceDetails.residenceOwnershipOtherDescription}"
+									class="validation-message"></label>
+							</div>
+						</div>
+						<div class="form-group row" id="firstRow">
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text"
+											th:field="${residenceDetails.residenceOwnership}"
+											placeholder="Residence Ownership" class="form-control"
+											maxlength="50" /> <input type="hidden"
+											th:field="${residenceDetails.id}" />
+									</div>
+									<label class="required-field"></label>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text"
+											th:field="${residenceDetails.residenceRentAmount}"
+											placeholder="Residence Rent Amount" class="form-control"
+											maxlength="50" /> <input type="hidden"
+											th:field="${residenceDetails.id}" />
+									</div>
+									<label class="required-field"></label>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text" th:field="${residenceDetails.residenceOwnershipOtherDescription}"
+											placeholder="If other, please describe" class="form-control" maxlength="500" />
+									</div>
+									<label class="required-field"></label>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group row" id="secondRowLabel">
+							<div class="col-sm-6">
+								<label th:if="${#fields.hasErrors('residenceDetails.residenceType')}"
+									th:errors="${residenceDetails.residenceOwnership}"
+									class="validation-message"></label>
+							</div>
+
+							<div class="col-sm-6">
+								<label
+									th:if="${#fields.hasErrors('residenceDetails.residenceSizeInSqft')}"
+									th:errors="${residenceDetails.residenceSizeInSqft}"
+									class="validation-message"></label>
+							</div>
+						</div>
+						<div class="form-group row" id="secondRow">
+							<div class="col-sm-6">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text" th:field="${residenceDetails.residenceType}"
+											placeholder="Residence Type" class="form-control" maxlength="50" />
+									</div>
+									<label class="required-field"></label>
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text" th:field="${residenceDetails.residenceSizeInSqft}"
+											placeholder="Approximate Size in Sq. ft." class="form-control" maxlength="10" />
+									</div>
+									<label class="required-field"></label>
+								</div>
+							</div>
+						</div>
+						<div class="form-group row" id="thirdRow">
+							<div class="col-sm-6">
+								<div class="row">
+									<div class="col-sm-11">
+										<h4>Facilities owned by your family</h4>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group row" id="fourthRow">
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11 form-check form-check-inline">
+										<label class="form-check-label">
+										<input type="checkbox"
+											th:field="${residenceDetails.haveWaterSupply}"
+											placeholder="Water Supply"
+											class="form-check-input" />Water Supply</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11 form-check form-check-inline">
+										<label class="form-check-label">
+										<input type="checkbox"
+											th:field="${residenceDetails.haveBathroom}"
+											placeholder="Bathroom"
+											class="form-check-input" />
+											Bathroom</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11 form-check form-check-inline">
+										<label class="form-check-label">
+										<input type="checkbox"
+											th:field="${residenceDetails.haveToilet}"
+											placeholder="Toilet"
+											class="form-check-input" />Toilet</label>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group row" id="fifthRow">
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11 form-check form-check-inline">
+										<label class="form-check-label">
+										<input type="checkbox"
+											th:field="${residenceDetails.haveCotBed}"
+											placeholder="Cot/bed"
+											class="form-check-input" />Cot/bed</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11 form-check form-check-inline">
+										<label class="form-check-label">
+										<input type="checkbox"
+											th:field="${residenceDetails.haveCupBoard}"
+											placeholder="Cupboard"
+											class="form-check-input" />Cupboard</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11 form-check form-check-inline">
+										<label class="form-check-label">
+										<input type="checkbox"
+											th:field="${residenceDetails.haveCookingGas}"
+											placeholder="Cooking Gas"
+											class="form-check-input" />Cooking Gas</label>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group row" id="sixthRow">
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11 form-check form-check-inline">
+										<label class="form-check-label">
+										<input type="checkbox"
+											th:field="${residenceDetails.haveTelevision}"
+											placeholder="Television"
+											class="form-check-input" />Television</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11 form-check form-check-inline">
+										<label class="form-check-label">
+										<input type="checkbox"
+											th:field="${residenceDetails.haveRefrigerator}"
+											placeholder="Refrigerator"
+											class="form-check-input" />Refrigerator</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11 form-check form-check-inline">
+										<label class="form-check-label">
+										<input type="checkbox"
+											th:field="${residenceDetails.haveWashingMachine}"
+											placeholder="Washing Machine"
+											class="form-check-input" />Washing Machine</label>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group row" id="seventhRow">
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11 form-check form-check-inline">
+										<label class="form-check-label">
+										<input type="checkbox"
+											th:field="${residenceDetails.haveOven}"
+											placeholder="Oven"
+											class="form-check-input" />Oven</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11 form-check form-check-inline">
+										<label class="form-check-label">
+										<input type="checkbox"
+											th:field="${residenceDetails.haveComputer}"
+											placeholder="Computer/Laptop"
+											class="form-check-input" />Computer/Laptop</label>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group row" id="seventhRow">
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11 form-check form-check-inline">
+										<label class="form-check-label">
+										<input type="checkbox"
+											th:field="${residenceDetails.haveVehicle}"
+											placeholder="Vehicle"
+											class="form-check-input" />Vehicle</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11">
+										<input type="text"
+											th:field="${residenceDetails.vehicleDescription}"
+											placeholder="If you have vehicle, provide details"
+											class="form-control" maxlength="50" />
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group row" id="eighthRow">
+							<div class="col-sm-6"></div>
+							<div class="col-sm-2">
+								<button type="button" id="btnClear"
+									class="form-control btn btn-secondary">Clear</button>
+							</div>
+							<div class="col-sm-2">
+								<button type="submit" id="btnSave" name="saveResidenceDetails"
+									class="form-control btn btn-primary">Save</button>
+							</div>
+							<div class="col-sm-2">
+								<button type="submit" id="btnSaveContinue"
+									name="saveContinueResidenceDetails"
+									class="form-control btn btn-primary">Save &amp;
+									Continue</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div th:replace="fragments/home :: notifyMessages">&nbsp;</div>
+	</div>
+	<div th:replace="fragments/home :: javascriptFiles">&nbsp;</div>
+</body>
+</html>
