@@ -11,6 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name="residence_details")
@@ -21,18 +25,22 @@ public class ResidenceDetails {
 	private int id;
 	
 	@Column(name="residence_ownership")
+	@NotEmpty(message="*Residence ownership cannot be empty")
     private String residenceOwnership;
 	
 	@Column(name="residence_ownership_other_description")
     private String residenceOwnershipOtherDescription;
 	
 	@Column(name="residence_type")
+	@NotEmpty(message="*Residence type cannot be empty")
     private String residenceType;
 	
 	@Column(name="vehicle_description")
     private String vehicleDescription;
 
 	@Column(name="residence_size_in_sqft")
+	@NotNull(message="*Please specify residence size")
+	@DecimalMin(value="1", message="*Please specify residence size")
     private BigDecimal residenceSizeInSqft;
 	
 	@Column(name="residence_rent_amount")

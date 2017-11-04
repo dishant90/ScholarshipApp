@@ -60,7 +60,7 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="/admin/home", method = RequestMethod.GET)
-	public ModelAndView home(){
+	public ModelAndView adminHome(){
 		ModelAndView modelAndView = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmailID(auth.getName());
@@ -70,5 +70,10 @@ public class LoginController {
 		return modelAndView;
 	}
 	
-
+	@RequestMapping(value = "/fragments/home", method = RequestMethod.GET)
+	public ModelAndView home() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("fragments/home");
+		return modelAndView;
+	}
 }

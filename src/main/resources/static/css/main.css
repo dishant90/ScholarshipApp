@@ -46,12 +46,16 @@ ul#messages li {
 	text-align: center;
 	padding: 5px;
 	border-radius: 5px;
+	z-index: 1000;
+	position:absolute;
 }
 
+/* Background color is green for information */
 ul#messages li.info {
 	background: #7f7;
 }
 
+/* Background color is red for error*/
 ul#messages li.error {
 	background: #d00;
 	color: white;
