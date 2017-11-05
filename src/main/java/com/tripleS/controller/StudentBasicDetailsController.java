@@ -1,23 +1,18 @@
 package com.tripleS.controller;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import com.tripleS.exception.InvalidFileNumberException;
 import com.tripleS.model.StudentFile;
 import com.tripleS.service.NotificationService;
 import com.tripleS.service.StudentFileService;
@@ -34,16 +29,6 @@ public class StudentBasicDetailsController {
 	@Autowired
 	private NotificationService notifyService;
 	
-	@Autowired
-	private HomeController homeController;
-
-	@InitBinder
-	public void initBinder(WebDataBinder dataBinder) {
-		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		CustomDateEditor dateEditor = new CustomDateEditor(dateFormat, true);
-		dataBinder.registerCustomEditor(Date.class, dateEditor);
-	}
-
 	@RequestMapping(value = "/basicDetails", method = RequestMethod.GET)
 	public ModelAndView newCase() {
 		ModelAndView modelAndView = new ModelAndView();
@@ -62,10 +47,10 @@ public class StudentBasicDetailsController {
 				model.asMap().put("studentFile", studentFile);
 				return "basicDetails";
 			} else {
-				return homeController.invalidFileNoRedirection(fileNo);
+				throw new InvalidFileNumberException("S001", fileNo);
 			}
 		} else {
-			return homeController.invalidFileNoRedirection(fileNo);
+			throw new InvalidFileNumberException("S001", fileNo);
 		}
 	}
 

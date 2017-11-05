@@ -1,25 +1,21 @@
 package com.tripleS.controller;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.tripleS.exception.InvalidFileNumberException;
 import com.tripleS.model.EntityBankDetails;
 import com.tripleS.service.EntityBankDetailsService;
 import com.tripleS.service.EntityDetailsService;
@@ -44,16 +40,6 @@ public class StudentCurriculumRecordController {
 	@Autowired
 	private NotificationService notifyService;
 	
-	@Autowired
-	private HomeController homeController;
-
-	@InitBinder
-	public void initBinder(WebDataBinder dataBinder) {
-		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-		CustomDateEditor dateEditor = new CustomDateEditor(dateFormat, true);
-		dataBinder.registerCustomEditor(Date.class, dateEditor);
-	}
-
 	@RequestMapping(value = "/curriculumRecord", method = RequestMethod.GET)
 	public String curriculumRecord(Model model) {
 		String fileNo = (String) model.asMap().get("fileNo");
@@ -70,10 +56,10 @@ public class StudentCurriculumRecordController {
 				model = getBankAccountDetailsByFileNo(fileNo, model);
 				return "curriculumRecord";
 			} else {
-				return homeController.invalidFileNoRedirection(fileNo);
+				throw new InvalidFileNumberException("S001", fileNo);
 			}
 		} else {
-			return homeController.invalidFileNoRedirection(fileNo);
+			throw new InvalidFileNumberException("S001", fileNo);
 		}
 	}
 	
@@ -86,7 +72,7 @@ public class StudentCurriculumRecordController {
 				model = getBankAccountDetailsByFileNo(fileNo, model);
 				return "bankAccountDetails";
 			} else {
-				return homeController.invalidFileNoRedirection(fileNo);
+				throw new InvalidFileNumberException("S001", fileNo);
 			}
 		} else {
 			logger.info("File No is " + fileNo);
@@ -124,7 +110,7 @@ public class StudentCurriculumRecordController {
 			redirectAttributes.addFlashAttribute("fileNo", fileNo);
 			modelAndView.setViewName("redirect:/studentFile/residenceDetails");
 		} else {
-			modelAndView.setViewName(homeController.invalidFileNoRedirection(fileNo));
+			throw new InvalidFileNumberException("S001", fileNo);
 		}
 		return modelAndView;
 	}
