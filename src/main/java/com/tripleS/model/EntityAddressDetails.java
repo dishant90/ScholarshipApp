@@ -8,44 +8,47 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
-
 import org.hibernate.validator.constraints.NotEmpty;
+import com.tripleS.validation.groups.RelativeOccupationValidations;
+import com.tripleS.validation.groups.StudentValidations;
 
 @Entity
-@Table(name="entity_address_details")
+@Table(name = "entity_address_details")
 public class EntityAddressDetails {
-	
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
-	@Column(name="address_type")
-    private String type;
-	
-	@Column(name="address_line1")
-	@NotEmpty(message = "*Please provide Address Line 1")
-    private String addressLine1;
-	
-	@Column(name="address_line2")
-    private String addressLine2;
-	
-	@Column(name="city")
-	@NotEmpty(message = "*Please provide City")
-    private String city;
-	
-	@Column(name="state")
-	@NotEmpty(message = "*Please provide State")
-    private String state;
-	
-	@Column(name="country")
-	@NotEmpty(message = "*Please provide Country")
-    private String country;
-	
-	@Column(name="pincode")
-	@Pattern(regexp="(^$|[0-9]{6})", message = "*Pincode must be exactly 6 digits")
-	@NotEmpty(message = "*Please provide Pincode")
-    private String pincode;
-	
+
+	@Column(name = "address_type")
+	private String type;
+
+	@Column(name = "address_line1")
+	@NotEmpty(message = "*Please provide Address Line 1", groups = { StudentValidations.class,
+			RelativeOccupationValidations.class })
+	private String addressLine1;
+
+	@Column(name = "address_line2")
+	private String addressLine2;
+
+	@Column(name = "city")
+	@NotEmpty(message = "*Please provide City", groups = { StudentValidations.class })
+	private String city;
+
+	@Column(name = "state")
+	@NotEmpty(message = "*Please provide State", groups = { StudentValidations.class })
+	private String state;
+
+	@Column(name = "country")
+	@NotEmpty(message = "*Please provide Country", groups = { StudentValidations.class })
+	private String country;
+
+	@Column(name = "pincode")
+	@Pattern(regexp = "(^$|[0-9]{6})", message = "*Pincode must be exactly 6 digits", groups = {
+			StudentValidations.class })
+	@NotEmpty(message = "*Please provide Pincode", groups = { StudentValidations.class })
+	private String pincode;
+
 	@OneToOne(mappedBy = "entityAddressDetails")
 	private EntityDetails entityDetails;
 
@@ -120,7 +123,7 @@ public class EntityAddressDetails {
 	public void setEntityDetails(EntityDetails entityDetails) {
 		this.entityDetails = entityDetails;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "EntityAddressDetails [id=" + id + ", type=" + type + ", addressLine1=" + addressLine1

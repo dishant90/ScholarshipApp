@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +21,8 @@ import com.tripleS.model.StudentFile;
 import com.tripleS.service.EntityDetailsService;
 import com.tripleS.service.NotificationService;
 import com.tripleS.service.StudentFileService;
+import com.tripleS.validation.groups.RelativeOccupationValidations;
+import com.tripleS.validation.groups.RelativeValidations;
 
 @Controller
 @RequestMapping("/studentFile")
@@ -35,7 +38,7 @@ public class StudentFamilyDetailsController {
 
 	@Autowired
 	private NotificationService notifyService;
-	
+
 	@RequestMapping(value = "/familyDetails", method = RequestMethod.GET)
 	public String familyDetails(Model model) {
 		String fileNo = (String) model.asMap().get("fileNo");
@@ -59,29 +62,42 @@ public class StudentFamilyDetailsController {
 		}
 	}
 
-	@RequestMapping(value = "/familyDetails", params = { "addUpdateEntityDetails" })
-	public String addRelativeRow(final String fileNo, EntityDetails entityDetails,
-			RedirectAttributes redirectAttributes) {
+	@RequestMapping(value = "/familyDetails", params = { "addUpdateEntityAction" })
+	public ModelAndView addRelativeRow(
+			@Validated({ RelativeValidations.class, RelativeOccupationValidations.class }) EntityDetails entityDetails,
+			BindingResult bindingResult,
+			RedirectAttributes redirectAttributes,
+			final String fileNo,
+			final String addUpdateEntityAction) {
 		logger.info("File No is " + fileNo);
-
-		entityDetails.setApplicant(entityDetailsService.findApplicant(fileNo));
-		entityDetails.setEmailID("temp@xyz.com");
-		entityDetails.setMobileNo("9321609101");
-		List<EntityDetails> relatives = entityDetails.getRelatives();
-		entityDetails = entityDetailsService.save(entityDetails);
-
-		if (relatives != null) {
-			if (relatives.size() > 0) {
-				EntityDetails relative = relatives.get(0);
-				relative.setApplicant(entityDetails);
-				relative.setEmailID("temp@xyz.com");
-				relative.setMobileNo("9321609101");
-				entityDetailsService.save(relative);
+		ModelAndView modelAndView = new ModelAndView();
+		if (bindingResult.hasErrors()) {
+			logger.error("Found validation errors while saving student's family member details");
+			modelAndView.addObject("fileNo", fileNo);
+			modelAndView.addObject("entityDetails", entityDetails);
+			modelAndView.addObject("addUpdateEntityAction", addUpdateEntityAction);
+			modelAndView.addObject("relatives",getRelativesByFileNo(fileNo));
+			modelAndView.setViewName("familyDetails");
+		} else {
+			logger.info("Found no validation errors");
+			entityDetails.setApplicant(entityDetailsService.findApplicant(fileNo));
+			/*entityDetails.setEmailID("temp@xyz.com");
+			entityDetails.setMobileNo("9321609101");*/
+			List<EntityDetails> relatives = entityDetails.getRelatives();
+			entityDetails = entityDetailsService.save(entityDetails);
+			if (relatives != null) {
+				if (relatives.size() > 0) {
+					EntityDetails relative = relatives.get(0);
+					relative.setApplicant(entityDetails);
+					/*relative.setEmailID("temp@xyz.com");
+					relative.setMobileNo("9321609101");*/
+					entityDetailsService.save(relative);
+				}
 			}
+			redirectAttributes.addFlashAttribute("fileNo", fileNo);
+			modelAndView.setViewName("redirect:/studentFile/familyDetails");
 		}
-
-		redirectAttributes.addFlashAttribute("fileNo", fileNo);
-		return "redirect:/studentFile/familyDetails";
+		return modelAndView;
 	}
 
 	@RequestMapping(value = "/familyDetails", params = { "addSchoolEmployerDetails" })
@@ -125,16 +141,20 @@ public class StudentFamilyDetailsController {
 	}
 
 	private Model getFamilyDetailsByFileNo(String fileNo, Model model) {
-		List<EntityDetails> relatives = entityDetailsService.findRelativesByFileNo(fileNo);
+		List<EntityDetails> relatives = getRelativesByFileNo(fileNo);
 		model.asMap().put("relatives", relatives);
 		if (model.asMap().get("entityDetails") == null) {
 			model.asMap().put("entityDetails", new EntityDetails());
-			model.asMap().put("entityAction", "Add Member");
+			model.asMap().put("addUpdateEntityAction", "Add Member");
 		} else {
 			model.asMap().put("entityDetails", model.asMap().get("entityDetails"));
-			model.asMap().put("entityAction", "Update Member");
+			model.asMap().put("addUpdateEntityAction", "Update Member");
 		}
 		return model;
+	}
+	
+	private List<EntityDetails> getRelativesByFileNo(String fileNo){
+		return entityDetailsService.findRelativesByFileNo(fileNo);
 	}
 
 }

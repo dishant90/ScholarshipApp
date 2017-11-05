@@ -13,53 +13,55 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.tripleS.validation.groups.StudentValidations;
+
 @Entity
-@Table(name="student_entity_details")
+@Table(name = "student_entity_details")
 public class StudentDetails {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
-	@Column(name="mother_tongue")
-	@NotEmpty(message = "*Please provide mother tongue")
-    private String motherTongue;
-	
-	@Column(name="religion")
-	@NotEmpty(message = "*Please provide religion")
-    private String religion;
-	
-	@Column(name="describe_prize_details")
-    private String describePrizeDetails;
-	
-	@Column(name="aim_in_life")
-    private String aimInLife;
-	
-	@Column(name="describe_job_business_details")
-    private String describeJobBusinessDetails;
-	
-	@Column(name="describe_other_problems_in_family")
-    private String describeOtherProblemsInFamily;
-	
-	@Column(name="got_help_from_other_sources")
-    private Boolean gotHelpFromOtherSources;
-	
-	@Column(name="have_education_loan")
-    private Boolean haveEducationLoan;
-	
-	@Column(name="describe_if_other_family_members_got_help")
-    private String describeIfOtherFamilyMembersGotHelp;
-	
+
+	@Column(name = "mother_tongue")
+	@NotEmpty(message = "*Please provide mother tongue", groups = { StudentValidations.class })
+	private String motherTongue;
+
+	@Column(name = "religion")
+	@NotEmpty(message = "*Please provide religion", groups = { StudentValidations.class })
+	private String religion;
+
+	@Column(name = "describe_prize_details")
+	private String describePrizeDetails;
+
+	@Column(name = "aim_in_life")
+	private String aimInLife;
+
+	@Column(name = "describe_job_business_details")
+	private String describeJobBusinessDetails;
+
+	@Column(name = "describe_other_problems_in_family")
+	private String describeOtherProblemsInFamily;
+
+	@Column(name = "got_help_from_other_sources")
+	private Boolean gotHelpFromOtherSources;
+
+	@Column(name = "have_education_loan")
+	private Boolean haveEducationLoan;
+
+	@Column(name = "describe_if_other_family_members_got_help")
+	private String describeIfOtherFamilyMembersGotHelp;
+
 	@Temporal(TemporalType.DATE)
-	@Column(name="date_of_birth")
-	//@DateTimeFormat(pattern = "dd/MM/yyyy")
-	//@NotNull(message = "*Please provide date of birth")
-    private Date dateOfBirth;
-	
-	@Column(name="place_of_birth")
-	@NotEmpty(message = "*Please provide place of birth")
-    private String placeOfBirth;
-	
+	@Column(name = "date_of_birth")
+	// @DateTimeFormat(pattern = "dd/MM/yyyy")
+	// @NotNull(message = "*Please provide date of birth")
+	private Date dateOfBirth;
+
+	@Column(name = "place_of_birth")
+	@NotEmpty(message = "*Please provide place of birth", groups = { StudentValidations.class })
+	private String placeOfBirth;
+
 	@OneToOne(mappedBy = "studentDetails")
 	private EntityDetails entityDetails;
 

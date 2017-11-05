@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +17,7 @@ import com.tripleS.exception.InvalidFileNumberException;
 import com.tripleS.model.StudentFile;
 import com.tripleS.service.NotificationService;
 import com.tripleS.service.StudentFileService;
+import com.tripleS.validation.groups.StudentValidations;
 
 @Controller
 @RequestMapping("/studentFile")
@@ -55,11 +57,11 @@ public class StudentBasicDetailsController {
 	}
 
 	@RequestMapping(value = "/basicDetails", method = RequestMethod.POST, params = { "saveContinueBasicDetails" })
-	public ModelAndView saveBasicDetailsAndContinue(@Valid StudentFile studentFile, BindingResult bindingResult,
+	public ModelAndView saveBasicDetailsAndContinue(@Validated({StudentValidations.class}) StudentFile studentFile, BindingResult bindingResult,
 			RedirectAttributes redirectAttributes) {
 		ModelAndView modelAndView = new ModelAndView();
 		if (bindingResult.hasErrors()) {
-			logger.error("Found validation errors");
+			logger.error("Found validation errors while saving student's basic details");
 			modelAndView.addObject("studentFile", studentFile);
 			modelAndView.setViewName("basicDetails");
 		} else {
@@ -85,11 +87,11 @@ public class StudentBasicDetailsController {
 	}
 
 	@RequestMapping(value = "/basicDetails", method = RequestMethod.POST, params = { "saveBasicDetails" })
-	public ModelAndView saveBasicDetails(@Valid StudentFile studentFile, BindingResult bindingResult,
+	public ModelAndView saveBasicDetails(@Validated({StudentValidations.class}) StudentFile studentFile, BindingResult bindingResult,
 			RedirectAttributes redirectAttributes) {
 		ModelAndView modelAndView = new ModelAndView();
 		if (bindingResult.hasErrors()) {
-			logger.error("Found validation errors");
+			logger.error("Found validation errors while saving student's basic details");
 			modelAndView.addObject("studentFile", studentFile);
 		} else {
 			logger.info("Found no validation errors");
