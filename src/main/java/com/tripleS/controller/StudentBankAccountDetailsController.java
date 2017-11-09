@@ -125,6 +125,9 @@ public class StudentBankAccountDetailsController {
 			model.asMap().put("entityBankDetails", model.asMap().get("entityBankDetails"));
 			model.asMap().put("bankAction", "Update Bank Account Details");
 		}
+		if(model.asMap().get("fileNo") == null) {
+			model.asMap().put("fileNo", fileNo);
+		}
 		return model;
 	}
 

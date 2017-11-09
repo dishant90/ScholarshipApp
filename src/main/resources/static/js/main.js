@@ -2,6 +2,22 @@
  * 
  */
 $(function() {
+	$(".selectBorder-placeholder select").focus(function() {
+		$(this).parent().css("border-color","#5cb3fd");
+	});
+	
+	$(".selectBorder-placeholder select").focusout(function() {
+		$(this).parent().css("border-color","rgba(0,0,0,.15)");
+	});
+	
+	$(".inputBorder-placeholder input").focus(function() {
+		$(this).parent().css("border-color","#5cb3fd");
+	});
+	
+	$(".inputBorder-placeholder input").focusout(function() {
+		$(this).parent().css("border-color","rgba(0,0,0,.15)");
+	});
+	
 	$('#messages li').click(function() {
 		$(this).fadeOut();
 	});

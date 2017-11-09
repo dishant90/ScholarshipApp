@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tripleS.enums.CountryEnum;
 import com.tripleS.exception.InvalidFileNumberException;
+import com.tripleS.propertyEditor.CountryEnumEditor;
 import com.tripleS.service.NotificationService;
 
 @ControllerAdvice
@@ -30,6 +32,7 @@ public class CommonControllerAdvice {
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		CustomDateEditor dateEditor = new CustomDateEditor(dateFormat, true);
 		dataBinder.registerCustomEditor(Date.class, dateEditor);
+		dataBinder.registerCustomEditor(CountryEnum.class, new CountryEnumEditor());
 	}
 	
 	@ExceptionHandler(InvalidFileNumberException.class)

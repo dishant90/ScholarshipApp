@@ -104,3 +104,45 @@ ul#messages li.error {
 .blueText {
 	color: blue;
 }
+
+.selectBorder-placeholder{
+  border:1px solid rgba(0,0,0,.15);
+  margin:10px;
+  margin-left:15px;
+}
+	
+.selectBorder-placeholder>label{
+  position:absolute;
+  top:-18px;
+  left:20px;
+  background-color:white;
+  padding-left:10px;
+  padding-right:10px;
+}
+
+.selectBorder-placeholder>select{
+  border:none;
+}
+
+.inputBorder-placeholder{
+  border:1px solid rgba(0,0,0,.15);
+  margin:10px;
+  margin-left:15px;
+}
+
+.inputBorder-placeholder:focus{
+	border-color:#5cb3fd
+}
+
+.inputBorder-placeholder>label{
+  position:absolute;
+  top:-18px;
+  left:20px;
+  background-color:white;
+  padding-left:10px;
+  padding-right:10px;
+}
+
+.inputBorder-placeholder>input{
+  border:none;
+}

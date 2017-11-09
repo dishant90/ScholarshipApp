@@ -2,13 +2,18 @@ package com.tripleS.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.NotEmpty;
+
+import com.tripleS.enums.CountryEnum;
 import com.tripleS.validation.groups.RelativeOccupationValidations;
 import com.tripleS.validation.groups.StudentValidations;
 
@@ -40,8 +45,9 @@ public class EntityAddressDetails {
 	private String state;
 
 	@Column(name = "country")
-	@NotEmpty(message = "*Please provide Country", groups = { StudentValidations.class })
-	private String country;
+	@Enumerated(EnumType.STRING)
+	@NotNull(message = "*Please provide Country", groups = { StudentValidations.class })
+	private CountryEnum country;
 
 	@Column(name = "pincode")
 	@Pattern(regexp = "(^$|[0-9]{6})", message = "*Pincode must be exactly 6 digits", groups = {
@@ -100,11 +106,11 @@ public class EntityAddressDetails {
 		this.state = state;
 	}
 
-	public String getCountry() {
+	public CountryEnum getCountry() {
 		return country;
 	}
 
-	public void setCountry(String country) {
+	public void setCountry(CountryEnum country) {
 		this.country = country;
 	}
 
