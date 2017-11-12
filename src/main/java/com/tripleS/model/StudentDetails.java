@@ -3,7 +3,10 @@ package com.tripleS.model;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,8 +14,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.tripleS.converter.GenderEnumConverter;
+import com.tripleS.enums.GenderEnum;
 import com.tripleS.validation.groups.StudentValidations;
 
 @Entity
@@ -23,6 +30,11 @@ public class StudentDetails {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
+	@Column(name = "gender")
+	@Convert(converter = GenderEnumConverter.class)
+	@NotNull(message = "*Please provide gender", groups = { StudentValidations.class })
+	private GenderEnum gender;
+	
 	@Column(name = "mother_tongue")
 	@NotEmpty(message = "*Please provide mother tongue", groups = { StudentValidations.class })
 	private String motherTongue;
@@ -71,6 +83,14 @@ public class StudentDetails {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public GenderEnum getGender() {
+		return gender;
+	}
+
+	public void setGender(GenderEnum gender) {
+		this.gender = gender;
 	}
 
 	public String getMotherTongue() {

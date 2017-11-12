@@ -40,8 +40,7 @@
 							<div class="col-sm-4">
 								<div class="row">
 									<div class="col-sm-9 inputBorder-placeholder">
-										<label
-											th:text="#{basicDetails.entityDetails.firstName.placeHolder}">First
+										<label th:text="#{basicDetails.entityDetails.firstName.label}">First
 											Name Placeholder</label> <input type="text"
 											th:field="*{entityDetails.firstName}" class="form-control"
 											maxlength="100" />
@@ -60,7 +59,9 @@
 							<div class="col-sm-4">
 								<div class="row">
 									<div class="col-sm-9 inputBorder-placeholder">
-										<label>Middle Name</label> <input type="text"
+										<label
+											th:text="#{basicDetails.entityDetails.middleName.label}">Middle
+											Name</label> <input type="text"
 											th:field="*{entityDetails.middleName}" class="form-control"
 											maxlength="100" />
 									</div>
@@ -69,42 +70,65 @@
 							<div class="col-sm-4">
 								<div class="row">
 									<div class="col-sm-9 inputBorder-placeholder">
-										<label>Last Name</label> <input type="text"
-											th:field="*{entityDetails.lastName}" class="form-control"
-											maxlength="100" />
+										<label th:text="#{basicDetails.entityDetails.lastName.label}">Last
+											Name</label> <input type="text" th:field="*{entityDetails.lastName}"
+											class="form-control" maxlength="100" />
 									</div>
 								</div>
 							</div>
 						</div>
 
 						<div class="form-group row" id="secondRowLabel">
-							<div class="col-sm-6">
+							<div class="col-sm-4">
+								<label th:if="${#fields.hasErrors('entityDetails.emailID')}"
+									th:errors="*{entityDetails.studentDetails.gender}"
+									class="validation-message"></label>
+							</div>
+							<div class="col-sm-4">
 								<label th:if="${#fields.hasErrors('entityDetails.emailID')}"
 									th:errors="*{entityDetails.emailID}" class="validation-message"></label>
 							</div>
-							<div class="col-sm-6">
+							<div class="col-sm-4">
 								<label th:if="${#fields.hasErrors('entityDetails.mobileNo')}"
 									th:errors="*{entityDetails.mobileNo}"
 									class="validation-message"></label>
 							</div>
 						</div>
 						<div class="form-group row" id="secondRow">
-							<div class="col-sm-6">
+							<div class="col-sm-4">
 								<div class="row">
-									<div class="col-sm-9 inputBorder-placeholder">
-										<label>Email Address</label> <input
-											th:field="*{entityDetails.emailID}" class="form-control"
-											type="text" maxlength="100" />
+									<div class="col-sm-9 selectBorder-placeholder">
+										<label
+											th:text="#{basicDetails.entityDetails.studentDetails.gender.label}">Gender</label>
+										<select class="form-control"
+											th:field="*{entityDetails.studentDetails.gender}">
+											<option value="NONE">--- Select ---</option>
+											<option
+												th:each="gender : ${T(com.tripleS.enums.GenderEnum).values()}"
+												th:value="${{gender}}"
+												th:selected="${gender == T(com.tripleS.enums.GenderEnum)}"
+												th:text="${gender.getDisplayName()}"></option>
+										</select>
 									</div>
 									<label class="required-field"></label>
 								</div>
 							</div>
-							<div class="col-sm-6">
+							<div class="col-sm-4">
 								<div class="row">
 									<div class="col-sm-9 inputBorder-placeholder">
-										<label>Mobile Number</label> <input
-											th:field="*{entityDetails.mobileNo}" class="form-control"
-											type="tel" maxlength="10" />
+										<label th:text="#{basicDetails.entityDetails.emailID.label}">Email
+											Address</label> <input th:field="*{entityDetails.emailID}"
+											class="form-control" type="text" maxlength="100" />
+									</div>
+									<label class="required-field"></label>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-9 inputBorder-placeholder">
+										<label th:text="#{basicDetails.entityDetails.mobileNo.label}">Mobile
+											Number</label> <input th:field="*{entityDetails.mobileNo}"
+											class="form-control" type="tel" maxlength="10" />
 									</div>
 									<label class="required-field"></label>
 								</div>
@@ -127,7 +151,9 @@
 							<div class="col-sm-6">
 								<div class="row">
 									<div class="col-sm-9 inputBorder-placeholder">
-										<label>Alternate Contact Number</label> <input
+										<label
+											th:text="#{basicDetails.entityDetails.alternateContactNo.label}">Alternate
+											Contact Number</label> <input
 											th:field="*{entityDetails.alternateContactNo}"
 											class="form-control" type="tel" maxlength="10" />
 									</div>
@@ -136,7 +162,9 @@
 							<div class="col-sm-6">
 								<div class="row">
 									<div class="col-sm-9 inputBorder-placeholder">
-										<label>Residence Telephone Number</label> <input type="text"
+										<label
+											th:text="#{basicDetails.entityDetails.telephoneNo.label}">Residence
+											Telephone Number</label> <input type="text"
 											th:field="*{entityDetails.telephoneNo}" class="form-control"
 											maxlength="15" />
 									</div>
@@ -161,7 +189,9 @@
 							<div class="col-sm-6">
 								<div class="row">
 									<div class="col-sm-9 inputBorder-placeholder">
-										<label>Address Line 1</label> <input
+										<label
+											th:text="#{basicDetails.entityDetails.entityAddressDetails.addressLine1.label}">Address
+											Line 1</label> <input
 											th:field="*{entityDetails.entityAddressDetails.addressLine1}"
 											class="form-control" type="text" maxlength="1000" />
 									</div>
@@ -171,7 +201,9 @@
 							<div class="col-sm-6">
 								<div class="row">
 									<div class="col-sm-9 inputBorder-placeholder">
-										<label>Address Line 2</label> <input
+										<label
+											th:text="#{basicDetails.entityDetails.entityAddressDetails.addressLine2.label}">Address
+											Line 2</label> <input
 											th:field="*{entityDetails.entityAddressDetails.addressLine2}"
 											class="form-control" type="text" maxlength="1000" />
 									</div>
@@ -208,10 +240,12 @@
 							<div class="col-sm-3">
 								<div class="row">
 									<div class="col-sm-9 selectBorder-placeholder">
-										<label>Country</label> <select class="form-control"
-											th:field="*{entityDetails.entityAddressDetails.country}"
-											placeholder="Country">
-											<option value="NONE">--- Select ---</option>
+										<label
+											th:text="#{basicDetails.entityDetails.entityAddressDetails.country.label}">Country</label>
+										<select class="form-control"
+											th:field="*{entityDetails.entityAddressDetails.country}">
+											<option value="NONE" th:text="#{default.dropdown.option}">---
+												Select ---</option>
 											<option
 												th:each="country : ${T(com.tripleS.enums.CountryEnum).values()}"
 												th:value="${{country}}"
@@ -224,10 +258,19 @@
 							</div>
 							<div class="col-sm-3">
 								<div class="row">
-									<div class="col-sm-9 inputBorder-placeholder">
-										<label>State</label> <input type="text"
-											th:field="*{entityDetails.entityAddressDetails.state}"
-											class="form-control" maxlength="50" />
+									<div class="col-sm-9 selectBorder-placeholder">
+										<label
+											th:text="#{basicDetails.entityDetails.entityAddressDetails.state.label}">State</label>
+										<select class="form-control"
+											th:field="*{entityDetails.entityAddressDetails.state}">
+											<option value="NONE" th:text="#{default.dropdown.option}">---
+												Select ---</option>
+											<option
+												th:each="state : ${T(com.tripleS.enums.StateEnum).values()}"
+												th:value="${{state}}"
+												th:selected="${state == T(com.tripleS.enums.StateEnum)}"
+												th:text="${state.getDisplayName()}"></option>
+										</select>
 									</div>
 									<label class="required-field"></label>
 								</div>
@@ -235,7 +278,9 @@
 							<div class="col-sm-3">
 								<div class="row">
 									<div class="col-sm-9 inputBorder-placeholder">
-										<label>City</label> <input type="text"
+										<label
+											th:text="#{basicDetails.entityDetails.entityAddressDetails.city.label}">City</label>
+										<input type="text"
 											th:field="*{entityDetails.entityAddressDetails.city}"
 											class="form-control" maxlength="50" />
 									</div>
@@ -245,7 +290,9 @@
 							<div class="col-sm-3">
 								<div class="row">
 									<div class="col-sm-9 inputBorder-placeholder">
-										<label>Pincode</label> <input type="text"
+										<label
+											th:text="#{basicDetails.entityDetails.entityAddressDetails.pincode.label}">Pincode</label>
+										<input type="text"
 											th:field="*{entityDetails.entityAddressDetails.pincode}"
 											class="form-control" maxlength="6" />
 									</div>
@@ -283,7 +330,9 @@
 							<div class="col-sm-3">
 								<div class="row">
 									<div class="col-sm-9 inputBorder-placeholder">
-										<label>Date of Birth</label> <input
+										<label
+											th:text="#{basicDetails.entityDetails.studentDetails.dateOfBirth.label}">Date
+											of Birth</label> <input
 											th:field="*{entityDetails.studentDetails.dateOfBirth}"
 											class="form-control dobMask" type="text" />
 										<!-- placeholder="Date of Birth" class="form-control" onfocus="(this.type='date')" onfocusout="(this.type='text')"/> -->
@@ -294,7 +343,9 @@
 							<div class="col-sm-3">
 								<div class="row">
 									<div class="col-sm-9 inputBorder-placeholder">
-										<label>Place of Birth</label> <input type="text"
+										<label
+											th:text="#{basicDetails.entityDetails.studentDetails.placeOfBirth.label}">Place
+											of Birth</label> <input type="text"
 											th:field="*{entityDetails.studentDetails.placeOfBirth}"
 											class="form-control" maxlength="100" />
 									</div>
@@ -304,7 +355,9 @@
 							<div class="col-sm-3">
 								<div class="row">
 									<div class="col-sm-9 inputBorder-placeholder">
-										<label>Religion</label> <input type="text"
+										<label
+											th:text="#{basicDetails.entityDetails.studentDetails.religion.label}">Religion</label>
+										<input type="text"
 											th:field="*{entityDetails.studentDetails.religion}"
 											class="form-control" maxlength="50" />
 									</div>
@@ -314,7 +367,9 @@
 							<div class="col-sm-3">
 								<div class="row">
 									<div class="col-sm-9 inputBorder-placeholder">
-										<label>Mother Tongue</label> <input type="text"
+										<label
+											th:text="#{basicDetails.entityDetails.studentDetails.motherTongue.label}">Mother
+											Tongue</label> <input type="text"
 											th:field="*{entityDetails.studentDetails.motherTongue}"
 											class="form-control" maxlength="100" />
 									</div>
@@ -323,49 +378,60 @@
 							</div>
 						</div>
 						<div class="form-group row" id="seventhRow">
-							<div class="col-sm-6">
+							<div class="col-sm-12 inputBorder-placeholder">
+								<label
+									th:text="#{basicDetails.entityDetails.studentDetails.aimInLife.label}">Aim
+									in Life</label>
 								<textarea th:field="*{entityDetails.studentDetails.aimInLife}"
-									placeholder="Aim in Life" class="form-control" maxlength="1000"
-									rows="5" onkeyup="countChar(this,charNumAimInLife)">
+									class="form-control" maxlength="1000" rows="3"
+									onkeyup="countChar(this,charNumAimInLife)">
 									</textarea>
 								<div id="charNumAimInLife" class="charNum"></div>
 							</div>
-							<div class="col-sm-6">
+							<div class="col-sm-12 inputBorder-placeholder">
+								<label
+									th:text="#{basicDetails.entityDetails.studentDetails.describePrizeDetails.label}">If
+									you have won any prize, please describe</label>
 								<textarea
 									th:field="*{entityDetails.studentDetails.describePrizeDetails}"
-									placeholder="If you have won any prize, please describe"
-									class="form-control" maxlength="1000" rows="5"
+									class="form-control" maxlength="1000" rows="3"
 									onkeyup="countChar(this,charNumDescribePrizeDetails)">
 									</textarea>
 								<div id="charNumDescribePrizeDetails" class="charNum"></div>
 							</div>
 						</div>
 						<div class="form-group row" id="eighthRow">
-							<div class="col-sm-6">
+							<div class="col-sm-12 inputBorder-placeholder">
+								<label
+									th:text="#{basicDetails.entityDetails.studentDetails.describeIfOtherFamilyMembersGotHelp.label}">If
+									other family members have got help, please describe</label>
 								<textarea
 									th:field="*{entityDetails.studentDetails.describeIfOtherFamilyMembersGotHelp}"
-									placeholder="If other family members have got help, please describe"
-									class="form-control" maxlength="1000" rows="5"
+									class="form-control" maxlength="1000" rows="3"
 									onkeyup="countChar(this,charNumDescribeIfOtherFamilyMembersGotHelp)">
 									</textarea>
 								<div id="charNumDescribeIfOtherFamilyMembersGotHelp"
 									class="charNum"></div>
 							</div>
-							<div class="col-sm-6">
+							<div class="col-sm-12 inputBorder-placeholder">
+								<label
+									th:text="#{basicDetails.entityDetails.studentDetails.describeOtherProblemsInFamily.label}">If
+									you have other problems in family, please describe</label>
 								<textarea
 									th:field="*{entityDetails.studentDetails.describeOtherProblemsInFamily}"
-									placeholder="If you have other problems in family, please describe"
-									class="form-control" maxlength="1000" rows="5"
+									class="form-control" maxlength="1000" rows="3"
 									onkeyup="countChar(this,charNumDescribeOtherProblemsInFamily)">
 									</textarea>
 								<div id="charNumDescribeOtherProblemsInFamily" class="charNum"></div>
 							</div>
 						</div>
 						<div class="form-group row" id="ninthRow">
-							<div class="col-sm-12">
+							<div class="col-sm-12 inputBorder-placeholder">
+								<label
+									th:text="#{basicDetails.entityDetails.studentDetails.describeJobBusinessDetails.label}">If
+									you have job or doing business, please describe</label>
 								<textarea
 									th:field="*{entityDetails.studentDetails.describeJobBusinessDetails}"
-									placeholder="If you have job or doing business, please describe"
 									class="form-control" maxlength="1000" rows="3"
 									onkeyup="countChar(this,charNumDescribeJobBusinessDetails)">
 									</textarea>
@@ -376,17 +442,20 @@
 							<div class="col-sm-6"></div>
 							<div class="col-sm-2">
 								<button type="button" id="btnClear"
-									class="form-control btn btn-secondary">Clear</button>
+									class="form-control btn btn-secondary"
+									th:text="#{basicDetails.clear.button}">Clear</button>
 							</div>
 							<div class="col-sm-2">
 								<button type="submit" id="btnSave" name="saveBasicDetails"
-									class="form-control btn btn-primary">Save</button>
+									class="form-control btn btn-primary"
+									th:text="#{basicDetails.save.button}">Save</button>
 							</div>
 							<div class="col-sm-2">
 								<button type="submit" id="btnSaveContinue"
 									name="saveContinueBasicDetails"
-									class="form-control btn btn-primary">Save &amp;
-									Continue</button>
+									class="form-control btn btn-primary"
+									th:text="#{basicDetails.saveContinue.button}">Save
+									&amp; Continue</button>
 							</div>
 						</div>
 					</form>

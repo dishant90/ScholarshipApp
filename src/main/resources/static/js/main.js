@@ -18,6 +18,14 @@ $(function() {
 		$(this).parent().css("border-color","rgba(0,0,0,.15)");
 	});
 	
+	$(".inputBorder-placeholder textarea").focus(function() {
+		$(this).parent().css("border-color","#5cb3fd");
+	});
+	
+	$(".inputBorder-placeholder textarea").focusout(function() {
+		$(this).parent().css("border-color","rgba(0,0,0,.15)");
+	});
+	
 	$('#messages li').click(function() {
 		$(this).fadeOut();
 	});

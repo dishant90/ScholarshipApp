@@ -288,3 +288,5 @@ ALTER TABLE residence_details
     ON DELETE CASCADE
     ON UPDATE CASCADE;
  
+ -- 11th Nov 2017
+ ALTER TABLE student_entity_details ADD COLUMN gender CHAR(1);

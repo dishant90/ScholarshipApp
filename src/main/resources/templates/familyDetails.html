@@ -10,9 +10,11 @@
 			<div class="col-sm-10 text-left" id="studentFamilyDetailsTab">
 				<div>
 					<div class="header">
-						<div class="displayLeft">Family Details</div>
-						<div class="displayRight" th:if="${fileNo}">File #
-							<label class="blueText" th:text="${fileNo}">File No Value</label>
+						<div class="displayLeft" th:text="#{familyDetails.header}">Family
+							Details</div>
+						<div class="displayRight" th:if="${fileNo}">
+							File # <label class="blueText" th:text="${fileNo}">File
+								No Value</label>
 						</div>
 					</div>
 					<form id="familyDetailsForm" role="form"
@@ -22,13 +24,15 @@
 							<thead>
 								<tr>
 									<!-- <th>Row</th> -->
-									<th>Relation</th>
-									<th>Name</th>
-									<th>Age</th>
-									<th>Qualification</th>
-									<th>Occupation</th>
-									<th>Name &amp; full address of Employer or School/College</th>
-									<th>Earnings/month</th>
+									<th th:text="#{familyDetails.Relation.th}">Relation</th>
+									<th th:text="#{familyDetails.Name.th}">Name</th>
+									<th th:text="#{familyDetails.Age.th}">Age</th>
+									<th th:text="#{familyDetails.Qualification.th}">Qualification</th>
+									<th th:text="#{familyDetails.Occupation.th}">Occupation</th>
+									<th
+										th:text="#{familyDetails.NameFullAddressOfEmployerOrSchoolCollege.th}">Name
+										&amp; full address of Employer or School/College</th>
+									<th th:text="#{familyDetails.EarningsPerMonth.th}">Earnings/month</th>
 									<th></th>
 									<th></th>
 								</tr>
@@ -65,13 +69,13 @@
 										th:text="*{relatives[__${rowStat.index}__].salaryPerMonth}">20000</label></td>
 									<td>
 										<button type="submit" name="editEntityDetails"
-											title="Edit Member"
+											th:title="#{familyDetails.EditMember.th}"
 											th:value="*{relatives[__${rowStat.index}__].id}"
 											class="fa fa-pencil-square-o fa-lg iconButton"></button>
 									</td>
 									<td>
 										<button type="submit" name="removeEntityDetails"
-											title="Remove Member"
+											th:title="#{familyDetails.RemoveMember.th}"
 											th:value="*{relatives[__${rowStat.index}__].id}"
 											class="fa fa-trash-o fa-lg iconButton"></button>
 									</td>
@@ -101,28 +105,32 @@
 						<div class="form-group row" id="firstRow">
 							<div class="col-sm-4">
 								<div class="row">
-									<div class="col-sm-11">
+									<div class="col-sm-9 inputBorder-placeholder">
+										<label th:text="#{familyDetails.entityDetails.type.label}">Relation</label>
 										<input type="text" th:field="${entityDetails.type}"
-											placeholder="Relation" class="form-control" maxlength="100" />
-										<input type="hidden" th:field="${entityDetails.id}" />
+											class="form-control" maxlength="100" /> <input type="hidden"
+											th:field="${entityDetails.id}" />
 									</div>
 									<label class="required-field"></label>
 								</div>
 							</div>
 							<div class="col-sm-4">
 								<div class="row">
-									<div class="col-sm-11">
-										<input type="text" th:field="${entityDetails.firstName}"
-											placeholder="First Name" class="form-control" maxlength="100" />
+									<div class="col-sm-9 inputBorder-placeholder">
+										<label
+											th:text="#{familyDetails.entityDetails.firstName.label}">First
+											Name</label> <input type="text" th:field="${entityDetails.firstName}"
+											class="form-control" maxlength="100" />
 									</div>
 									<label class="required-field"></label>
 								</div>
 							</div>
 							<div class="col-sm-4">
 								<div class="row">
-									<div class="col-sm-11">
-										<input type="text" th:field="${entityDetails.lastName}"
-											placeholder="Last Name" class="form-control" maxlength="100" />
+									<div class="col-sm-9 inputBorder-placeholder">
+										<label th:text="#{familyDetails.entityDetails.lastName.label}">Last
+											Name</label> <input type="text" th:field="${entityDetails.lastName}"
+											class="form-control" maxlength="100" />
 									</div>
 								</div>
 							</div>
@@ -151,27 +159,31 @@
 						<div class="form-group row" id="secondRow">
 							<div class="col-sm-4">
 								<div class="row">
-									<div class="col-sm-11">
+									<div class="col-sm-9 inputBorder-placeholder">
+										<label th:text="#{familyDetails.entityDetails.age.label}">Age</label>
 										<input type="text" th:field="${entityDetails.age}"
-											placeholder="Age" class="form-control" maxlength="3" />
+											class="form-control" maxlength="3" />
 									</div>
 								</div>
 							</div>
 							<div class="col-sm-4">
 								<div class="row">
-									<div class="col-sm-11">
+									<div class="col-sm-9 inputBorder-placeholder">
+										<label
+											th:text="#{familyDetails.entityDetails.qualification.label}">Qualification</label>
 										<input type="text" th:field="${entityDetails.qualification}"
-											placeholder="Qualification" class="form-control"
-											maxlength="100" />
+											class="form-control" maxlength="100" />
 									</div>
 								</div>
 							</div>
 							<div class="col-sm-4">
 								<div class="row">
-									<div class="col-sm-11">
+									<div class="col-sm-9 inputBorder-placeholder">
+										<label
+											th:text="#{familyDetails.entityDetails.occupationProfession.label}">Occupation</label>
 										<input type="text"
 											th:field="${entityDetails.occupationProfession}"
-											placeholder="Occupation" class="form-control" maxlength="100" />
+											class="form-control" maxlength="100" />
 									</div>
 								</div>
 							</div>
@@ -187,10 +199,11 @@
 						<div class="form-group row" id="thirdRow">
 							<div class="col-sm-4">
 								<div class="row">
-									<div class="col-sm-11">
+									<div class="col-sm-9 inputBorder-placeholder">
+										<label
+											th:text="#{familyDetails.entityDetails.salaryPerMonth.label}">Earning/month</label>
 										<input type="text" th:field="${entityDetails.salaryPerMonth}"
-											placeholder="Earning/month" class="form-control"
-											maxlength="10" />
+											class="form-control" maxlength="10" />
 									</div>
 								</div>
 							</div>
@@ -233,22 +246,24 @@
 						<div class="form-group row" id="fourthRow">
 							<div class="col-sm-4">
 								<div class="row">
-									<div class="col-sm-11">
+									<div class="col-sm-9 inputBorder-placeholder">
+										<label
+											th:text="#{familyDetails.entityDetails.relatives.type.label}">School/Company</label>
 										<input type="text"
 											th:field="${entityDetails.relatives[0].type}"
-											placeholder="School/Company" class="form-control"
-											maxlength="100" />
+											class="form-control" maxlength="100" />
 									</div>
 									<label class="required-field"></label>
 								</div>
 							</div>
 							<div class="col-sm-4">
 								<div class="row">
-									<div class="col-sm-11">
-										<input type="text"
+									<div class="col-sm-9 inputBorder-placeholder">
+										<label
+											th:text="#{familyDetails.entityDetails.relatives.firstName.label}">Name
+											of School/Company</label> <input type="text"
 											th:field="${entityDetails.relatives[0].firstName}"
-											placeholder="Name of School/Company" class="form-control"
-											maxlength="100" /> <input type="hidden"
+											class="form-control" maxlength="100" /> <input type="hidden"
 											th:field="${entityDetails.relatives[0].id}" />
 									</div>
 									<label class="required-field"></label>
@@ -256,11 +271,13 @@
 							</div>
 							<div class="col-sm-4">
 								<div class="row">
-									<div class="col-sm-11">
-										<input type="text"
+									<div class="col-sm-9 inputBorder-placeholder">
+										<label
+											th:text="#{familyDetails.entityDetails.relatives.entityAddressDetails.addressLine1.label}">Address
+											of School/Company</label> <input type="text"
 											th:field="${entityDetails.relatives[0].entityAddressDetails.addressLine1}"
-											placeholder="Address of School/Company" class="form-control"
-											maxlength="1000" /> <input type="hidden"
+											class="form-control" maxlength="1000" /> <input
+											type="hidden"
 											th:field="${entityDetails.relatives[0].entityAddressDetails.id}" />
 									</div>
 								</div>
@@ -299,39 +316,61 @@
 						<div class="form-group row" id="fifthRow">
 							<div class="col-sm-3">
 								<div class="row">
-									<div class="col-sm-11">
-										<input type="text"
-											th:field="${entityDetails.relatives[0].entityAddressDetails.country}"
-											placeholder="Country" class="form-control" maxlength="50" />
+									<div class="col-sm-9 selectBorder-placeholder">
+										<label
+											th:text="#{familyDetails.entityDetails.relatives.entityAddressDetails.country.label}">Country</label>
+										<select class="form-control"
+											th:field="${entityDetails.relatives[0].entityAddressDetails.country}">
+											<option value="NONE" th:text="#{default.dropdown.option}">---
+												Select ---</option>
+											<option
+												th:each="country : ${T(com.tripleS.enums.CountryEnum).values()}"
+												th:value="${{country}}"
+												th:selected="${country == T(com.tripleS.enums.CountryEnum)}"
+												th:text="${country.getDisplayName()}"></option>
+										</select>
 									</div>
 									<label class="required-field"></label>
 								</div>
 							</div>
 							<div class="col-sm-3">
 								<div class="row">
-									<div class="col-sm-11">
-										<input type="text"
-											th:field="${entityDetails.relatives[0].entityAddressDetails.state}"
-											placeholder="State" class="form-control" maxlength="50" />
+									<div class="col-sm-9 selectBorder-placeholder">
+										<label
+											th:text="#{familyDetails.entityDetails.relatives.entityAddressDetails.state.label}">State</label>
+										<select class="form-control"
+											th:field="*{entityDetails.relatives[0].entityAddressDetails.state}">
+											<option value="NONE" th:text="#{default.dropdown.option}">---
+												Select ---</option>
+											<option
+												th:each="state : ${T(com.tripleS.enums.StateEnum).values()}"
+												th:value="${{state}}"
+												th:selected="${state == T(com.tripleS.enums.StateEnum)}"
+												th:text="${state.getDisplayName()}"></option>
+										</select>
 									</div>
 									<label class="required-field"></label>
 								</div>
 							</div>
 							<div class="col-sm-3">
 								<div class="row">
-									<div class="col-sm-11">
+									<div class="col-sm-9 inputBorder-placeholder">
+										<label
+											th:text="#{familyDetails.entityDetails.relatives.entityAddressDetails.city.label}">City</label>
 										<input type="text"
 											th:field="${entityDetails.relatives[0].entityAddressDetails.city}"
-											placeholder="City" class="form-control" maxlength="50" />
+											class="form-control" maxlength="50" />
 									</div>
 								</div>
 							</div>
 							<div class="col-sm-3">
 								<div class="row">
-									<div class="col-sm-11">
+									<div class="col-sm-9 inputBorder-placeholder">
+										<label
+											th:text="#{familyDetails.entityDetails.relatives.entityAddressDetails.pincode.label}">Pincode</label>
 										<input type="text"
 											th:field="${entityDetails.relatives[0].entityAddressDetails.pincode}"
-											placeholder="Pincode" class="form-control" maxlength="6" />
+											class="form-control" maxlength="6" />
 									</div>
 								</div>
 							</div>
@@ -339,7 +378,8 @@
 						<div class="form-group row" id="sixthRow">
 							<div class="col-sm-4">
 								<button type="submit" th:text="${addUpdateEntityAction}"
-									name="addUpdateEntityAction" th:value="${addUpdateEntityAction}">Add/Update Member</button>
+									name="addUpdateEntityAction"
+									th:value="${addUpdateEntityAction}">Add/Update Member</button>
 							</div>
 						</div>
 						<div class="form-group row" id="seventhRow">
@@ -349,7 +389,8 @@
 							<div class="col-sm-2">
 								<button type="submit" id="btnContinue"
 									name="continueFromFamilyDetails"
-									class="form-control btn btn-primary">Continue</button>
+									class="form-control btn btn-primary"
+									th:text="#{familyDetails.continue.button}">Continue</button>
 							</div>
 						</div>
 					</form>

@@ -14,6 +14,7 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.tripleS.enums.CountryEnum;
+import com.tripleS.enums.StateEnum;
 import com.tripleS.validation.groups.RelativeOccupationValidations;
 import com.tripleS.validation.groups.StudentValidations;
 
@@ -41,8 +42,9 @@ public class EntityAddressDetails {
 	private String city;
 
 	@Column(name = "state")
-	@NotEmpty(message = "*Please provide State", groups = { StudentValidations.class })
-	private String state;
+	@Enumerated(EnumType.STRING)
+	@NotNull(message = "*Please provide State", groups = { StudentValidations.class })
+	private StateEnum state;
 
 	@Column(name = "country")
 	@Enumerated(EnumType.STRING)
@@ -98,11 +100,11 @@ public class EntityAddressDetails {
 		this.city = city;
 	}
 
-	public String getState() {
+	public StateEnum getState() {
 		return state;
 	}
 
-	public void setState(String state) {
+	public void setState(StateEnum state) {
 		this.state = state;
 	}
 

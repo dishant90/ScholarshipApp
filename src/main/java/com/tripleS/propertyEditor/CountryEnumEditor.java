@@ -24,7 +24,7 @@ public class CountryEnumEditor extends PropertyEditorSupport {
 			logger.info("Country dropdown validation passed; " + country + " is a valid country");
 			this.setValue(CountryEnum.valueOf(country));
 		} else {
-			logger.info(country + "No such country defined in the code");
+			logger.info(country + ": No such country defined in the code");
 		}
 		
 	}

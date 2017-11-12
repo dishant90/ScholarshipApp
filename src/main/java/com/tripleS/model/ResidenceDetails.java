@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,6 +18,8 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.tripleS.enums.ResidenceOwnershipEnum;
+
 @Entity
 @Table(name="residence_details")
 public class ResidenceDetails {
@@ -25,8 +29,9 @@ public class ResidenceDetails {
 	private int id;
 	
 	@Column(name="residence_ownership")
-	@NotEmpty(message="*Residence ownership cannot be empty")
-    private String residenceOwnership;
+	@Enumerated(EnumType.STRING)
+	@NotNull(message="*Residence ownership cannot be empty")
+    private ResidenceOwnershipEnum residenceOwnership;
 	
 	@Column(name="residence_ownership_other_description")
     private String residenceOwnershipOtherDescription;
@@ -94,11 +99,11 @@ public class ResidenceDetails {
 		this.id = id;
 	}
 
-	public String getResidenceOwnership() {
+	public ResidenceOwnershipEnum getResidenceOwnership() {
 		return residenceOwnership;
 	}
 
-	public void setResidenceOwnership(String residenceOwnership) {
+	public void setResidenceOwnership(ResidenceOwnershipEnum residenceOwnership) {
 		this.residenceOwnership = residenceOwnership;
 	}
 

@@ -15,26 +15,35 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tripleS.enums.CountryEnum;
+import com.tripleS.enums.GenderEnum;
+import com.tripleS.enums.ResidenceOwnershipEnum;
+import com.tripleS.enums.StateEnum;
 import com.tripleS.exception.InvalidFileNumberException;
 import com.tripleS.propertyEditor.CountryEnumEditor;
+import com.tripleS.propertyEditor.GenderEnumEditor;
+import com.tripleS.propertyEditor.ResidenceOwnershipEnumEditor;
+import com.tripleS.propertyEditor.StateEnumEditor;
 import com.tripleS.service.NotificationService;
 
 @ControllerAdvice
 public class CommonControllerAdvice {
 
 	private static final Logger logger = LoggerFactory.getLogger(CommonControllerAdvice.class);
-	
+
 	@Autowired
 	private NotificationService notifyService;
-	
+
 	@InitBinder
 	public void initBinder(WebDataBinder dataBinder) {
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		CustomDateEditor dateEditor = new CustomDateEditor(dateFormat, true);
 		dataBinder.registerCustomEditor(Date.class, dateEditor);
 		dataBinder.registerCustomEditor(CountryEnum.class, new CountryEnumEditor());
+		dataBinder.registerCustomEditor(StateEnum.class, new StateEnumEditor());
+		dataBinder.registerCustomEditor(GenderEnum.class, new GenderEnumEditor());
+		dataBinder.registerCustomEditor(ResidenceOwnershipEnum.class, new ResidenceOwnershipEnumEditor());
 	}
-	
+
 	@ExceptionHandler(InvalidFileNumberException.class)
 	public ModelAndView invalidFileNoRedirection(InvalidFileNumberException ifne) {
 		logger.error("Invalid case number - Error Code: " + ifne.getErrCode());
@@ -43,5 +52,5 @@ public class CommonControllerAdvice {
 		ModelAndView modelAndView = new ModelAndView("fragments/home");
 		return modelAndView;
 	}
-	
+
 }

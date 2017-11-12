@@ -146,3 +146,7 @@ ul#messages li.error {
 .inputBorder-placeholder>input{
   border:none;
 }
+
+.inputBorder-placeholder>textarea{
+  border:none;
+}

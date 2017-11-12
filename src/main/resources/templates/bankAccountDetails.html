@@ -10,28 +10,32 @@
 			<div class="col-sm-10 text-left" id="studentBankDetailsTab">
 				<div>
 					<div class="header">
-						<div class="displayLeft">Bank Account Details</div>
+						<div class="displayLeft" th:text="#{bankAccountDetails.header}">Bank
+							Account Details</div>
 						<div class="displayRight" th:if="${fileNo}">
 							File # <label class="blueText" th:text="${fileNo}">File
 								No Value</label>
 						</div>
 					</div>
 					<form id="bankAcountDetailsForm" role="form"
-						th:action="@{/studentFile/bankAccountDetails}"
-						method="post">
+						th:action="@{/studentFile/bankAccountDetails}" method="post">
 						<input type="hidden" th:value="${fileNo}" name="fileNo" />
 
 						<table class="table table-hover">
 							<thead>
 								<tr>
-									<th>To be used</th>
-									<th>Account Number</th>
-									<th>Bank Name</th>
-									<th>Branch</th>
-									<th>IFSC Code</th>
-									<th>Account Holder Name 1</th>
-									<th>Account Holder Name 2</th>
-									<th>Account Holder Name 3</th>
+									<th th:text="#{bankAccountDetails.ToBeUsed.th}">To be used</th>
+									<th th:text="#{bankAccountDetails.AccountNumber.th}">Account
+										Number</th>
+									<th th:text="#{bankAccountDetails.BankName.th}">Bank Name</th>
+									<th th:text="#{bankAccountDetails.Branch.th}">Branch</th>
+									<th th:text="#{bankAccountDetails.IFSCCode.th}">IFSC Code</th>
+									<th th:text="#{bankAccountDetails.AccountHolderName1.th}">Account
+										Holder Name 1</th>
+									<th th:text="#{bankAccountDetails.AccountHolderName2.th}">Account
+										Holder Name 2</th>
+									<th th:text="#{bankAccountDetails.AccountHolderName3.th}">Account
+										Holder Name 3</th>
 									<th></th>
 									<th></th>
 								</tr>
@@ -61,13 +65,13 @@
 											1</label></td>
 									<td>
 										<button type="submit" name="editEntityBankDetails"
-											title="Edit Account Details"
+											th:title="#{familyDetails.EditAccountDetails.th}"
 											th:value="*{entityBankDetailsList[__${rowStat.index}__].id}"
 											class="fa fa-pencil-square-o fa-lg iconButton"></button>
 									</td>
 									<td>
 										<button type="submit" name="removeEntityBankDetails"
-											title="Remove Account Details"
+											th:title="#{familyDetails.RemoveAccountDetails.th}"
 											th:value="*{entityBankDetailsList[__${rowStat.index}__].id}"
 											class="fa fa-trash-o fa-lg iconButton"></button>
 									</td>
@@ -94,11 +98,12 @@
 						<div class="form-group row" id="firstRow">
 							<div class="col-sm-6">
 								<div class="row">
-									<div class="col-sm-11">
-										<input type="text"
+									<div class="col-sm-9 inputBorder-placeholder">
+										<label
+											th:text="#{bankAccountDetails.entityBankDetails.bankAccountNo.label}">Bank
+											Account No</label> <input type="text"
 											th:field="${entityBankDetails.bankAccountNo}"
-											placeholder="Bank Account No" class="form-control"
-											maxlength="25" /> <input type="hidden"
+											class="form-control" maxlength="25" /> <input type="hidden"
 											th:field="${entityBankDetails.id}" />
 									</div>
 									<label class="required-field"></label>
@@ -106,9 +111,12 @@
 							</div>
 							<div class="col-sm-6">
 								<div class="row">
-									<div class="col-sm-11">
-										<input type="text" th:field="${entityBankDetails.bankName}"
-											placeholder="Bank Name" class="form-control" maxlength="100" />
+									<div class="col-sm-9 inputBorder-placeholder">
+										<label
+											th:text="#{bankAccountDetails.entityBankDetails.bankName.label}">Bank
+											Name</label> <input type="text"
+											th:field="${entityBankDetails.bankName}" class="form-control"
+											maxlength="100" />
 									</div>
 									<label class="required-field"></label>
 								</div>
@@ -132,17 +140,22 @@
 						<div class="form-group row" id="secondRow">
 							<div class="col-sm-6">
 								<div class="row">
-									<div class="col-sm-11">
+									<div class="col-sm-9 inputBorder-placeholder">
+										<label
+											th:text="#{bankAccountDetails.entityBankDetails.branch.label}">Branch</label>
 										<input type="text" th:field="${entityBankDetails.branch}"
-											placeholder="Branch" class="form-control" maxlength="100" />
+											class="form-control" maxlength="100" />
 									</div>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="row">
-									<div class="col-sm-11">
-										<input type="text" th:field="${entityBankDetails.ifscCode}"
-											placeholder="IFSC Code" class="form-control" maxlength="25" />
+									<div class="col-sm-9 inputBorder-placeholder">
+										<label
+											th:text="#{bankAccountDetails.entityBankDetails.ifscCode.label}">IFSC
+											Code</label> <input type="text"
+											th:field="${entityBankDetails.ifscCode}" class="form-control"
+											maxlength="25" />
 									</div>
 									<label class="required-field"></label>
 								</div>
@@ -175,10 +188,11 @@
 						<div class="form-group row" id="thirdRow">
 							<div class="col-sm-4">
 								<div class="row">
-									<div class="col-sm-11">
-										<input type="text"
+									<div class="col-sm-9 inputBorder-placeholder">
+										<label
+											th:text="#{bankAccountDetails.entityBankDetails.accountHolderName1.label}">First
+											Account Holder's Name</label> <input type="text"
 											th:field="${entityBankDetails.accountHolderName1}"
-											placeholder="First Account Holder's Name"
 											class="form-control" maxlength="300" /> <input type="hidden"
 											th:field="${entityBankDetails.id}" />
 									</div>
@@ -187,20 +201,22 @@
 							</div>
 							<div class="col-sm-4">
 								<div class="row">
-									<div class="col-sm-11">
-										<input type="text"
+									<div class="col-sm-9 inputBorder-placeholder">
+										<label
+											th:text="#{bankAccountDetails.entityBankDetails.accountHolderName2.label}">Second
+											Account Holder's Name</label> <input type="text"
 											th:field="${entityBankDetails.accountHolderName2}"
-											placeholder="Second Account Holder's Name"
 											class="form-control" maxlength="300" />
 									</div>
 								</div>
 							</div>
 							<div class="col-sm-4">
 								<div class="row">
-									<div class="col-sm-11">
-										<input type="text"
+									<div class="col-sm-9 inputBorder-placeholder">
+										<label
+											th:text="#{bankAccountDetails.entityBankDetails.accountHolderName3.label}">Third
+											Account Holder's Name</label> <input type="text"
 											th:field="${entityBankDetails.accountHolderName3}"
-											placeholder="Third Account Holder's Name"
 											class="form-control" maxlength="300" />
 									</div>
 								</div>
@@ -210,11 +226,11 @@
 							<div class="col-sm-4">
 								<div class="row">
 									<div class="col-sm-11 form-check form-check-inline">
-										<label class="form-check-label"> <input type="checkbox"
+										<label
+											class="form-check-label"> <input type="checkbox"
 											th:field="${entityBankDetails.isCurrent}"
-											placeholder="Is this account to be used in the payments?"
-											class="form-check-input" /> Is this account to be used in the
-											payments?
+											class="form-check-input" /> Is this account to be used in
+											the payments?
 										</label>
 									</div>
 								</div>
@@ -234,7 +250,8 @@
 							<div class="col-sm-2">
 								<button type="submit" id="btnContinue"
 									name="continueFromBankDetails"
-									class="form-control btn btn-primary">Continue</button>
+									class="form-control btn btn-primary"
+									th:text="#{bankAccountDetails.continue.button}">Continue</button>
 							</div>
 						</div>
 					</form>
