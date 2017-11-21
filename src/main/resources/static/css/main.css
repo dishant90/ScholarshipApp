@@ -150,3 +150,11 @@ ul#messages li.error {
 .inputBorder-placeholder>textarea{
   border:none;
 }
+
+.hideElement{
+	display:none;
+}
+
+.showInlineElement{
+	display:block;
+}

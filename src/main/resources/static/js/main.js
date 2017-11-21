@@ -46,6 +46,16 @@ $(function() {
 		var isValid = validateDate("Date of Birth", $(".dobMask").val());
 		return isValid;
 	});
+	
+	loadResidenceDetailsFields();
+	
+	$("#residenceOwnership").change(function() {
+		loadResidenceOwnershipDependencies($(this));
+	});
+	
+	$("#haveVehicle1").change(function() {
+		loadVehicleDependencies($(this));
+	});
 });
 
 function countChar(obj, trackCharactersObjID) {
@@ -103,5 +113,64 @@ function validateDate(propertyName, propertyValue) {
 	} else {
 		displayModal(errorMessage);
 		return false;
+	}
+}
+
+function showRentAmountDiv() {
+	$("#residenceRentAmountDiv").show();
+}
+
+function hideRentAmountDiv() {
+	$("#residenceRentAmountDiv").hide();
+	$("#residenceRentAmount").val(null);
+}
+
+function showResidenceOtherDescription() {
+	$("#residenceOwnershipOtherDescriptionDiv").show();
+}
+
+function hideResidenceOtherDescription() {
+	$("#residenceOwnershipOtherDescriptionDiv").hide();
+	$("#residenceOwnershipOtherDescription").val(null);
+}
+
+function showVehicleDescription() {
+	$("#vehicleDescriptionDiv").show();
+}
+
+function hideVehicleDescription() {
+	$("#vehicleDescriptionDiv").hide();
+	$("#vehicleDescription").val(null);
+}
+
+function loadResidenceDetailsFields() {
+	var residenceOwnershipObject = $("#residenceOwnership");
+	if(residenceOwnershipObject.length) {
+		loadResidenceOwnershipDependencies(residenceOwnershipObject);
+	}
+	
+	if($('[name="haveVehicle"]').length) {
+		loadVehicleDependencies($("#haveVehicle1"));
+	}
+}
+
+function loadResidenceOwnershipDependencies(residenceOwnershipObject) {
+	if(residenceOwnershipObject.val() == "RENTED") {
+		showRentAmountDiv();
+		hideResidenceOtherDescription();
+	} else if(residenceOwnershipObject.val() == "OTHER") {
+		showResidenceOtherDescription();
+		hideRentAmountDiv();
+	} else {
+		hideRentAmountDiv();
+		hideResidenceOtherDescription();
+	}
+}
+
+function loadVehicleDependencies(haveVehicleObject) {
+	if(haveVehicleObject.is(":checked")) {
+		showVehicleDescription();
+	} else {
+		hideVehicleDescription();
 	}
 }

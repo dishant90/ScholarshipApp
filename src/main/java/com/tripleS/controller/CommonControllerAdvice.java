@@ -17,11 +17,13 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tripleS.enums.CountryEnum;
 import com.tripleS.enums.GenderEnum;
 import com.tripleS.enums.ResidenceOwnershipEnum;
+import com.tripleS.enums.ResidenceTypeEnum;
 import com.tripleS.enums.StateEnum;
 import com.tripleS.exception.InvalidFileNumberException;
 import com.tripleS.propertyEditor.CountryEnumEditor;
 import com.tripleS.propertyEditor.GenderEnumEditor;
 import com.tripleS.propertyEditor.ResidenceOwnershipEnumEditor;
+import com.tripleS.propertyEditor.ResidenceTypeEnumEditor;
 import com.tripleS.propertyEditor.StateEnumEditor;
 import com.tripleS.service.NotificationService;
 
@@ -42,6 +44,7 @@ public class CommonControllerAdvice {
 		dataBinder.registerCustomEditor(StateEnum.class, new StateEnumEditor());
 		dataBinder.registerCustomEditor(GenderEnum.class, new GenderEnumEditor());
 		dataBinder.registerCustomEditor(ResidenceOwnershipEnum.class, new ResidenceOwnershipEnumEditor());
+		dataBinder.registerCustomEditor(ResidenceTypeEnum.class, new ResidenceTypeEnumEditor());
 	}
 
 	@ExceptionHandler(InvalidFileNumberException.class)

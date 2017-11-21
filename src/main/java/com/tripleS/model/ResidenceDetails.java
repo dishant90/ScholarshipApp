@@ -19,6 +19,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.tripleS.enums.ResidenceOwnershipEnum;
+import com.tripleS.enums.ResidenceTypeEnum;
 
 @Entity
 @Table(name="residence_details")
@@ -37,8 +38,9 @@ public class ResidenceDetails {
     private String residenceOwnershipOtherDescription;
 	
 	@Column(name="residence_type")
-	@NotEmpty(message="*Residence type cannot be empty")
-    private String residenceType;
+	@Enumerated(EnumType.STRING)
+	@NotNull(message="*Residence type cannot be empty")
+    private ResidenceTypeEnum residenceType;
 	
 	@Column(name="vehicle_description")
     private String vehicleDescription;
@@ -115,11 +117,11 @@ public class ResidenceDetails {
 		this.residenceOwnershipOtherDescription = residenceOwnershipOtherDescription;
 	}
 
-	public String getResidenceType() {
+	public ResidenceTypeEnum getResidenceType() {
 		return residenceType;
 	}
 
-	public void setResidenceType(String residenceType) {
+	public void setResidenceType(ResidenceTypeEnum residenceType) {
 		this.residenceType = residenceType;
 	}
 
