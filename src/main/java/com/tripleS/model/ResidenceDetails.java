@@ -14,13 +14,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.tripleS.classLevelConstraints.ValidateResidenceDetails;
 import com.tripleS.enums.ResidenceOwnershipEnum;
 import com.tripleS.enums.ResidenceTypeEnum;
 
+@ValidateResidenceDetails
 @Entity
 @Table(name="residence_details")
 public class ResidenceDetails {
@@ -48,9 +51,11 @@ public class ResidenceDetails {
 	@Column(name="residence_size_in_sqft")
 	@NotNull(message="*Please specify residence size")
 	@DecimalMin(value="1", message="*Please specify residence size")
+	@Digits(integer=6, fraction=2, message="*Please specify valid residence size in sq. ft. e.g. 650")
     private BigDecimal residenceSizeInSqft;
 	
 	@Column(name="residence_rent_amount")
+	@Digits(integer=6, fraction=2, message="*Please specify valid residence rent amount e.g. 8450.50")
     private BigDecimal residenceRentAmount;
 	
 	@Column(name="have_water_supply")

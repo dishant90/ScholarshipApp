@@ -118,28 +118,34 @@ function validateDate(propertyName, propertyValue) {
 
 function showRentAmountDiv() {
 	$("#residenceRentAmountDiv").show();
+	$("#residenceRentAmountErrorDiv").show();
 }
 
 function hideRentAmountDiv() {
 	$("#residenceRentAmountDiv").hide();
+	$("#residenceRentAmountErrorDiv").hide();
 	$("#residenceRentAmount").val(null);
 }
 
 function showResidenceOtherDescription() {
 	$("#residenceOwnershipOtherDescriptionDiv").show();
+	$("#residenceOwnershipOtherDescriptionErrorDiv").show();
 }
 
 function hideResidenceOtherDescription() {
 	$("#residenceOwnershipOtherDescriptionDiv").hide();
+	$("#residenceOwnershipOtherDescriptionErrorDiv").hide();
 	$("#residenceOwnershipOtherDescription").val(null);
 }
 
 function showVehicleDescription() {
 	$("#vehicleDescriptionDiv").show();
+	$("#vehicleDescriptionErrorDiv").show();
 }
 
 function hideVehicleDescription() {
 	$("#vehicleDescriptionDiv").hide();
+	$("#vehicleDescriptionErrorDiv").hide();
 	$("#vehicleDescription").val(null);
 }
 
