@@ -11,11 +11,11 @@
 	<body>
 		<div class="col-sm-2 sidenav nav-fill" th:fragment="caseMenu">
 			<nav class="nav flex-column nav-pills nav-fill">
-				<a class="nav-link active" href="#" th:href="@{/studentFile/basicDetails/} + ${fileNo}">Basic Details</a>
-				<a class="nav-link" href="#" th:href="@{/studentFile/familyDetails/} + ${fileNo}">Family Details</a>
-				<a class="nav-link" href="#" th:href="@{/studentFile/bankAccountDetails/} + ${fileNo}">Bank Account Details</a>
-				<a class="nav-link" href="#" th:href="@{/studentFile/residenceDetails/} + ${fileNo}">Residence Details</a>
-				<a class="nav-link" href="#" th:href="@{/studentFile/curriculumRecord/} + ${fileNo}">Curriculum Record</a>
+				<a class="nav-link" id="basicDetailsLink" th:classappend="${fileNo == null} ? disabled : enabled" href="#" th:href="${fileNo == null} ? '#' : @{/studentFile/basicDetails/} + ${fileNo}">Basic Details</a>
+				<a class="nav-link" id="familyDetailsLink" th:classappend="${fileNo == null} ? disabled : enabled" href="#" th:href="${fileNo == null} ? '#' : @{/studentFile/familyDetails/} + ${fileNo}">Family Details</a>
+				<a class="nav-link" id="bankAccountDetailsLink" th:classappend="${fileNo == null} ? disabled : enabled" href="#" th:href="${fileNo == null} ? '#' : @{/studentFile/bankAccountDetails/} + ${fileNo}">Bank Account Details</a>
+				<a class="nav-link" id="residenceDetailsLink" th:classappend="${fileNo == null} ? disabled : enabled" href="#" th:href="${fileNo == null} ? '#' : @{/studentFile/residenceDetails/} + ${fileNo}">Residence Details</a>
+				<a class="nav-link" id="curriculumRecordLink" th:classappend="${fileNo == null} ? disabled : enabled" href="#" th:href="${fileNo == null} ? '#' : @{/studentFile/curriculumRecord/} + ${fileNo}">Curriculum Record</a>
 				<a class="nav-link disabled" href="#">Disabled</a>
 			</nav>
 		</div>

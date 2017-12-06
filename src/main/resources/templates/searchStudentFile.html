@@ -1,0 +1,166 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/home :: htmlhead">
+</head>
+<body>
+	<div th:replace="fragments/home :: header">&nbsp;</div>
+	<div class="container-fluid text-center">
+		<div class="row content">
+			<div class="col-sm-12 text-left" id="searchStudentFileTab">
+				<div>
+					<form id="searchStudentFileForm" role="form"
+						th:action="@{/searchStudentFile/basic}"
+						th:object="${searchStudentFile}" method="post">
+						<div class="form-group row" id="firstRowLabel">
+							<div class="col-sm-4">
+								<label th:if="${#fields.hasErrors('fileNo')}"
+									th:errors="*{fileNo}" class="validation-message"></label>
+							</div>
+							<div class="col-sm-4">
+								<label th:if="${#fields.hasErrors('fileNo')}"
+									th:errors="*{fileStatus}" class="validation-message"></label>
+							</div>
+							<div class="col-sm-4">
+								<label th:if="${#fields.hasErrors('mobileNo')}"
+									th:errors="*{mobileNo}" class="validation-message"></label>
+							</div>
+						</div>
+						<div class="form-group row" id="firstRow">
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11 inputBorder-placeholder">
+										<label th:text="#{searchStudentFile.fileNo.label}">File
+											No</label> <input type="text" th:field="*{fileNo}"
+											class="form-control" maxlength="10" />
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11 inputBorder-placeholder">
+										<label th:text="#{searchStudentFile.fileStatus.label}">File
+											Status</label> <input type="text" th:field="*{fileStatus}"
+											class="form-control" maxlength="50" />
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11 inputBorder-placeholder">
+										<label th:text="#{searchStudentFile.mobileNo.label}">Mobile
+											No</label> <input type="tel" th:field="*{mobileNo}"
+											class="form-control" maxlength="10" />
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group row" id="secondRowLabel">
+							<div class="col-sm-4">
+								<label th:if="${#fields.hasErrors('firstName')}"
+									th:errors="*{firstName}" class="validation-message"></label>
+							</div>
+							<div class="col-sm-4">
+								<label th:if="${#fields.hasErrors('lastName')}"
+									th:errors="*{lastName}" class="validation-message"></label>
+							</div>
+							<div class="col-sm-4">
+								<label th:if="${#fields.hasErrors('createdBy')}"
+									th:errors="*{createdBy}" class="validation-message"></label>
+							</div>
+						</div>
+						<div class="form-group row" id="secondRow">
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11 inputBorder-placeholder">
+										<label th:text="#{searchStudentFile.firstName.label}">First
+											Name</label> <input th:field="*{firstName}" class="form-control"
+											type="text" maxlength="100" />
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11 inputBorder-placeholder">
+										<label th:text="#{searchStudentFile.lastName.label}">Last
+											Name</label> <input th:field="*{lastName}" class="form-control"
+											type="text" maxlength="100" />
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11 inputBorder-placeholder">
+										<label th:text="#{searchStudentFile.createdBy.label}">Created
+											By</label> <input th:field="*{createdBy}" class="form-control"
+											type="text" maxlength="50" />
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group row" id="thirdRowLabel">
+							<div class="col-sm-4">
+								<label th:if="${#fields.hasErrors('createdDate')}"
+									th:errors="*{createdDate}" class="validation-message"></label>
+							</div>
+							<div class="col-sm-4">
+								<label th:if="${#fields.hasErrors('interviewedBy')}"
+									th:errors="*{interviewedBy}" class="validation-message"></label>
+							</div>
+							<div class="col-sm-4">
+								<label th:if="${#fields.hasErrors('interviewedDate')}"
+									th:errors="*{interviewedDate}" class="validation-message"></label>
+							</div>
+						</div>
+						<div class="form-group row" id="thirdRow">
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11 inputBorder-placeholder">
+										<label th:text="#{searchStudentFile.createdDate.label}">Created
+											Date</label> <input th:field="*{createdDate}" class="form-control dobMask"
+											type="text" />
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11 inputBorder-placeholder">
+										<label th:text="#{searchStudentFile.interviewedBy.label}">Interviewed
+											By</label> <input th:field="*{interviewedBy}" class="form-control"
+											type="tel" maxlength="50" />
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="row">
+									<div class="col-sm-11 inputBorder-placeholder">
+										<label th:text="#{searchStudentFile.interviewedDate.label}">Interviewed
+											Date</label> <input type="text" th:field="*{interviewedDate}"
+											class="form-control dobMask" />
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group row" id="fourthRow">
+							<div class="col-sm-8"></div>
+							<div class="col-sm-2">
+								<button type="button" id="btnClear"
+									class="form-control btn btn-secondary"
+									th:text="#{searchStudentFile.clear.button}">Clear</button>
+							</div>
+							<div class="col-sm-2">
+								<button type="submit" id="btnSearch" name="searchStudentFile"
+									class="form-control btn btn-primary"
+									th:text="#{searchStudentFile.searchFiles.button}">Search
+									File(s)</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div th:replace="fragments/home :: modalFragment">&nbsp;</div>
+		<div th:replace="fragments/home :: notifyMessages">&nbsp;</div>
+	</div>
+	<div th:replace="fragments/home :: javascriptFiles">&nbsp;</div>
+</body>
+</html>

@@ -2,6 +2,22 @@
  * 
  */
 $(function() {
+	var serverURL = "http://localhost:8080";
+
+	$("#searchFileNo").focusout(function(e) {
+			$("form#searchFileForm").submit();
+			return false;
+	});
+	
+    /*$('.nav-link').click(function(e) {
+    	if($(this).hasClass('disabled')) {
+        	return;
+        }
+    	$('.nav-link').removeClass('active');
+        $(this).addClass('active');
+        e.preventDefault();
+    });*/
+	
 	$(".selectBorder-placeholder select").focus(function() {
 		$(this).parent().css("border-color","#5cb3fd");
 	});
@@ -48,6 +64,7 @@ $(function() {
 	});
 	
 	loadResidenceDetailsFields();
+	highlightActiveMenuItem();
 	
 	$("#residenceOwnership").change(function() {
 		loadResidenceOwnershipDependencies($(this));
@@ -178,5 +195,19 @@ function loadVehicleDependencies(haveVehicleObject) {
 		showVehicleDescription();
 	} else {
 		hideVehicleDescription();
+	}
+}
+
+function highlightActiveMenuItem() {
+	if($("#basicDetailsHeader").length > 0){
+		$("#basicDetailsLink").addClass("active");
+	} else if($("#familyDetailsHeader").length > 0){
+		$("#familyDetailsLink").addClass("active");
+	} else if($("#bankAccountDetailsHeader").length > 0){
+		$("#bankAccountDetailsLink").addClass("active");
+	} if($("#residenceDetailsHeader").length > 0){
+		$("#residenceDetailsLink").addClass("active");
+	} if($("#curriculumRecordHeader").length > 0){
+		$("#curriculumRecordLink").addClass("active");
 	}
 }

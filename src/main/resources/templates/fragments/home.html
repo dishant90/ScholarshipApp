@@ -32,13 +32,13 @@
 						  Search File
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-							<a class="dropdown-item" href="#">Search Case</a>
+							<a class="dropdown-item" href="#" th:href="@{/searchStudentFile/basic}">Search Case</a>
 							<a class="dropdown-item" href="#">Search Application</a>
 						</div>
 					</li>
 				</ul>
-				<form class="form-inline my-2 my-lg-0">
-					<input class="form-control mr-sm-2" type="text" placeholder="Enter Case No">
+				<form id="searchFileForm" class="form-inline my-2 my-lg-0" th:action="@{/searchStudentFile/basicDetailsByFileNo}">
+					<input class="form-control mr-sm-2" id="searchFileNo" name="searchFileNo" type="text" placeholder="Enter Case No">
 					<!--<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
 					<!-- <a class="mr-sm-2" href="#" style="color:white"><span th:utext="${userName}"></span></a> -->
 					<a class="mr-sm-2" href="#" style="color:white"><span sec:authentication="name">currentUser</span></a>
