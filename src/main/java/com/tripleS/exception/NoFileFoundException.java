@@ -1,13 +1,13 @@
 package com.tripleS.exception;
 
-public class InvalidFileNumberException extends RuntimeException{
+public class NoFileFoundException extends RuntimeException{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private static final String errCode = "S001";
+	private static final String errCode = "S002";
 	private String errMsg;
 
 	public String getErrCode() {
@@ -22,7 +22,7 @@ public class InvalidFileNumberException extends RuntimeException{
 		this.errMsg = errMsg;
 	}
 
-	public InvalidFileNumberException(String fileNo) {
-		this.errMsg = "Invalid case number: " + fileNo;
+	public NoFileFoundException() {
+		this.errMsg = "No file found";
 	}
 }

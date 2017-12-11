@@ -20,6 +20,7 @@ import com.tripleS.enums.ResidenceOwnershipEnum;
 import com.tripleS.enums.ResidenceTypeEnum;
 import com.tripleS.enums.StateEnum;
 import com.tripleS.exception.InvalidFileNumberException;
+import com.tripleS.exception.NoFileFoundException;
 import com.tripleS.propertyEditor.CountryEnumEditor;
 import com.tripleS.propertyEditor.GenderEnumEditor;
 import com.tripleS.propertyEditor.ResidenceOwnershipEnumEditor;
@@ -51,9 +52,16 @@ public class CommonControllerAdvice {
 	public ModelAndView invalidFileNoRedirection(InvalidFileNumberException ifne) {
 		logger.error("Invalid case number - Error Code: " + ifne.getErrCode());
 		logger.error("Invalid case number - Error Message: " + ifne.getErrMsg());
-		notifyService.addErrorMessage("Invalid case number: " + ifne.getErrMsg());
+		notifyService.addErrorMessage(ifne.getErrMsg());
 		ModelAndView modelAndView = new ModelAndView("fragments/home");
 		return modelAndView;
+	}
+	
+	@ExceptionHandler(NoFileFoundException.class)
+	public void noFileFoundExceptionHandler(NoFileFoundException nffe) {
+		logger.error("Error Code: " + nffe.getErrCode());
+		logger.error("Error Message: " + nffe.getErrMsg());
+		notifyService.addErrorMessage(nffe.getErrMsg());
 	}
 
 }

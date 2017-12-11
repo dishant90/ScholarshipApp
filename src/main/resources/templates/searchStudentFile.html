@@ -9,20 +9,22 @@
 			<div class="col-sm-12 text-left" id="searchStudentFileTab">
 				<div>
 					<form id="searchStudentFileForm" role="form"
-						th:action="@{/searchStudentFile/basic}"
-						th:object="${searchStudentFile}" method="post">
+						th:action="@{/searchStudentFile/basic}" method="post">
 						<div class="form-group row" id="firstRowLabel">
 							<div class="col-sm-4">
-								<label th:if="${#fields.hasErrors('fileNo')}"
-									th:errors="*{fileNo}" class="validation-message"></label>
+								<label th:if="${#fields.hasErrors('searchStudentFile.fileNo')}"
+									th:errors="${searchStudentFile.fileNo}"
+									class="validation-message"></label>
 							</div>
 							<div class="col-sm-4">
-								<label th:if="${#fields.hasErrors('fileNo')}"
-									th:errors="*{fileStatus}" class="validation-message"></label>
+								<label th:if="${#fields.hasErrors('searchStudentFile.fileStatus')}"
+									th:errors="${searchStudentFile.fileStatus}"
+									class="validation-message"></label>
 							</div>
 							<div class="col-sm-4">
-								<label th:if="${#fields.hasErrors('mobileNo')}"
-									th:errors="*{mobileNo}" class="validation-message"></label>
+								<label th:if="${#fields.hasErrors('searchStudentFile.mobileNo')}"
+									th:errors="${searchStudentFile.mobileNo}"
+									class="validation-message"></label>
 							</div>
 						</div>
 						<div class="form-group row" id="firstRow">
@@ -30,7 +32,7 @@
 								<div class="row">
 									<div class="col-sm-11 inputBorder-placeholder">
 										<label th:text="#{searchStudentFile.fileNo.label}">File
-											No</label> <input type="text" th:field="*{fileNo}"
+											No</label> <input type="text" th:field="${searchStudentFile.fileNo}"
 											class="form-control" maxlength="10" />
 									</div>
 								</div>
@@ -39,7 +41,8 @@
 								<div class="row">
 									<div class="col-sm-11 inputBorder-placeholder">
 										<label th:text="#{searchStudentFile.fileStatus.label}">File
-											Status</label> <input type="text" th:field="*{fileStatus}"
+											Status</label> <input type="text"
+											th:field="${searchStudentFile.fileStatus}"
 											class="form-control" maxlength="50" />
 									</div>
 								</div>
@@ -48,7 +51,7 @@
 								<div class="row">
 									<div class="col-sm-11 inputBorder-placeholder">
 										<label th:text="#{searchStudentFile.mobileNo.label}">Mobile
-											No</label> <input type="tel" th:field="*{mobileNo}"
+											No</label> <input type="tel" th:field="${searchStudentFile.mobileNo}"
 											class="form-control" maxlength="10" />
 									</div>
 								</div>
@@ -56,16 +59,19 @@
 						</div>
 						<div class="form-group row" id="secondRowLabel">
 							<div class="col-sm-4">
-								<label th:if="${#fields.hasErrors('firstName')}"
-									th:errors="*{firstName}" class="validation-message"></label>
+								<label th:if="${#fields.hasErrors('searchStudentFile.firstName')}"
+									th:errors="${searchStudentFile.firstName}"
+									class="validation-message"></label>
 							</div>
 							<div class="col-sm-4">
-								<label th:if="${#fields.hasErrors('lastName')}"
-									th:errors="*{lastName}" class="validation-message"></label>
+								<label th:if="${#fields.hasErrors('searchStudentFile.lastName')}"
+									th:errors="${searchStudentFile.lastName}"
+									class="validation-message"></label>
 							</div>
 							<div class="col-sm-4">
-								<label th:if="${#fields.hasErrors('createdBy')}"
-									th:errors="*{createdBy}" class="validation-message"></label>
+								<label th:if="${#fields.hasErrors('searchStudentFile.createdBy')}"
+									th:errors="${searchStudentFile.createdBy}"
+									class="validation-message"></label>
 							</div>
 						</div>
 						<div class="form-group row" id="secondRow">
@@ -73,8 +79,8 @@
 								<div class="row">
 									<div class="col-sm-11 inputBorder-placeholder">
 										<label th:text="#{searchStudentFile.firstName.label}">First
-											Name</label> <input th:field="*{firstName}" class="form-control"
-											type="text" maxlength="100" />
+											Name</label> <input th:field="${searchStudentFile.firstName}"
+											class="form-control" type="text" maxlength="100" />
 									</div>
 								</div>
 							</div>
@@ -82,8 +88,8 @@
 								<div class="row">
 									<div class="col-sm-11 inputBorder-placeholder">
 										<label th:text="#{searchStudentFile.lastName.label}">Last
-											Name</label> <input th:field="*{lastName}" class="form-control"
-											type="text" maxlength="100" />
+											Name</label> <input th:field="${searchStudentFile.lastName}"
+											class="form-control" type="text" maxlength="100" />
 									</div>
 								</div>
 							</div>
@@ -91,24 +97,27 @@
 								<div class="row">
 									<div class="col-sm-11 inputBorder-placeholder">
 										<label th:text="#{searchStudentFile.createdBy.label}">Created
-											By</label> <input th:field="*{createdBy}" class="form-control"
-											type="text" maxlength="50" />
+											By</label> <input th:field="${searchStudentFile.createdBy}"
+											class="form-control" type="text" maxlength="50" />
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="form-group row" id="thirdRowLabel">
 							<div class="col-sm-4">
-								<label th:if="${#fields.hasErrors('createdDate')}"
-									th:errors="*{createdDate}" class="validation-message"></label>
+								<label th:if="${#fields.hasErrors('searchStudentFile.createdDate')}"
+									th:errors="${searchStudentFile.createdDate}"
+									class="validation-message"></label>
 							</div>
 							<div class="col-sm-4">
-								<label th:if="${#fields.hasErrors('interviewedBy')}"
-									th:errors="*{interviewedBy}" class="validation-message"></label>
+								<label th:if="${#fields.hasErrors('searchStudentFile.interviewedBy')}"
+									th:errors="${searchStudentFile.interviewedBy}"
+									class="validation-message"></label>
 							</div>
 							<div class="col-sm-4">
-								<label th:if="${#fields.hasErrors('interviewedDate')}"
-									th:errors="*{interviewedDate}" class="validation-message"></label>
+								<label th:if="${#fields.hasErrors('searchStudentFile.interviewedDate')}"
+									th:errors="${searchStudentFile.interviewedDate}"
+									class="validation-message"></label>
 							</div>
 						</div>
 						<div class="form-group row" id="thirdRow">
@@ -116,8 +125,8 @@
 								<div class="row">
 									<div class="col-sm-11 inputBorder-placeholder">
 										<label th:text="#{searchStudentFile.createdDate.label}">Created
-											Date</label> <input th:field="*{createdDate}" class="form-control dobMask"
-											type="text" />
+											Date</label> <input th:field="${searchStudentFile.createdDate}"
+											class="form-control dobMask" type="text" />
 									</div>
 								</div>
 							</div>
@@ -125,8 +134,8 @@
 								<div class="row">
 									<div class="col-sm-11 inputBorder-placeholder">
 										<label th:text="#{searchStudentFile.interviewedBy.label}">Interviewed
-											By</label> <input th:field="*{interviewedBy}" class="form-control"
-											type="tel" maxlength="50" />
+											By</label> <input th:field="${searchStudentFile.interviewedBy}"
+											class="form-control" type="tel" maxlength="50" />
 									</div>
 								</div>
 							</div>
@@ -134,7 +143,8 @@
 								<div class="row">
 									<div class="col-sm-11 inputBorder-placeholder">
 										<label th:text="#{searchStudentFile.interviewedDate.label}">Interviewed
-											Date</label> <input type="text" th:field="*{interviewedDate}"
+											Date</label> <input type="text"
+											th:field="${searchStudentFile.interviewedDate}"
 											class="form-control dobMask" />
 									</div>
 								</div>
@@ -148,11 +158,64 @@
 									th:text="#{searchStudentFile.clear.button}">Clear</button>
 							</div>
 							<div class="col-sm-2">
-								<button type="submit" id="btnSearch" name="searchStudentFile"
+								<button type="submit" id="btnSearch"
 									class="form-control btn btn-primary"
 									th:text="#{searchStudentFile.searchFiles.button}">Search
 									File(s)</button>
 							</div>
+						</div>
+						<div>
+							<table class="table table-hover" th:if="${studentFilesFound}">
+								<thead>
+									<tr>
+										<th th:text="#{searchStudentFile.fileNo.label}">Case #</th>
+										<th th:text="#{searchStudentFile.fileStatus.label}">Case
+											Status</th>
+										<th th:text="#{searchStudentFile.firstName.label}">First
+											Name</th>
+										<th th:text="#{searchStudentFile.lastName.label}">Last
+											Name</th>
+										<th th:text="#{searchStudentFile.mobileNo.label}">Mobile
+											#</th>
+										<th th:text="#{searchStudentFile.createdBy.label}">Created
+											By</th>
+										<th th:text="#{searchStudentFile.createdDate.label}">Created
+											Date</th>
+										<th th:text="#{searchStudentFile.interviewedBy.label}">Interviewed
+											By</th>
+										<th th:text="#{searchStudentFile.interviewedDate.label}">Interviewed
+											Date</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr th:each="row,rowStat : ${studentFilesFound}">
+										<td><a
+											th:href="*{studentFilesFound[__${rowStat.index}__].fileNo == null} ? '#' : @{/studentFile/basicDetails/} + *{studentFilesFound[__${rowStat.index}__].fileNo}"
+											th:text="*{studentFilesFound[__${rowStat.index}__].fileNo}">alphanumeric</a></td>
+										<td><label
+											th:text="*{studentFilesFound[__${rowStat.index}__].fileStatus}">Current
+												case status</label></td>
+										<td><label
+											th:text="*{studentFilesFound[__${rowStat.index}__].entityDetails.firstName}">John</label></td>
+										<td><label
+											th:text="*{studentFilesFound[__${rowStat.index}__].entityDetails.lastName}">Doe</label></td>
+										<td><label
+											th:text="*{studentFilesFound[__${rowStat.index}__].entityDetails.mobileNo}">SBI0001</label></td>
+										<td><label
+											th:text="*{studentFilesFound[__${rowStat.index}__].createdBy}">Name
+												1</label></td>
+										<td><label
+											th:text="*{studentFilesFound[__${rowStat.index}__].createdDate}">Name
+												1</label></td>
+										<td><label
+											th:text="*{studentFilesFound[__${rowStat.index}__].interviewedBy}">Name
+												1</label></td>
+										<td><label
+											th:text="*{studentFilesFound[__${rowStat.index}__].interviewedDate}">Name
+												1</label></td>
+									</tr>
+								</tbody>
+							</table>
 						</div>
 					</form>
 				</div>

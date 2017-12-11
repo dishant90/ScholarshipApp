@@ -54,10 +54,10 @@ public class StudentResidenceDetailsController {
 				model = getResidenceDetailsByFileNo(fileNo, model);
 				return "residenceDetails";
 			} else {
-				throw new InvalidFileNumberException("S001", fileNo);
+				throw new InvalidFileNumberException(fileNo);
 			}
 		} else {
-			throw new InvalidFileNumberException("S001", fileNo);
+			throw new InvalidFileNumberException(fileNo);
 		}
 	}
 

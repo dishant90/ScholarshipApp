@@ -56,10 +56,10 @@ public class StudentCurriculumRecordController {
 				model = getBankAccountDetailsByFileNo(fileNo, model);
 				return "curriculumRecord";
 			} else {
-				throw new InvalidFileNumberException("S001", fileNo);
+				throw new InvalidFileNumberException(fileNo);
 			}
 		} else {
-			throw new InvalidFileNumberException("S001", fileNo);
+			throw new InvalidFileNumberException(fileNo);
 		}
 	}
 	
@@ -72,7 +72,7 @@ public class StudentCurriculumRecordController {
 				model = getBankAccountDetailsByFileNo(fileNo, model);
 				return "bankAccountDetails";
 			} else {
-				throw new InvalidFileNumberException("S001", fileNo);
+				throw new InvalidFileNumberException(fileNo);
 			}
 		} else {
 			logger.info("File No is " + fileNo);
@@ -110,7 +110,7 @@ public class StudentCurriculumRecordController {
 			redirectAttributes.addFlashAttribute("fileNo", fileNo);
 			modelAndView.setViewName("redirect:/studentFile/residenceDetails");
 		} else {
-			throw new InvalidFileNumberException("S001", fileNo);
+			throw new InvalidFileNumberException(fileNo);
 		}
 		return modelAndView;
 	}

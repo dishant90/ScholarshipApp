@@ -55,10 +55,10 @@ public class StudentFamilyDetailsController {
 				model = getFamilyDetailsByFileNo(fileNo, model);
 				return "familyDetails";
 			} else {
-				throw new InvalidFileNumberException("S001", fileNo);
+				throw new InvalidFileNumberException(fileNo);
 			}
 		} else {
-			throw new InvalidFileNumberException("S001", fileNo);
+			throw new InvalidFileNumberException(fileNo);
 		}
 	}
 
@@ -135,7 +135,7 @@ public class StudentFamilyDetailsController {
 			redirectAttributes.addFlashAttribute("fileNo", fileNo);
 			modelAndView.setViewName("redirect:/studentFile/bankAccountDetails");
 		} else {
-			throw new InvalidFileNumberException("S001", fileNo);
+			throw new InvalidFileNumberException(fileNo);
 		}
 		return modelAndView;
 	}

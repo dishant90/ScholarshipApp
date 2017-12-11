@@ -50,10 +50,10 @@ public class StudentBasicDetailsController {
 				model.asMap().put("studentFile", studentFile);
 				return "basicDetails";
 			} else {
-				throw new InvalidFileNumberException("S001", fileNo);
+				throw new InvalidFileNumberException(fileNo);
 			}
 		} else {
-			throw new InvalidFileNumberException("S001", fileNo);
+			throw new InvalidFileNumberException(fileNo);
 		}
 	}
 

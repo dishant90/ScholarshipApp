@@ -1,4 +1,8 @@
 /* CSS declarations go here */
+thead {
+	background-color: #f1f1f1;
+}
+
 .caseSearchMargin {
 	margin-top: 4%;
 }
