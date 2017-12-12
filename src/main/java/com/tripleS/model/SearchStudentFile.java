@@ -2,12 +2,18 @@ package com.tripleS.model;
 
 import java.util.Date;
 
+import javax.validation.constraints.Pattern;
+
+import com.tripleS.classLevelConstraints.ValidateSearchStudentFile;
+
+@ValidateSearchStudentFile
 public class SearchStudentFile {
 	
     private String fileNo;
 	
     private String fileStatus;
     
+    @Pattern(regexp = "(^$|[0-9]{10})", message = "*Mobile number must be exactly 10 digits")
     private String mobileNo;
     
     private String firstName;

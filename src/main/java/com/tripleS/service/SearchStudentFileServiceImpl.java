@@ -1,6 +1,5 @@
 package com.tripleS.service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -60,37 +59,37 @@ public class SearchStudentFileServiceImpl implements SearchStudentFileService {
 			QStudentFile studentFile = QStudentFile.studentFile;
 			
 			// add the filters into the collection
-			if(fileNo != null && !fileNo.isEmpty()){
+			if(fileNo != null && !fileNo.trim().isEmpty()){
 				hasFileNo = studentFile.fileNo.eq(fileNo);
 				applicantSearchCriteria.add(hasFileNo);
 				logger.info("Filter File No Added");
 			}
-			if(fileStatus != null && !fileStatus.isEmpty()){
+			if(fileStatus != null && !fileStatus.trim().isEmpty()){
 				hasFileStatus = studentFile.fileStatus.eq(fileStatus);
 				applicantSearchCriteria.add(hasFileStatus);
 				logger.info("Filter File Status Added");
 			}
-			if(mobileNo != null && !mobileNo.isEmpty()){
+			if(mobileNo != null && !mobileNo.trim().isEmpty()){
 				hasMobileNo = studentFile.entityDetails.mobileNo.eq(mobileNo);
 				applicantSearchCriteria.add(hasMobileNo);
 				logger.info("Filter Mobile Number Added");
 			}
-			if(firstName != null && !firstName.isEmpty()){
+			if(firstName != null && !firstName.trim().isEmpty()){
 				hasFirstName = studentFile.entityDetails.firstName.eq(firstName);
 				applicantSearchCriteria.add(hasFirstName);
 				logger.info("Filter First Name Added");
 			}
-			if(lastName != null && !lastName.isEmpty()){
+			if(lastName != null && !lastName.trim().isEmpty()){
 				hasLastName = studentFile.entityDetails.lastName.eq(lastName);
 				applicantSearchCriteria.add(hasLastName);
 				logger.info("Filter Last Name Added");
 			}
-			if(createdBy != null && !createdBy.isEmpty()){
+			if(createdBy != null && !createdBy.trim().isEmpty()){
 				hasCreatedBy = studentFile.createdBy.eq(createdBy);
 				applicantSearchCriteria.add(hasCreatedBy);
 				logger.info("Filter Created By Added");
 			}
-			if(interviewedBy != null && !interviewedBy.isEmpty()){
+			if(interviewedBy != null && !interviewedBy.trim().isEmpty()){
 				hasInterviewedBy = studentFile.interviewedBy.eq(interviewedBy);
 				applicantSearchCriteria.add(hasInterviewedBy);
 				logger.info("Filter Interviewed By Added");
