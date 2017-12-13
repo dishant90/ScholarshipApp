@@ -53,18 +53,58 @@ $(function() {
 		var isValid = validateDate("Date of Birth", $(".dobMask").val(), true);
 		return isValid;
 	});
+	
+	$("#studentBasicForm").find("#btnClear").click(function() {
+		$("#studentBasicForm").find(':input').not(':button, :submit, :reset, :hidden, :checkbox, :radio, select').val('');
+		$("#studentBasicForm").find('select').val("NONE");
+		$("#studentBasicForm").find(':checkbox, :radio').prop('checked', false);
+		/*$("#entityDetails\\.firstName").val("");
+		$("#entityDetails\\.middleName").val("");
+		$("#entityDetails\\.lastName").val("");
+		$("#entityDetails\\.studentDetails\\.gender").val("");
+		$("#entityDetails\\.emailID").val("");
+		$("#entityDetails\\.mobileNo").val("");
+		$("#entityDetails\\.alternateContactNo").val("");
+		$("#entityDetails\\.telephoneNo").val("");
+		$("#entityDetails\\.entityAddressDetails\\.addressLine1").val("");
+		$("#entityDetails\\.entityAddressDetails\\.addressLine2").val("");
+		$("#entityDetails\\.entityAddressDetails\\.country").val("");
+		$("#entityDetails\\.entityAddressDetails\\.state").val("");
+		$("#entityDetails\\.entityAddressDetails\\.city").val("");
+		$("#entityDetails\\.entityAddressDetails\\.pincode").val("");
+		$("#entityDetails\\.studentDetails\\.dateOfBirth").val(null);
+		$("#entityDetails\\.studentDetails\\.placeOfBirth").val("");
+		$("#entityDetails\\.studentDetails\\.religion").val("");
+		$("#entityDetails\\.studentDetails\\.motherTongue").val("");
+		$("#entityDetails\\.studentDetails\\.aimInLife").val("");
+		$("#entityDetails\\.studentDetails\\.describePrizeDetails").val("");
+		$("#entityDetails\\.studentDetails\\.describeIfOtherFamilyMembersGotHelp").val("");
+		$("#entityDetails\\.studentDetails\\.describeOtherProblemsInFamily").val("");
+		$("#entityDetails\\.studentDetails\\.describeJobBusinessDetails").val("");*/
+	});
 
-	$("#searchStudentFileForm").find("#btnSearch").click(
-			function() {
-				var isValid = validateDate("Created Date", $("#createdDate")
-						.val(), false);
-				if (isValid) {
-					isValid = validateDate("Interviewed Date", $(
-							"#interviewedDate").val(), false);
-				}
-				return isValid;
-			});
+	$("#residenceDetailsForm").find("#btnClear").click(function() {
+		$("#residenceDetailsForm").find(':input').not(':button, :submit, :reset, :hidden, :checkbox, :radio, select').val('');
+		$("#residenceDetailsForm").find('select').val("NONE");
+		$("#residenceDetailsForm").find(':checkbox, :radio').prop('checked', false);
+	});
+	
+	$("#searchStudentFileForm").find("#btnSearch").click(function() {
+		var isValid = validateDate("Created Date", $("#createdDate")
+				.val(), false);
+		if (isValid) {
+			isValid = validateDate("Interviewed Date", $(
+					"#interviewedDate").val(), false);
+		}
+		return isValid;
+	});
 
+	$("#searchStudentFileForm").find("#btnClear").click(function() {
+		$("#searchStudentFileForm").find(':input').not(':button, :submit, :reset, :hidden, :checkbox, :radio, select').val('');
+		$("#searchStudentFileForm").find('select').val("NONE");
+		$("#searchStudentFileForm").find(':checkbox, :radio').prop('checked', false);
+	});
+	
 	loadResidenceDetailsFields();
 	highlightActiveMenuItem();
 

@@ -1,6 +1,8 @@
 package com.tripleS.controller;
 
 import javax.validation.Valid;
+
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +65,12 @@ public class StudentBasicDetailsController {
 		ModelAndView modelAndView = new ModelAndView();
 		if (bindingResult.hasErrors()) {
 			logger.error("Found validation errors while saving student's basic details");
+			if(studentFile != null) {
+				if(StringUtils.isNotBlank(studentFile.getFileNo())){
+					logger.info("File already exists");
+					modelAndView.addObject("fileNo", studentFile.getFileNo());
+				}
+			}
 			modelAndView.addObject("studentFile", studentFile);
 			modelAndView.setViewName("basicDetails");
 		} else {
@@ -93,6 +101,12 @@ public class StudentBasicDetailsController {
 		ModelAndView modelAndView = new ModelAndView();
 		if (bindingResult.hasErrors()) {
 			logger.error("Found validation errors while saving student's basic details");
+			if(studentFile != null) {
+				if(StringUtils.isNotBlank(studentFile.getFileNo())){
+					logger.info("File already exists");
+					modelAndView.addObject("fileNo", studentFile.getFileNo());
+				}
+			}
 			modelAndView.addObject("studentFile", studentFile);
 		} else {
 			logger.info("Found no validation errors");
