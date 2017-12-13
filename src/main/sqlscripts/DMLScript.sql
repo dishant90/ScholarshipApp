@@ -2,6 +2,14 @@
 use triplesdb;
 INSERT INTO role (name) VALUES ('ADMIN');
 
-Select max(File_No) from student_file;
-
-Select * from student_file;
+-- 13th Dev 2017
+INSERT INTO role (name) VALUES ('FIRST_INTERVIEWER');
+INSERT INTO role (name) VALUES ('FILE_VERIFIER');
+INSERT INTO role (name) VALUES ('APPLICATION_VERIFIER');
+INSERT INTO role (name) VALUES ('FAMILY_BACKGROUND_ENQUIRER');
+INSERT INTO role (name) VALUES ('LOANAPPROVER');
+INSERT INTO role (name) VALUES ('TRUSTEE');
+INSERT INTO role (name) VALUES ('SYSTEM_ADMINISTRATOR');
+INSERT INTO role (name) VALUES ('GENERAL_ADMINISTRATOR');
+INSERT INTO role (name) VALUES ('DATA_ENTRY_OPERATOR');
+INSERT INTO role (name) VALUES ('FINANCE_MANAGER');
