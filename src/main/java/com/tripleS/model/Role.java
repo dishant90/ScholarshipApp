@@ -1,6 +1,9 @@
 package com.tripleS.model;
 
 import javax.persistence.*;
+
+import com.tripleS.enums.RoleEnum;
+
 import java.util.Set;
 
 @Entity
@@ -11,7 +14,8 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-    private String name;
+	@Enumerated(EnumType.STRING)
+    private RoleEnum name;
  
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
@@ -24,11 +28,11 @@ public class Role {
         this.id = id;
     }
 
-    public String getName() {
+    public RoleEnum getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(RoleEnum name) {
         this.name = name;
     }
 
