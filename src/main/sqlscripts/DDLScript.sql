@@ -290,3 +290,12 @@ ALTER TABLE residence_details
  
  -- 11th Nov 2017
  ALTER TABLE student_entity_details ADD COLUMN gender CHAR(1);
+ 
+ -- 17th Dec 2017
+ CREATE TABLE `password_reset_token` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `token` varchar(5000) DEFAULT NULL,
+  `expiry_date` date DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;

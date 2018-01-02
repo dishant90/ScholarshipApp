@@ -48,7 +48,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.
 			authorizeRequests()
 				.antMatchers("/").permitAll()
-				.antMatchers("/login").permitAll()
+				.antMatchers("/login", "/updatePassword*",
+						"/forgotPassword*", "/user/resetPassword*",
+						"/user/changePassword*",
+						"/user/savePassword*").permitAll()
 				.antMatchers("/registration").permitAll()
 				.antMatchers("/admin/**").hasAuthority("SYSTEM_ADMINISTRATOR").anyRequest()
 				.authenticated().and().csrf().disable().formLogin()

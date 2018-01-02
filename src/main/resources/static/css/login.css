@@ -35,3 +35,6 @@ input[type="password"] {
   border-top-right-radius: 0;
 }
 
+.password-verdict{
+	color:#000;
+}
