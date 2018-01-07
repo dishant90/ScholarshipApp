@@ -3,39 +3,43 @@
 	xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Student Scholarship Application</title>
-	<link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
-  	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
-  	<script src="../js/jquery-3.1.1.min.js" th:src="@{/js/jquery-3.1.1.min.js}"></script>
-  	<script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
-  	<script src="../js/bootstrap-4.0.0.min.js" th:src="@{/js/bootstrap-4.0.0.min.js}"></script>
+<title>Student Scholarship Application</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/bootstrap.min.css}" />
+<script src="../js/jquery-3.1.1.min.js"
+	th:src="@{/js/jquery-3.1.1.min.js}"></script>
+<script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+<script src="../js/bootstrap-4.0.0.min.js"
+	th:src="@{/js/bootstrap-4.0.0.min.js}"></script>
 </head>
 
 <body>
-	<form th:action="@{/registration}" method="get">
-		<button class="btn btn-md btn-warning btn-block" type="Submit">Go
-			To Registration Page</button>
-	</form>
-	<form th:action="@{/forgotPassword}" method="get">
-		<button class="btn btn-md btn-warning btn-block" type="Submit"
-			th:text="#{login.forgotPassword.label}">Forgot Password?</button>
-	</form>
 	<div class="container">
-		<!-- <img th:src="@{/images/login.jpg}" class="img-responsive mx-auto" width="300" height="300" alt="Logo" /> -->
-		<form th:action="@{/login}" method="POST" class="form-signin">
-			<h3 class="form-signin-heading" th:text="Welcome"></h3>
-			<br/>
-			 
-			<input type="text" id="email" name="emailID"  th:placeholder="Email"
-				class="form-control" /> <br/> 
-			<input type="password"  th:placeholder="Password"
-				id="password" name="password" class="form-control" /> <br /> 
-				
-			<div align="center" th:if="${param.error}">
-				<p style="font-size: 20; color: #FF1C19;">Email or Password invalid, please verify</p>
-			</div>
-			<button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit" th:text="Login"></button>
-		</form>
+		<div class="form-signin">
+			<form th:action="@{/login}" method="POST">
+				<div class="form-signin-heading">
+					<h3 th:text="#{login.welcome.label}"></h3>
+					<img th:src="@{/images/sundershewaksabhalogo.jpg}"
+						class="img-responsive mx-auto" width="200" height="200" alt="Logo" />
+				</div>
+				<input type="text" id="email" name="emailID"
+					th:placeholder="#{login.email.label}" class="form-control" /> <br />
+				<input type="password" th:placeholder="#{login.password.label}"
+					id="password" name="password" class="form-control" /> <br />
+
+				<div align="center" th:if="${param.error}">
+					<p style="font-size: 20; color: #FF1C19;" th:text="#{login.invalidCredentials.label}"></p>
+				</div>
+				<button class="btn btn-lg btn-primary btn-block" name="Submit"
+					value="Login" type="Submit" th:text="#{login.button}"></button>
+			</form>
+			<br /> <a class="mr-sm-6" th:href="@{/registration}"
+				th:text="#{login.navigateToRegistrationPage.anchor}"> </a> <a
+				class="mr-sm-6 float-right" th:href="@{/forgotPassword}"
+				th:text="#{login.navigateToForgotPassword.anchor}"> </a>
+		</div>
+		<div th:if="${param.message != null}" class="alert alert-info" th:text="${param.message[0]}">message</div>
 	</div>
 </body>
 </html>

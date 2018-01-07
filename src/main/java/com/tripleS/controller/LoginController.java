@@ -9,7 +9,7 @@ import javax.validation.Valid;
 import com.tripleS.util.GenericResponse;
 
 import com.tripleS.service.UserSecurityService;
-
+import com.tripleS.exception.UserNotFoundException;
 import com.tripleS.model.PasswordDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,8 +85,11 @@ public class LoginController {
                 .toString();
             userService.createPasswordResetTokenForUser(user, token);
             mailSender.send(constructResetTokenEmail(getAppUrl(request), request.getLocale(), token, user));
+            return new GenericResponse(messages.getMessage("message.resetPasswordEmail", null, request.getLocale()));
+        } else {
+        	throw new UserNotFoundException();
         }
-        return new GenericResponse(messages.getMessage("message.resetPasswordEmail", null, request.getLocale()));
+        
     }
     
     @RequestMapping(value = "/user/changePassword", method = RequestMethod.GET)
@@ -127,7 +130,7 @@ public class LoginController {
 		User userExists = userService.findUserByEmailID(user.getEmailID());
 		if (userExists != null) {
 			bindingResult.rejectValue("email", "error.user",
-					"There is already a user registered with the email provided");
+					"There is already a user registered with the email id provided");
 		}
 		if (bindingResult.hasErrors()) {
 			modelAndView.setViewName("registration");

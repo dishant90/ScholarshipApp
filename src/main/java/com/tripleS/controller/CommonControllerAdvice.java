@@ -4,15 +4,25 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.tripleS.exception.UserAlreadyExistException;
+import com.tripleS.exception.UserNotFoundException;
+import com.tripleS.util.GenericResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.context.MessageSource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailAuthenticationException;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.tripleS.enums.CountryEnum;
 import com.tripleS.enums.GenderEnum;
@@ -29,12 +39,15 @@ import com.tripleS.propertyEditor.StateEnumEditor;
 import com.tripleS.service.NotificationService;
 
 @ControllerAdvice
-public class CommonControllerAdvice {
+public class CommonControllerAdvice extends ResponseEntityExceptionHandler  {
 
 	private static final Logger logger = LoggerFactory.getLogger(CommonControllerAdvice.class);
 
 	@Autowired
 	private NotificationService notifyService;
+	
+	@Autowired
+    private MessageSource messages;
 
 	@InitBinder
 	public void initBinder(WebDataBinder dataBinder) {
@@ -64,4 +77,27 @@ public class CommonControllerAdvice {
 		notifyService.addErrorMessage(nffe.getErrMsg());
 	}
 
+	 // 404
+    @ExceptionHandler({ UserNotFoundException.class })
+    public ResponseEntity<Object> handleUserNotFound(final RuntimeException ex, final WebRequest request) {
+        logger.error("404 Status Code", ex);
+        final GenericResponse bodyOfResponse = new GenericResponse(messages.getMessage("message.userNotFound", null, request.getLocale()), "UserNotFound");
+        return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
+    // 409
+    @ExceptionHandler({ UserAlreadyExistException.class })
+    public ResponseEntity<Object> handleUserAlreadyExist(final RuntimeException ex, final WebRequest request) {
+        logger.error("409 Status Code", ex);
+        final GenericResponse bodyOfResponse = new GenericResponse(messages.getMessage("message.userAlreadyExist", null, request.getLocale()), "UserAlreadyExist");
+        return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.CONFLICT, request);
+    }
+
+    // 500
+    @ExceptionHandler({ MailAuthenticationException.class })
+    public ResponseEntity<Object> handleMail(final RuntimeException ex, final WebRequest request) {
+        logger.error("500 Status Code", ex);
+        final GenericResponse bodyOfResponse = new GenericResponse(messages.getMessage("message.email.config.error", null, request.getLocale()), "MailError");
+        return new ResponseEntity<Object>(bodyOfResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
