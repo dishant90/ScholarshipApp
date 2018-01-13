@@ -50,7 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/").permitAll()
 				.antMatchers("/login", "/updatePassword*",
 						"/forgotPassword*", "/user/resetPassword*",
-						"/user/changePassword*",
+						"/user/updatePassword*",
 						"/user/savePassword*").permitAll()
 				.antMatchers("/registration").permitAll()
 				.antMatchers("/admin/**").hasAuthority("SYSTEM_ADMINISTRATOR").anyRequest()

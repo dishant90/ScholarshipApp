@@ -40,6 +40,7 @@
 				th:text="#{login.navigateToForgotPassword.anchor}"> </a>
 		</div>
 		<div th:if="${param.message != null}" class="alert alert-info" th:text="${param.message[0]}">message</div>
+		<div th:if="${message != null}" class="alert alert-info" th:text="${message}">message</div>
 	</div>
 </body>
 </html>

@@ -28,6 +28,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.tripleS.model.User;
 import com.tripleS.service.UserService;
 
@@ -92,15 +94,16 @@ public class LoginController {
         
     }
     
-    @RequestMapping(value = "/user/changePassword", method = RequestMethod.GET)
-    public String showChangePasswordPage(Locale locale, Model model, 
-      @RequestParam("id") long id, @RequestParam("token") String token) {
+    @RequestMapping(value = "/user/updatePassword", method = RequestMethod.GET)
+    //public String showChangePasswordPage(Locale locale, Model model,
+    public String showChangePasswordPage(Locale locale, @RequestParam("id") long id, 
+    		@RequestParam("token") String token, RedirectAttributes redirectAttributes) {
         String result = userSecurityService.validatePasswordResetToken(id, token);
         if (result != null) {
-            model.addAttribute("message", 
+        	redirectAttributes.addFlashAttribute("message", 
               messages.getMessage("auth.message." + result, null, locale));
-            logger.info("Token invalid");
-            return "login";
+            logger.info("Token invalid message: " + messages.getMessage("auth.message." + result, null, locale));
+            return "redirect:/login?lang=" + locale.getLanguage();
         }
         logger.info("Token validated successfully");
         return "updatePassword";
@@ -118,7 +121,7 @@ public class LoginController {
         if(user != null) {
         	logger.info("Password save request for " + user.getFirstName());
         	userService.changeUserPassword(user, passwordDto.getNewPassword());
-        	return new GenericResponse(messages.getMessage("message.resetPasswordSuccessfully", null, locale));
+        	return new GenericResponse(messages.getMessage("message.resetPasswordSuccessful", null, locale));
         } else {
         	return new GenericResponse(messages.getMessage("message.resetPasswordFailure", null, locale));
         }
@@ -164,7 +167,7 @@ public class LoginController {
 	}
 	
 	private SimpleMailMessage constructResetTokenEmail(final String contextPath, final Locale locale, final String token, final User user) {
-        final String url = contextPath + "/user/changePassword?id=" + user.getId() + "&token=" + token;
+        final String url = contextPath + "/user/updatePassword?id=" + user.getId() + "&token=" + token;
         final String message = messages.getMessage("message.resetPassword", null, locale);
         return constructEmail("Reset Password", message + " \r\n" + url, user);
     }
