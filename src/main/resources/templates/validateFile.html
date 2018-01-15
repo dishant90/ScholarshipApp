@@ -1,0 +1,55 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/home :: htmlhead">
+</head>
+<body>
+	<div th:replace="fragments/home :: header">&nbsp;</div>
+	<div class="container-fluid text-center">
+		<div class="row content">
+			<div th:replace="fragments/caseMenu :: caseMenu">&nbsp;</div>
+			<div class="col-sm-10 text-left" id="studentBasicDetailsTab">
+				<div>
+					<div class="header">
+						<div class="displayLeft" id="basicDetailsHeader"
+							th:text="#{basicDetails.header}"></div>
+						<div class="displayRight" th:if="${fileNo}">
+							Case # <label class="blueText" th:text="${fileNo}">Case
+								No Value</label>
+						</div>
+					</div>
+					<form id="validateStudentFileForm" role="form"
+						th:action="@{/studentFile/validateFile}" method="post">
+						<input type="hidden" th:value="${fileNo}" name="fileNo" />
+						<div th:if="${!validFile}" class="alert alert-info"
+							th:text="#{validateFile.requiredDetails.label}">Mandatory Screens:</div>
+						<div th:if="${validFile}" class="alert alert-info"
+							th:text="#{validateFile.successMessage.label}">Cse
+							validated successfully</div>
+						<table th:if="${!validFile}" class="table table-hover">
+							<tbody>
+								<tr th:each="row,rowStat : ${requiredDetails}">
+									<td th:text="${rowStat.count}">1</td>
+									<td><label
+										th:text="*{requiredDetails[__${rowStat.index}__]}">Required
+											Details Screen 1</label></td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="form-group row" id="firstRow">
+							<div class="col-sm-10"></div>
+							<div class="col-sm-2">
+								<button th:text="#{validateFile.submit.button}" type="submit"
+									id="btnSubmitFile" name="submitFile"
+									class="form-control btn btn-primary">Submit File</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div th:replace="fragments/home :: modalFragment">&nbsp;</div>
+		<div th:replace="fragments/home :: notifyMessages">&nbsp;</div>
+	</div>
+	<div th:replace="fragments/home :: javascriptFiles">&nbsp;</div>
+</body>
+</html>

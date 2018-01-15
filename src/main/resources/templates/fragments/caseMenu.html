@@ -16,7 +16,9 @@
 				<a class="nav-link" id="bankAccountDetailsLink" th:classappend="${fileNo == null} ? disabled : enabled" href="#" th:href="${fileNo == null} ? '#' : @{/studentFile/bankAccountDetails/} + ${fileNo}">Bank Account Details</a>
 				<a class="nav-link" id="residenceDetailsLink" th:classappend="${fileNo == null} ? disabled : enabled" href="#" th:href="${fileNo == null} ? '#' : @{/studentFile/residenceDetails/} + ${fileNo}">Residence Details</a>
 				<a class="nav-link" id="curriculumRecordLink" th:classappend="${fileNo == null} ? disabled : enabled" href="#" th:href="${fileNo == null} ? '#' : @{/studentFile/curriculumRecord/} + ${fileNo}">Curriculum Record</a>
-				<a class="nav-link disabled" href="#">Disabled</a>
+				<a class="nav-link disabled" id="referencesLink" th:classappend="${fileNo == null} ? disabled : enabled" href="#">References</a>
+				<a class="nav-link disabled" id="helpFromOtherSourcesLink" th:classappend="${fileNo == null} ? disabled : enabled" href="#">Help from Other Sources</a>
+				<a class="nav-link" id="validateFileLink" th:classappend="${fileNo == null} ? disabled : enabled" th:href="${fileNo == null} ? '#' : @{/studentFile/validateFile/} + ${fileNo}">Validate File</a>
 			</nav>
 		</div>
 		<script src="../js/jquery-3.1.1.min.js" th:src="@{/js/jquery-3.1.1.min.js}"></script>
