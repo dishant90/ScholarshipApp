@@ -4,6 +4,8 @@ import java.util.Date;
 import javax.persistence.*;
 import javax.validation.Valid;
 
+import com.tripleS.enums.FileStatusEnum;
+
 @Entity
 @Table(name="student_file")
 public class StudentFile {
@@ -16,8 +18,9 @@ public class StudentFile {
     private String fileNo;
 	
 	@Column(name="file_status")
+	@Enumerated(EnumType.STRING)
 	//@NotEmpty(message="*File status cannot be empty")
-    private String fileStatus;
+    private FileStatusEnum fileStatus;
 	
 	@Column(name="created_by")
 	//@NotEmpty(message="*Created By cannot be empty")
@@ -51,10 +54,10 @@ public class StudentFile {
 	public void setFileNo(String fileNo) {
 		this.fileNo = fileNo;
 	}
-	public String getFileStatus() {
+	public FileStatusEnum getFileStatus() {
 		return fileStatus;
 	}
-	public void setFileStatus(String fileStatus) {
+	public void setFileStatus(FileStatusEnum fileStatus) {
 		this.fileStatus = fileStatus;
 	}
 	public String getCreatedBy() {

@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.tripleS.enums.CountryEnum;
+import com.tripleS.enums.FileStatusEnum;
 import com.tripleS.enums.GenderEnum;
 import com.tripleS.enums.ResidenceOwnershipEnum;
 import com.tripleS.enums.ResidenceTypeEnum;
@@ -32,6 +33,7 @@ import com.tripleS.enums.StateEnum;
 import com.tripleS.exception.InvalidFileNumberException;
 import com.tripleS.exception.NoFileFoundException;
 import com.tripleS.propertyEditor.CountryEnumEditor;
+import com.tripleS.propertyEditor.FileStatusEnumEditor;
 import com.tripleS.propertyEditor.GenderEnumEditor;
 import com.tripleS.propertyEditor.ResidenceOwnershipEnumEditor;
 import com.tripleS.propertyEditor.ResidenceTypeEnumEditor;
@@ -59,6 +61,7 @@ public class CommonControllerAdvice extends ResponseEntityExceptionHandler  {
 		dataBinder.registerCustomEditor(GenderEnum.class, new GenderEnumEditor());
 		dataBinder.registerCustomEditor(ResidenceOwnershipEnum.class, new ResidenceOwnershipEnumEditor());
 		dataBinder.registerCustomEditor(ResidenceTypeEnum.class, new ResidenceTypeEnumEditor());
+		dataBinder.registerCustomEditor(FileStatusEnum.class, new FileStatusEnumEditor());
 	}
 
 	@ExceptionHandler(InvalidFileNumberException.class)

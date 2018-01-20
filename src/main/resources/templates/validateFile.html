@@ -22,9 +22,12 @@
 						<input type="hidden" th:value="${fileNo}" name="fileNo" />
 						<div th:if="${!validFile}" class="alert alert-info"
 							th:text="#{validateFile.requiredDetails.label}">Mandatory Screens:</div>
-						<div th:if="${validFile}" class="alert alert-info"
-							th:text="#{validateFile.successMessage.label}">Cse
+						<div th:if="${validFile and !fileSubmitted}" class="alert alert-info"
+							th:text="#{validateFile.successMessage.label}">Case
 							validated successfully</div>
+						<div th:if="${validFile and fileSubmitted}" class="alert alert-info"
+							th:text="#{validateFile.fileAlreadySubmitted.label}">Case
+							already submitted</div>
 						<table th:if="${!validFile}" class="table table-hover">
 							<tbody>
 								<tr th:each="row,rowStat : ${requiredDetails}">
@@ -35,7 +38,7 @@
 								</tr>
 							</tbody>
 						</table>
-						<div class="form-group row" id="firstRow">
+						<div th:if="${validFile and !fileSubmitted}" class="form-group row" id="firstRow">
 							<div class="col-sm-10"></div>
 							<div class="col-sm-2">
 								<button th:text="#{validateFile.submit.button}" type="submit"

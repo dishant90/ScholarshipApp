@@ -5,13 +5,14 @@ import java.util.Date;
 import javax.validation.constraints.Pattern;
 
 import com.tripleS.classLevelConstraints.ValidateSearchStudentFile;
+import com.tripleS.enums.FileStatusEnum;
 
 @ValidateSearchStudentFile
 public class SearchStudentFile {
 	
     private String fileNo;
 	
-    private String fileStatus;
+    private FileStatusEnum fileStatus;
     
     @Pattern(regexp = "(^$|[0-9]{10})", message = "*Mobile number must be exactly 10 digits")
     private String mobileNo;
@@ -34,10 +35,10 @@ public class SearchStudentFile {
 	public void setFileNo(String fileNo) {
 		this.fileNo = fileNo;
 	}
-	public String getFileStatus() {
+	public FileStatusEnum getFileStatus() {
 		return fileStatus;
 	}
-	public void setFileStatus(String fileStatus) {
+	public void setFileStatus(FileStatusEnum fileStatus) {
 		this.fileStatus = fileStatus;
 	}
 	public String getMobileNo() {

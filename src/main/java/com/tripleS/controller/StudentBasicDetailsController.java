@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.tripleS.enums.FileStatusEnum;
 import com.tripleS.exception.InvalidFileNumberException;
 import com.tripleS.model.StudentFile;
 import com.tripleS.service.NotificationService;
@@ -100,7 +102,7 @@ public class StudentBasicDetailsController {
 			RedirectAttributes redirectAttributes) {
 		ModelAndView modelAndView = new ModelAndView();
 		if (bindingResult.hasErrors()) {
-			logger.error("Found validation errors while saving student's basic details");
+			logger.error("Found validation errors while saving student's basic details: " + bindingResult.getAllErrors().toString());
 			if(studentFile != null) {
 				if(StringUtils.isNotBlank(studentFile.getFileNo())){
 					logger.info("File already exists");

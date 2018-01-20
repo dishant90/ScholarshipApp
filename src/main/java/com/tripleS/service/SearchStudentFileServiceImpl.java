@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.tripleS.enums.FileStatusEnum;
 import com.tripleS.model.QStudentFile;
 import com.tripleS.model.SearchStudentFile;
 import com.tripleS.model.StudentFile;
@@ -45,7 +46,7 @@ public class SearchStudentFileServiceImpl implements SearchStudentFileService {
 		BooleanBuilder studentFileFilter = new BooleanBuilder();
 		
 		String fileNo = searchStudentFile.getFileNo();
-		String fileStatus = searchStudentFile.getFileStatus();
+		FileStatusEnum fileStatus = searchStudentFile.getFileStatus();
 		String mobileNo = searchStudentFile.getMobileNo();
 		String firstName = searchStudentFile.getFirstName();
 		String lastName = searchStudentFile.getLastName();
@@ -64,7 +65,7 @@ public class SearchStudentFileServiceImpl implements SearchStudentFileService {
 				applicantSearchCriteria.add(hasFileNo);
 				logger.info("Filter File No Added");
 			}
-			if(fileStatus != null && !fileStatus.trim().isEmpty()){
+			if(fileStatus != null){
 				hasFileStatus = studentFile.fileStatus.eq(fileStatus);
 				applicantSearchCriteria.add(hasFileStatus);
 				logger.info("Filter File Status Added");

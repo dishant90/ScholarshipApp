@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.tripleS.enums.FileStatusEnum;
 import com.tripleS.model.StudentFile;
 import com.tripleS.repository.StudentFileRepository;
 
@@ -22,12 +23,20 @@ public class StudentFileServiceImpl implements StudentFileService {
 		return studentFileRepository.findByFileNo(fileNo);
 	}
 
+	/**
+	 * should be used only when updating an existing case
+	 * @see com.tripleS.service.StudentFileService#update(com.tripleS.model.StudentFile)
+	 */
 	@Override
 	public StudentFile update(StudentFile studentFile) {
 		studentFile = studentFileRepository.save(studentFile);
 		return studentFile;
 	}
 
+	/**
+	 * should be used only when creating a new case
+	 * @see com.tripleS.service.StudentFileService#save(com.tripleS.model.StudentFile)
+	 */
 	@Override
 	public StudentFile save(StudentFile studentFile) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -36,7 +45,7 @@ public class StudentFileServiceImpl implements StudentFileService {
 		generatedFileNo = generateFileNo();
 		}
         studentFile.setFileNo(generatedFileNo);
-        studentFile.setFileStatus("New");
+        studentFile.setFileStatus(FileStatusEnum.NEW);
         studentFile.setCreatedBy(auth.getName());
         studentFile.setCreatedDate(new Date());
         //studentFile.setCreatedDate(new Date(new java.util.Date().getTime()));

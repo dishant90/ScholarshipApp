@@ -23,7 +23,7 @@ public class SearchStudentFileValidator implements ConstraintValidator<ValidateS
 	public boolean isValid(SearchStudentFile searchStudentFile, ConstraintValidatorContext context) {
 
 		if (searchStudentFile == null || (StringUtils.isBlank(searchStudentFile.getFileNo())
-				&& StringUtils.isBlank(searchStudentFile.getFileStatus())
+				&& searchStudentFile.getFileStatus()== null
 				&& StringUtils.isBlank(searchStudentFile.getFirstName())
 				&& StringUtils.isBlank(searchStudentFile.getLastName())
 				&& StringUtils.isBlank(searchStudentFile.getMobileNo())
