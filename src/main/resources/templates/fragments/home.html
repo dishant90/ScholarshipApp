@@ -13,7 +13,7 @@
 			<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
-			<a class="navbar-brand" href="#">Logo</a>
+			<a class="navbar-brand" href="#" th:href="@{/fragments/home}">Logo</a>
 
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
@@ -38,9 +38,7 @@
 				</ul>
 				<form id="searchFileForm" class="form-inline my-2 my-lg-0" th:action="@{/searchStudentFile/basicDetailsByFileNo}">
 					<input class="form-control mr-sm-2" id="searchFileNo" name="searchFileNo" type="text" placeholder="Enter Case No">
-					<!--<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
-					<!-- <a class="mr-sm-2" href="#" style="color:white"><span th:utext="${userName}"></span></a> -->
-					<a class="mr-sm-2" href="#" style="color:white"><span sec:authentication="name">currentUser</span></a>
+					<a class="mr-sm-2" href="#" th:href="@{/user}" style="color:white"><span sec:authentication="name">currentUser</span></a>
 					<a class="mr-sm-2" th:href="@{/logout}" style="color:white" id="userLogout">
 						<i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>Logout
 					</a>

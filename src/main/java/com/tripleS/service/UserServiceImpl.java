@@ -46,6 +46,12 @@ public class UserServiceImpl implements UserService{
 		userRepository.save(user);
 		logger.info("User saved in the db: " + user.toString());
 	}
+	
+	@Override
+	public void updateUser(User user) {
+		userRepository.save(user);
+		logger.info("User saved in the db: " + user.toString());
+	}
 
 	@Override
 	public void createPasswordResetTokenForUser(User user, String token) {

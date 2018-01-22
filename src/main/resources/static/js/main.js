@@ -2,7 +2,6 @@
  * 
  */
 $(function() {
-	var serverURL = "http://localhost:8080";
 
 	$("#searchFileNo").focusout(function(e) {
 		$("form#searchFileForm").submit();

@@ -1,4 +1,4 @@
-package com.tripleS.model;
+package com.tripleS.dto;
 
 public class PasswordDto {
 	private String oldPassword;

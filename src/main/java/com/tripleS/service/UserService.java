@@ -7,4 +7,5 @@ public interface UserService {
 	public void saveUser(User user);
 	public void createPasswordResetTokenForUser(User user, String token);
 	public void changeUserPassword(User user, String password);
+	void updateUser(User user);
 }

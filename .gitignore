@@ -23,3 +23,4 @@ dist/
 nbdist/
 .nb-gradle/
 /scholarship.log
+/scholarship.log.1

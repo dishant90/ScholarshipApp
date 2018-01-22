@@ -12,6 +12,7 @@
 <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
 <script src="../js/bootstrap-4.0.0.min.js"
 	th:src="@{/js/bootstrap-4.0.0.min.js}"></script>
+<script src="../js/main.js" th:src="@{/js/main.js}"></script>
 </head>
 
 <body>
@@ -34,13 +35,14 @@
 				<button class="btn btn-lg btn-primary btn-block" name="Submit"
 					value="Login" type="Submit" th:text="#{login.button}"></button>
 			</form>
-			<br /> <a class="mr-sm-6" th:href="@{/registration}"
+			<br /> <a class="mr-sm-6" th:href="@{/user/registration}"
 				th:text="#{login.navigateToRegistrationPage.anchor}"> </a> <a
 				class="mr-sm-6 float-right" th:href="@{/forgotPassword}"
 				th:text="#{login.navigateToForgotPassword.anchor}"> </a>
 		</div>
 		<div th:if="${param.message != null}" class="alert alert-info" th:text="${param.message[0]}">message</div>
 		<div th:if="${message != null}" class="alert alert-info" th:text="${message}">message</div>
+		<div th:replace="fragments/home :: modalFragment">&nbsp;</div>
 	</div>
 </body>
 </html>

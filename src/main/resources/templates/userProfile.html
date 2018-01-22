@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Student Scholarship Application</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/bootstrap.min.css}" />
+<script src="../js/jquery-3.1.1.min.js"
+	th:src="@{/js/jquery-3.1.1.min.js}"></script>
+<script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+<script src="../js/bootstrap-4.0.0.min.js"
+	th:src="@{/js/bootstrap-4.0.0.min.js}"></script>
+</head>
+<body>
+	<div th:replace="fragments/home :: header">&nbsp;</div>
+	<div class="container">
+		<div class="form-signin">
+			<form autocomplete="off" action="#" th:action="@{/user/updateProfile}"
+				th:object="${userDTO}" method="post" class="form-horizontal"
+				role="form">
+				<div class="form-signin-heading">
+					<h3 th:text="#{userProfile.welcome.label}"></h3>
+				</div>
+				<label th:if="${#fields.hasErrors('firstName')}"
+					th:errors="*{firstName}" class="validation-message"></label> <input
+					type="text" th:field="*{firstName}"
+					th:placeholder="#{userProfile.firstName.label}"
+					class="form-control" /><br /> <label
+					th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+					class="validation-message"></label> <input type="text"
+					th:field="*{lastName}"
+					th:placeholder="#{userProfile.lastName.label}"
+					class="form-control" /><br /> <label
+					th:if="${#fields.hasErrors('emailID')}" th:errors="*{emailID}"
+					class="validation-message"></label> <input type="text"
+					th:field="*{emailID}"
+					th:placeholder="#{userProfile.email.label}"
+					class="form-control" /><br />
+
+				<button type="submit" class="btn btn-primary btn-block"
+					th:text="#{userProfile.update.button}">Update Profile</button>
+				<br />
+			</form>
+		</div>
+		<div th:replace="fragments/home :: modalFragment">&nbsp;</div>
+		<div th:replace="fragments/home :: notifyMessages">&nbsp;</div>
+	</div>
+
+</body>
+</html>
