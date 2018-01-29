@@ -17,9 +17,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tripleS.exception.InvalidFileNumberException;
 import com.tripleS.model.EntityBankDetails;
+import com.tripleS.model.StudentCurriculumRecord;
 import com.tripleS.service.EntityBankDetailsService;
 import com.tripleS.service.EntityDetailsService;
 import com.tripleS.service.NotificationService;
+import com.tripleS.service.StudentCurriculumRecordService;
 import com.tripleS.service.StudentFileService;
 
 @Controller
@@ -29,13 +31,13 @@ public class StudentCurriculumRecordController {
 	private static final Logger logger = LoggerFactory.getLogger(StudentCurriculumRecordController.class);
 
 	@Autowired
+	private StudentCurriculumRecordService studentCurriculumRecordService;
+	
+	@Autowired
 	private StudentFileService studentFileService;
 
 	@Autowired
 	private EntityDetailsService entityDetailsService;
-
-	@Autowired
-	private EntityBankDetailsService entityBankDetailsService;
 
 	@Autowired
 	private NotificationService notifyService;
@@ -43,8 +45,8 @@ public class StudentCurriculumRecordController {
 	@RequestMapping(value = "/curriculumRecord", method = RequestMethod.GET)
 	public String curriculumRecord(Model model) {
 		String fileNo = (String) model.asMap().get("fileNo");
-		logger.info("In the bank account details Get Request...File No is " + fileNo);
-		model = getBankAccountDetailsByFileNo(fileNo, model);
+		logger.info("In the curriculum record Get Request...File No is " + fileNo);
+		model = getCurriculumRecordByFileNo(fileNo, model);
 		return "curriculumRecord";
 	}
 
@@ -53,7 +55,7 @@ public class StudentCurriculumRecordController {
 		if (!fileNo.isEmpty()) {
 			logger.info("Path Variable... File No is " + fileNo);
 			if (studentFileService.existsByFileNo(fileNo)) {
-				model = getBankAccountDetailsByFileNo(fileNo, model);
+				model = getCurriculumRecordByFileNo(fileNo, model);
 				return "curriculumRecord";
 			} else {
 				throw new InvalidFileNumberException(fileNo);
@@ -64,68 +66,106 @@ public class StudentCurriculumRecordController {
 	}
 	
 	@RequestMapping(value = "/curriculumRecord", params = { "addUpdateCurriculumRecord" })
-	public String addCurriculumRecord(final String fileNo, @Validated EntityBankDetails entityBankDetails,
+	public String addCurriculumRecord(final String fileNo, @Validated StudentCurriculumRecord studentCurriculumRecord,
 			BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
 		if (bindingResult.hasErrors()) {
-			logger.info("Found validation errors on Bank Details page for " + fileNo);
+			logger.info("Found validation errors on Curriculum Record page for " + fileNo);
 			if (studentFileService.existsByFileNo(fileNo)) {
-				model = getBankAccountDetailsByFileNo(fileNo, model);
-				return "bankAccountDetails";
+				model = getCurriculumRecordByFileNo(fileNo, model);
+				return "curriculumRecord";
 			} else {
 				throw new InvalidFileNumberException(fileNo);
 			}
 		} else {
 			logger.info("File No is " + fileNo);
-			entityBankDetails.setEntityDetails(entityDetailsService.findApplicant(fileNo));
-			entityBankDetailsService.save(entityBankDetails);
+			studentCurriculumRecord.getStudentCourseDetails().setEntityDetails(entityDetailsService.findApplicant(fileNo));
+			studentCurriculumRecordService.save(studentCurriculumRecord);
 			redirectAttributes.addFlashAttribute("fileNo", fileNo);
-			return "redirect:/studentFile/bankAccountDetails";
+			return "redirect:/studentFile/curriculumRecord";
 		}
+	}
+	
+	@RequestMapping(value = "/curriculumRecord", params = { "onChangeOfCourse" })
+	public String onChangeofCourse(final String fileNo, StudentCurriculumRecord studentCurriculumRecord,
+			RedirectAttributes redirectAttributes, Model model) {
+		if (studentFileService.existsByFileNo(fileNo)) {
+			List<StudentCurriculumRecord> studentCurriculumRecordList = getCurriculumRecordByFileNo(fileNo);
+			for(int i=0; i<studentCurriculumRecordList.size();i++){
+				if(studentCurriculumRecordList.get(i).getStudentCourseDetails().getCourseName().equals(
+						studentCurriculumRecord.getStudentCourseDetails().getCourseName())){
+					studentCurriculumRecord.setStudentCourseDetails(
+							studentCurriculumRecordList.get(i).getStudentCourseDetails());
+				}
+			}
+			model.asMap().put("studentCurriculumRecord", studentCurriculumRecord);
+			model.asMap().put("studentCurriculumRecordList", studentCurriculumRecordList);
+			if(model.asMap().get("fileNo") == null) {
+				model.asMap().put("fileNo", fileNo);
+			}
+			/*if(model.asMap().get("studentCurriculumRecordAction") != null){
+				if(model.asMap().get("studentCurriculumRecordAction").equals("Add New Record")){
+					model.asMap().put("studentCurriculumRecordAction", "Add New Record");
+				} else {
+					model.asMap().put("studentCurriculumRecordAction", "Update Record");
+				}
+			}*/
+			return "curriculumRecord";
+		} else {
+			throw new InvalidFileNumberException(fileNo);
+		}
+		
 	}
 
 	@RequestMapping(value = "/curriculumRecord", params = { "editCurriculumRecord" })
-	public String editCurriculumRecord(final String fileNo, EntityBankDetails entityBankDetails,
+	public String editCurriculumRecord(final String fileNo, StudentCurriculumRecord studentCurriculumRecord,
 			RedirectAttributes redirectAttributes, final HttpServletRequest req) {
-		final Integer rowId = Integer.valueOf(req.getParameter("editEntityBankDetails"));
-		entityBankDetails = entityBankDetailsService.findById(rowId);
+		final Integer rowId = Integer.valueOf(req.getParameter("editCurriculumRecord"));
+		studentCurriculumRecord = studentCurriculumRecordService.findById(rowId);
 		redirectAttributes.addFlashAttribute("fileNo", fileNo);
-		redirectAttributes.addFlashAttribute("entityBankDetails", entityBankDetails);
-		return "redirect:/studentFile/bankAccountDetails";
+		redirectAttributes.addFlashAttribute("studentCurriculumRecord", studentCurriculumRecord);
+		return "redirect:/studentFile/curriculumRecord";
 	}
 
-	@RequestMapping(value = "/curriculumRecord", params = { "removecurriculumRecord" })
-	public String removecurriculumRecord(final String fileNo, EntityBankDetails entityBankDetails,
+	@RequestMapping(value = "/curriculumRecord", params = { "removeCurriculumRecord" })
+	public String removecurriculumRecord(final String fileNo, StudentCurriculumRecord studentCurriculumRecord,
 			RedirectAttributes redirectAttributes, final HttpServletRequest req) {
-		final Integer rowId = Integer.valueOf(req.getParameter("removeEntityBankDetails"));
-		entityDetailsService.delete(rowId);
+		final Integer rowId = Integer.valueOf(req.getParameter("removeCurriculumRecord"));
+		studentCurriculumRecordService.delete(rowId);
 		redirectAttributes.addFlashAttribute("fileNo", fileNo);
-		return "redirect:/studentFile/bankAccountDetails";
+		return "redirect:/studentFile/curriculumRecord";
 	}
 
-	@RequestMapping(value = "/curriculumRecord", params = { "continueFromcurriculumRecord" })
+	@RequestMapping(value = "/curriculumRecord", params = { "continueFromCurriculumRecord" })
 	public ModelAndView continueFromCurriculumRecord(final String fileNo, RedirectAttributes redirectAttributes) {
 		ModelAndView modelAndView = new ModelAndView();
 		if (!fileNo.isEmpty()) {
 			logger.info("Existing File No: " + fileNo);
 			redirectAttributes.addFlashAttribute("fileNo", fileNo);
-			modelAndView.setViewName("redirect:/studentFile/residenceDetails");
+			modelAndView.setViewName("redirect:/studentFile/studentReferences");
 		} else {
 			throw new InvalidFileNumberException(fileNo);
 		}
 		return modelAndView;
 	}
 	
-	private Model getBankAccountDetailsByFileNo(String fileNo, Model model) {
-		List<EntityBankDetails> entityBankDetailsList = entityBankDetailsService.findByFileNo(fileNo);
-		model.asMap().put("entityBankDetailsList", entityBankDetailsList);
-		if (model.asMap().get("entityBankDetails") == null) {
-			model.asMap().put("entityBankDetails", new EntityBankDetails());
-			model.asMap().put("bankAction", "Add Bank Account Details");
+	private Model getCurriculumRecordByFileNo(String fileNo, Model model) {
+		List<StudentCurriculumRecord> studentCurriculumRecordList = getCurriculumRecordByFileNo(fileNo);
+		model.asMap().put("studentCurriculumRecordList", studentCurriculumRecordList);
+		if (model.asMap().get("studentCurriculumRecord") == null) {
+			model.asMap().put("studentCurriculumRecord", new StudentCurriculumRecord());
+			//model.asMap().put("studentCurriculumRecordAction", "Add New Record");
 		} else {
-			model.asMap().put("entityBankDetails", model.asMap().get("entityBankDetails"));
-			model.asMap().put("bankAction", "Update Bank Account Details");
+			model.asMap().put("studentCurriculumRecord", model.asMap().get("studentCurriculumRecord"));
+			//model.asMap().put("studentCurriculumRecordAction", "Update Record");
+		}
+		if(model.asMap().get("fileNo") == null) {
+			model.asMap().put("fileNo", fileNo);
 		}
 		return model;
+	}
+	
+	private List<StudentCurriculumRecord> getCurriculumRecordByFileNo(String fileNo) {
+		return studentCurriculumRecordService.findByFileNo(fileNo);
 	}
 
 }

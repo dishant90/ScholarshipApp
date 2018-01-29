@@ -57,29 +57,6 @@ $(function() {
 		$("#studentBasicForm").find(':input').not(':button, :submit, :reset, :hidden, :checkbox, :radio, select').val('');
 		$("#studentBasicForm").find('select').val("NONE");
 		$("#studentBasicForm").find(':checkbox, :radio').prop('checked', false);
-		/*$("#entityDetails\\.firstName").val("");
-		$("#entityDetails\\.middleName").val("");
-		$("#entityDetails\\.lastName").val("");
-		$("#entityDetails\\.studentDetails\\.gender").val("");
-		$("#entityDetails\\.emailID").val("");
-		$("#entityDetails\\.mobileNo").val("");
-		$("#entityDetails\\.alternateContactNo").val("");
-		$("#entityDetails\\.telephoneNo").val("");
-		$("#entityDetails\\.entityAddressDetails\\.addressLine1").val("");
-		$("#entityDetails\\.entityAddressDetails\\.addressLine2").val("");
-		$("#entityDetails\\.entityAddressDetails\\.country").val("");
-		$("#entityDetails\\.entityAddressDetails\\.state").val("");
-		$("#entityDetails\\.entityAddressDetails\\.city").val("");
-		$("#entityDetails\\.entityAddressDetails\\.pincode").val("");
-		$("#entityDetails\\.studentDetails\\.dateOfBirth").val(null);
-		$("#entityDetails\\.studentDetails\\.placeOfBirth").val("");
-		$("#entityDetails\\.studentDetails\\.religion").val("");
-		$("#entityDetails\\.studentDetails\\.motherTongue").val("");
-		$("#entityDetails\\.studentDetails\\.aimInLife").val("");
-		$("#entityDetails\\.studentDetails\\.describePrizeDetails").val("");
-		$("#entityDetails\\.studentDetails\\.describeIfOtherFamilyMembersGotHelp").val("");
-		$("#entityDetails\\.studentDetails\\.describeOtherProblemsInFamily").val("");
-		$("#entityDetails\\.studentDetails\\.describeJobBusinessDetails").val("");*/
 	});
 
 	$("#residenceDetailsForm").find("#btnClear").click(function() {
@@ -105,10 +82,15 @@ $(function() {
 	});
 	
 	loadResidenceDetailsFields();
-	highlightActiveMenuItem();
+	highlightActiveCaseMenuItem();
+	highlightActiveUserProfileMenuItem();
 
 	$("#residenceOwnership").change(function() {
 		loadResidenceOwnershipDependencies($(this));
+	});
+	
+	$("#studentCourseDetails\\.courseName").change(function() {
+		getCourseDetailsIfCourseAlreadyAdded($(this));
 	});
 
 	$("#haveVehicle1").change(function() {
@@ -254,18 +236,34 @@ function loadVehicleDependencies(haveVehicleObject) {
 	}
 }
 
-function highlightActiveMenuItem() {
+function highlightActiveCaseMenuItem() {
 	if ($("#basicDetailsHeader").length > 0) {
 		$("#basicDetailsLink").addClass("active");
 	} else if ($("#familyDetailsHeader").length > 0) {
 		$("#familyDetailsLink").addClass("active");
 	} else if ($("#bankAccountDetailsHeader").length > 0) {
 		$("#bankAccountDetailsLink").addClass("active");
-	}
-	if ($("#residenceDetailsHeader").length > 0) {
+	} else if ($("#residenceDetailsHeader").length > 0) {
 		$("#residenceDetailsLink").addClass("active");
-	}
-	if ($("#curriculumRecordHeader").length > 0) {
+	} else if ($("#curriculumRecordHeader").length > 0) {
 		$("#curriculumRecordLink").addClass("active");
+	}
+}
+
+function highlightActiveUserProfileMenuItem() {
+	if ($("#userProfileHeader").length > 0) {
+		$("#userProfileLink").addClass("active");
+	} else if ($("#changePasswordHeader").length > 0) {
+		$("#changePasswordLink").addClass("active");
+	}
+}
+
+function getCourseDetailsIfCourseAlreadyAdded(courseNameObject) {
+	if(courseNameObject != null && courseNameObject.val() != "" && courseNameObject.val() != "NONE"){
+		$("#btnCourseChange").click();
+	} else {
+		$("#studentCourseDetails\\.schoolCollegeInstituteName").val(null);
+		$("#studentCourseDetails\\.branch").val("NONE");
+		$("#studentCourseDetails\\.id").val(null);
 	}
 }

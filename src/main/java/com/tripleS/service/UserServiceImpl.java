@@ -64,6 +64,11 @@ public class UserServiceImpl implements UserService{
     public void changeUserPassword(final User user, final String password) {
         user.setPassword(bCryptPasswordEncoder.encode(password));
         userRepository.save(user);
+        logger.info("Password changed successfully");
     }
 	
+	@Override
+    public boolean checkIfValidOldPassword(final User user, final String oldPassword) {
+        return bCryptPasswordEncoder.matches(oldPassword, user.getPassword());
+    }
 }

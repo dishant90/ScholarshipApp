@@ -38,7 +38,7 @@ input[type="text"] {
 }
 
 input[type="password"] {
-  margin-bottom: 20px;
+  margin-bottom: 0px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
@@ -165,7 +165,7 @@ ul#messages li.error {
 	
 .selectBorder-placeholder>label{
   position:absolute;
-  top:-18px;
+  top:-19px;
   left:20px;
   background-color:white;
   padding-left:10px;
@@ -188,7 +188,7 @@ ul#messages li.error {
 
 .inputBorder-placeholder>label{
   position:absolute;
-  top:-18px;
+  top:-19px;
   left:20px;
   background-color:white;
   padding-left:10px;

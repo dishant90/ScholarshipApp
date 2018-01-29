@@ -38,7 +38,7 @@
 				</ul>
 				<form id="searchFileForm" class="form-inline my-2 my-lg-0" th:action="@{/searchStudentFile/basicDetailsByFileNo}">
 					<input class="form-control mr-sm-2" id="searchFileNo" name="searchFileNo" type="text" placeholder="Enter Case No">
-					<a class="mr-sm-2" href="#" th:href="@{/user}" style="color:white"><span sec:authentication="name">currentUser</span></a>
+					<a class="mr-sm-2" href="#" th:href="@{/user/updateProfile}" style="color:white"><span sec:authentication="name">currentUser</span></a>
 					<a class="mr-sm-2" th:href="@{/logout}" style="color:white" id="userLogout">
 						<i class="fa fa-sign-out fa-fw" aria-hidden="true"></i>Logout
 					</a>

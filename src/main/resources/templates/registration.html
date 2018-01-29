@@ -38,7 +38,7 @@
 					class="validation-message"></label>
 				<input type="password" th:field="*{password}"
 					th:placeholder="#{registration.user.password.label}" class="form-control" />
-
+				<br/>
 				<button type="submit" class="btn btn-primary btn-block" th:text="#{registration.user.register.button}">Register User</button><br/>
 				
 				<span th:utext="${successMessage}"></span>

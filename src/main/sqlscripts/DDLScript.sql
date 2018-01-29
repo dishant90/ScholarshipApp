@@ -300,9 +300,16 @@ ALTER TABLE residence_details
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
--- 13th Jan 2018 (not executed at AWS on 13th Jan 2018)
+-- 13th Jan 2018
 ALTER TABLE student_curriculum_record MODIFY COLUMN id INT AUTO_INCREMENT;
 ALTER TABLE student_course_details MODIFY COLUMN id INT AUTO_INCREMENT;
 ALTER TABLE student_curriculum_record MODIFY COLUMN passing_year varchar(4);
 ALTER TABLE student_curriculum_record DROP FOREIGN KEY student_curriculum_record_ibfk_1;
 ALTER TABLE student_curriculum_record DROP COLUMN entity_id;
+
+-- 30th Jan 2018
+ALTER TABLE student_curriculum_record MODIFY COLUMN passing_year varchar(9);
+ALTER TABLE student_curriculum_record CHANGE COLUMN passing_year academic_year varchar(9);
+
+-- 05th Deb 2018
+ALTER TABLE student_course_details ADD COLUMN branch VARCHAR(100);

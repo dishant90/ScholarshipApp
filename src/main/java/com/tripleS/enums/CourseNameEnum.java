@@ -1,7 +1,10 @@
 package com.tripleS.enums;
 
 public enum CourseNameEnum {
+	VIII("VIII"),
+	IX("IX"),
 	SSC("SSC"),
+	XI("XI"),
 	HSC("HSC"),
 	BE("BE"),
 	MS("MS"),

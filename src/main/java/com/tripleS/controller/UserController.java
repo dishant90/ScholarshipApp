@@ -11,6 +11,7 @@ import com.tripleS.service.NotificationService;
 import com.tripleS.service.UserSecurityService;
 import com.tripleS.dto.PasswordDto;
 import com.tripleS.dto.UserDTO;
+import com.tripleS.exception.InvalidOldPasswordException;
 import com.tripleS.exception.UserNotFoundException;
 
 import org.slf4j.Logger;
@@ -39,32 +40,31 @@ import com.tripleS.service.UserService;
 public class UserController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
-    private Environment env;
-	
+	private Environment env;
+
 	@Autowired
-    private MessageSource messages;
-	
+	private MessageSource messages;
+
 	@Autowired
-    private JavaMailSender mailSender;
-	
+	private JavaMailSender mailSender;
+
 	@Autowired
-    private UserSecurityService userSecurityService;
-	
+	private UserSecurityService userSecurityService;
+
 	@Autowired
 	private NotificationService notifyService;
-	
-	@RequestMapping(value = "", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/updateProfile", method = RequestMethod.GET)
 	public ModelAndView getUser() {
 		ModelAndView modelAndView = new ModelAndView();
-		final org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User)SecurityContextHolder.getContext()
-	            .getAuthentication()
-	            .getPrincipal();
-		if(user != null) {
+		final org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) SecurityContextHolder
+				.getContext().getAuthentication().getPrincipal();
+		if (user != null) {
 			logger.info("Logged in user's email id: " + user.getUsername());
 			User loggedInUser = userService.findUserByEmailID(user.getUsername());
 			UserDTO userDTO = new UserDTO();
@@ -75,7 +75,7 @@ public class UserController {
 			modelAndView.setViewName("userProfile");
 		} else {
 			SecurityContextHolder.getContext().setAuthentication(null);
-			modelAndView.setViewName("redirect:/logout");
+			modelAndView.setViewName("redirect:/login");
 		}
 		return modelAndView;
 	}
@@ -88,55 +88,75 @@ public class UserController {
 		modelAndView.setViewName("registration");
 		return modelAndView;
 	}
-	
+
+	@RequestMapping(value = "/changePassword", method = RequestMethod.GET)
+	public ModelAndView changePassword() {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("changePassword");
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+	// @PreAuthorize("hasRole('READ_PRIVILEGE')")
+	@ResponseBody
+	public GenericResponse changeUserPassword(Locale locale, @RequestParam("password") String password,
+			@RequestParam("oldpassword") String oldPassword) {
+		User user = userService.findUserByEmailID(SecurityContextHolder.getContext().getAuthentication().getName());
+
+		if (!userService.checkIfValidOldPassword(user, oldPassword)) {
+			throw new InvalidOldPasswordException();
+		}
+		userService.changeUserPassword(user, password);
+		SecurityContextHolder.getContext().setAuthentication(null);
+		return new GenericResponse(messages.getMessage("message.updatePasswordSuc", null, locale));
+	}
+
 	// Reset password
-    @RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
-    @ResponseBody
-    public GenericResponse resetPassword(final HttpServletRequest request, @RequestParam("email") final String userEmail) {
-    	logger.info("Requested password reset for user with email id: " + userEmail);
-        final User user = userService.findUserByEmailID(userEmail);
-        if (user != null) {
-            final String token = UUID.randomUUID()
-                .toString();
-            userService.createPasswordResetTokenForUser(user, token);
-            mailSender.send(constructResetTokenEmail(getAppUrl(request), request.getLocale(), token, user));
-            return new GenericResponse(messages.getMessage("message.resetPasswordEmail", null, request.getLocale()));
-        } else {
-        	throw new UserNotFoundException();
-        }
-        
-    }
-    
-    @RequestMapping(value = "/updatePassword", method = RequestMethod.GET)
-    //public String showChangePasswordPage(Locale locale, Model model,
-    public String showChangePasswordPage(Locale locale, @RequestParam("id") long id, 
-    		@RequestParam("token") String token, RedirectAttributes redirectAttributes) {
-        String result = userSecurityService.validatePasswordResetToken(id, token);
-        if (result != null) {
-        	redirectAttributes.addFlashAttribute("message", 
-              messages.getMessage("auth.message." + result, null, locale));
-            logger.info("Token invalid message: " + messages.getMessage("auth.message." + result, null, locale));
-            return "redirect:/login?lang=" + locale.getLanguage();
-        }
-        logger.info("Token validated successfully");
-        return "updatePassword";
-    }
-    
-    @RequestMapping(value = "/savePassword", method = RequestMethod.POST)
-    @ResponseBody
-    public GenericResponse savePassword(final Locale locale, @Valid PasswordDto passwordDto) {
-    	logger.info("Passport save request");
-        final User user = (User) SecurityContextHolder.getContext()
-            .getAuthentication()
-            .getPrincipal();
-        if(user != null) {
-        	logger.info("Password save request for " + user.getFirstName());
-        	userService.changeUserPassword(user, passwordDto.getNewPassword());
-        	return new GenericResponse(messages.getMessage("message.resetPasswordSuccessful", null, locale));
-        } else {
-        	return new GenericResponse(messages.getMessage("message.resetPasswordFailure", null, locale));
-        }
-    }
+	@RequestMapping(value = "/resetPassword", method = RequestMethod.POST)
+	@ResponseBody
+	public GenericResponse resetPassword(final HttpServletRequest request,
+			@RequestParam("email") final String userEmail) {
+		logger.info("Requested password reset for user with email id: " + userEmail);
+		final User user = userService.findUserByEmailID(userEmail);
+		if (user != null) {
+			final String token = UUID.randomUUID().toString();
+			userService.createPasswordResetTokenForUser(user, token);
+			mailSender.send(constructResetTokenEmail(getAppUrl(request), request.getLocale(), token, user));
+			return new GenericResponse(messages.getMessage("message.resetPasswordEmail", null, request.getLocale()));
+		} else {
+			throw new UserNotFoundException();
+		}
+
+	}
+
+	@RequestMapping(value = "/updatePassword", method = RequestMethod.GET)
+	// public String showChangePasswordPage(Locale locale, Model model,
+	public String showChangePasswordPage(Locale locale, @RequestParam("id") long id,
+			@RequestParam("token") String token, RedirectAttributes redirectAttributes) {
+		String result = userSecurityService.validatePasswordResetToken(id, token);
+		if (result != null) {
+			redirectAttributes.addFlashAttribute("message",
+					messages.getMessage("auth.message." + result, null, locale));
+			logger.info("Token invalid message: " + messages.getMessage("auth.message." + result, null, locale));
+			return "redirect:/login?lang=" + locale.getLanguage();
+		}
+		logger.info("Token validated successfully");
+		return "updatePassword";
+	}
+
+	@RequestMapping(value = "/savePassword", method = RequestMethod.POST)
+	@ResponseBody
+	public GenericResponse savePassword(final Locale locale, @Valid PasswordDto passwordDto) {
+		logger.info("Passport save request");
+		final User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (user != null) {
+			logger.info("Password save request for " + user.getFirstName());
+			userService.changeUserPassword(user, passwordDto.getNewPassword());
+			return new GenericResponse(messages.getMessage("message.resetPasswordSuccessful", null, locale));
+		} else {
+			return new GenericResponse(messages.getMessage("message.resetPasswordFailure", null, locale));
+		}
+	}
 
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
@@ -157,20 +177,21 @@ public class UserController {
 		}
 		return modelAndView;
 	}
-	
+
 	@RequestMapping(value = "/updateProfile", method = RequestMethod.POST)
-	public ModelAndView updateUserProfile(@Valid UserDTO userDTO, BindingResult bindingResult, Locale locale, RedirectAttributes redirectAttributes) {
+	public ModelAndView updateUserProfile(@Valid UserDTO userDTO, BindingResult bindingResult, Locale locale,
+			RedirectAttributes redirectAttributes) {
 		ModelAndView modelAndView = new ModelAndView();
 		if (bindingResult.hasErrors()) {
 			logger.error("Found validation errors while updating logged in user's profile");
 			modelAndView.addObject("userDTO", userDTO);
 			modelAndView.setViewName("userProfile");
 		} else {
-			final org.springframework.security.core.userdetails.User currentUser = (org.springframework.security.core.userdetails.User)SecurityContextHolder.getContext()
-		            .getAuthentication()
-		            .getPrincipal();
-			if(!currentUser.getUsername().equals(userDTO.getEmailID())){
-				logger.info("Logged in user wants to change the email id, verify if the new one already exists in the database");
+			final org.springframework.security.core.userdetails.User currentUser = (org.springframework.security.core.userdetails.User) SecurityContextHolder
+					.getContext().getAuthentication().getPrincipal();
+			if (!currentUser.getUsername().equals(userDTO.getEmailID())) {
+				logger.info(
+						"Logged in user wants to change the email id, verify if the new one already exists in the database");
 				User userExists = userService.findUserByEmailID(userDTO.getEmailID());
 				if (userExists != null && !userExists.getEmailID().equals(currentUser.getUsername())) {
 					logger.error("Email ID already exists in the db, please provide different one");
@@ -188,41 +209,40 @@ public class UserController {
 			user.setLastName(userDTO.getLastName());
 			user.setEmailID(userDTO.getEmailID());
 			userService.updateUser(user);
-			if(!currentUser.getUsername().equals(userDTO.getEmailID())){
+			if (!currentUser.getUsername().equals(userDTO.getEmailID())) {
 				logger.info("Email id has changed, user would be logged out to login again");
-				redirectAttributes.addFlashAttribute("message", 
-			              messages.getMessage("message.emailIDChanged", null, locale));
-				logger.info(
-						userDTO.getFirstName() + "'s profile updated successfully!! You have been logged out of the system. Please login with the updated email id.");
+				redirectAttributes.addFlashAttribute("message",
+						messages.getMessage("message.emailIDChanged", null, locale));
+				logger.info(userDTO.getFirstName()
+						+ "'s profile updated successfully!! You have been logged out of the system. Please login with the updated email id.");
 				SecurityContextHolder.getContext().setAuthentication(null);
-				//modelAndView.setViewName("redirect:/logout");
 				modelAndView.setViewName("redirect:/login");
 			} else {
 				logger.info("User details other than email id has been updated");
-				notifyService.addInfoMessage(
-					userDTO.getFirstName() + "'s profile updated successfully!!");
+				notifyService.addInfoMessage(userDTO.getFirstName() + "'s profile updated successfully!!");
 				modelAndView.setViewName("userProfile");
 			}
 		}
 		return modelAndView;
 	}
-	
-	private SimpleMailMessage constructResetTokenEmail(final String contextPath, final Locale locale, final String token, final User user) {
-        final String url = contextPath + "/user/updatePassword?id=" + user.getId() + "&token=" + token;
-        final String message = messages.getMessage("message.resetPassword", null, locale);
-        return constructEmail("Reset Password", message + " \r\n" + url, user);
-    }
-	
-	private SimpleMailMessage constructEmail(String subject, String body, User user) {
-        final SimpleMailMessage email = new SimpleMailMessage();
-        email.setSubject(subject);
-        email.setText(body);
-        email.setTo(user.getEmailID());
-        email.setFrom(env.getProperty("support.email"));
-        return email;
-    }
 
-    private String getAppUrl(HttpServletRequest request) {
-        return "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-    }
+	private SimpleMailMessage constructResetTokenEmail(final String contextPath, final Locale locale,
+			final String token, final User user) {
+		final String url = contextPath + "/user/updatePassword?id=" + user.getId() + "&token=" + token;
+		final String message = messages.getMessage("message.resetPassword", null, locale);
+		return constructEmail("Reset Password", message + " \r\n" + url, user);
+	}
+
+	private SimpleMailMessage constructEmail(String subject, String body, User user) {
+		final SimpleMailMessage email = new SimpleMailMessage();
+		email.setSubject(subject);
+		email.setText(body);
+		email.setTo(user.getEmailID());
+		email.setFrom(env.getProperty("support.email"));
+		return email;
+	}
+
+	private String getAppUrl(HttpServletRequest request) {
+		return "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+	}
 }

@@ -30,6 +30,7 @@ import com.tripleS.service.EntityBankDetailsService;
 import com.tripleS.service.EntityDetailsService;
 import com.tripleS.service.NotificationService;
 import com.tripleS.service.ResidenceDetailsService;
+import com.tripleS.service.StudentCurriculumRecordService;
 import com.tripleS.service.StudentFileService;
 import com.tripleS.validation.groups.StudentValidations;
 
@@ -53,6 +54,9 @@ public class ValidateStudentFileController {
 	
 	@Autowired
 	private ResidenceDetailsService residenceDetailsService;
+	
+	@Autowired
+	private StudentCurriculumRecordService studentCurriculumRecordService;
 
 	@Autowired
 	private NotificationService notifyService;
@@ -83,6 +87,11 @@ public class ValidateStudentFileController {
 						if(residenceDetailsService.findByFileNo(fileNo) == null) {
 							requiredDetails.add(messages.getMessage("residenceDetails.header", null,locale));
 							logger.info("Residence details are not submitted");
+						}
+						if(studentCurriculumRecordService.findByFileNo(fileNo) == null || 
+								studentCurriculumRecordService.findByFileNo(fileNo).size() == 0 ) {
+							requiredDetails.add(messages.getMessage("curriculumRecord.header", null,locale));
+							logger.info("Curriculum record is not submitted");
 						}
 						if(requiredDetails.isEmpty()){
 							validFile = true;

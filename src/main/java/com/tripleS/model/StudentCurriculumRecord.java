@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
@@ -22,11 +23,11 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.tripleS.classLevelConstraints.ValidateResidenceDetails;
+import com.tripleS.enums.AcademicYearEnum;
 import com.tripleS.enums.CourseNameEnum;
 import com.tripleS.enums.ResidenceOwnershipEnum;
 import com.tripleS.enums.ResidenceTypeEnum;
 
-@ValidateResidenceDetails
 @Entity
 @Table(name="student_curriculum_record")
 public class StudentCurriculumRecord {
@@ -36,22 +37,26 @@ public class StudentCurriculumRecord {
 	private int id;
 	
 	@Column(name="course_year")
+	@NotEmpty(message="*Please provide course year")
     private String courseYear;
 	
-	@Column(name="passing_year")
-    private String passingYear;
+	@Column(name="academic_year")
+	@Enumerated(EnumType.STRING)
+	@NotNull(message="*Please select an academic year")
+    private AcademicYearEnum academicYear;
 	
 	@Column(name="percentage_marks")
-	@NotNull(message="*Please specify score")
-	@DecimalMin(value="0", message="*Please specify score")
-	@Digits(integer=6, fraction=2, message="*Please specify valid score e.g. 85")
+	//@NotNull(message="*Please provide score")
+	//@DecimalMin(value="0", message="*Please provide score")
+	@Digits(integer=6, fraction=2, message="*Please provide valid score e.g. 85.46")
     private BigDecimal percentageMarks;
 	
 	@Column(name="grade")
     private String grade;
 
-	@ManyToOne(cascade={CascadeType.ALL})
+	@ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH})
 	@JoinColumn(name="student_course_details_id")
+	@Valid
 	private StudentCourseDetails studentCourseDetails;
 
 	public int getId() {
@@ -70,12 +75,12 @@ public class StudentCurriculumRecord {
 		this.courseYear = courseDuration;
 	}
 
-	public String getPassingYear() {
-		return passingYear;
+	public AcademicYearEnum getAcademicYear() {
+		return academicYear;
 	}
 
-	public void setPassingYear(String passingYear) {
-		this.passingYear = passingYear;
+	public void setAcademicYear(AcademicYearEnum academicYear) {
+		this.academicYear = academicYear;
 	}
 
 	public BigDecimal getPercentageMarks() {
@@ -104,7 +109,7 @@ public class StudentCurriculumRecord {
 
 	@Override
 	public String toString() {
-		return "StudentCurriculumRecord [id=" + id + ", courseYear=" + courseYear + ", passingYear=" + passingYear
+		return "StudentCurriculumRecord [id=" + id + ", courseYear=" + courseYear + ", academicYear=" + academicYear
 				+ ", percentageMarks=" + percentageMarks + ", grade=" + grade + ", studentCourseDetails="
 				+ studentCourseDetails + "]";
 	}

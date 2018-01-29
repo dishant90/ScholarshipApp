@@ -7,67 +7,67 @@
 	<div class="container-fluid text-center">
 		<div class="row content">
 			<div th:replace="fragments/caseMenu :: caseMenu">&nbsp;</div>
-			<div class="col-sm-10 text-left" id="studentBankDetailsTab">
+			<div class="col-sm-10 text-left" id="studentCurriculumRecordTab">
 				<div>
 					<div class="header">
-						<div id="curriculumRecordHeader" class="displayLeft">Bank Account Details</div>
-						<div class="displayRight" th:if="${fileNo}">Case #
-							<label class="blueText" th:text="${fileNo}">Case No Value</label>
+						<div id="curriculumRecordHeader" class="displayLeft" th:text="#{curriculumRecord.header}">Curriculum
+							Record</div>
+						<div class="displayRight" th:if="${fileNo}">
+							Case # <label class="blueText" th:text="${fileNo}">Case
+								No Value</label>
 						</div>
 					</div>
-					<form id="bankAcountDetailsForm" role="form"
-						th:action="@{/studentFile/bankAccountDetails}"
-						method="post">
+					<form id="curriculumRecordForm" role="form"
+						th:action="@{/studentFile/curriculumRecord}" method="post">
 						<input type="hidden" th:value="${fileNo}" name="fileNo" />
 
 						<table class="table table-hover">
 							<thead>
 								<tr>
-									<th>To be used</th>
-									<th>Account Number</th>
-									<th>Bank Name</th>
-									<th>Branch</th>
-									<th>IFSC Code</th>
-									<th>Account Holder Name 1</th>
-									<th>Account Holder Name 2</th>
-									<th>Account Holder Name 3</th>
+									<th th:text="#{curriculumRecord.courseName.th}">Course
+										Name</th>
+									<th th:text="#{curriculumRecord.branch.th}">Branch</th>
+									<th th:text="#{curriculumRecord.schoolCollegeName.th}">School/College
+										Name</th>
+									<th th:text="#{curriculumRecord.courseYear.th}">Course
+										Year</th>
+									<th th:text="#{curriculumRecord.academicYear.th}">Academic
+										Year</th>
+									<th th:text="#{curriculumRecord.percentageMarks.th}">%
+										Marks</th>
+									<th th:text="#{curriculumRecord.grade.th}">Grade</th>
 									<th></th>
 									<th></th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr th:each="row,rowStat : ${entityBankDetailsList}">
+								<tr th:each="row,rowStat : ${studentCurriculumRecordList}">
 									<td><label
-										th:text="*{entityBankDetailsList[__${rowStat.index}__].isCurrent}">Radio
-											Button</label></td>
+										th:text="*{studentCurriculumRecordList[__${rowStat.index}__].studentCourseDetails.courseName.getDisplayName()}">Course
+											Name</label></td>
 									<td><label
-										th:text="*{entityBankDetailsList[__${rowStat.index}__].bankAccountNo}">10
-											digit Account # </label></td>
+										th:text="*{studentCurriculumRecordList[__${rowStat.index}__].studentCourseDetails.branch.getDisplayName()}">Branch</label></td>
 									<td><label
-										th:text="*{entityBankDetailsList[__${rowStat.index}__].bankName}">SBI</label></td>
+										th:text="*{studentCurriculumRecordList[__${rowStat.index}__].studentCourseDetails.schoolCollegeInstituteName}">School/College
+											Name</label></td>
 									<td><label
-										th:text="*{entityBankDetailsList[__${rowStat.index}__].branch}">Mumbai</label></td>
+										th:text="*{studentCurriculumRecordList[__${rowStat.index}__].courseYear}">1st</label></td>
 									<td><label
-										th:text="*{entityBankDetailsList[__${rowStat.index}__].ifscCode}">SBI0001</label></td>
+										th:text="*{studentCurriculumRecordList[__${rowStat.index}__].academicYear.getDisplayName()}">2018/19</label></td>
 									<td><label
-										th:text="*{entityBankDetailsList[__${rowStat.index}__].accountHolderName1}">Name
-											1</label></td>
+										th:text="*{studentCurriculumRecordList[__${rowStat.index}__].percentageMarks}">90</label></td>
 									<td><label
-										th:text="*{entityBankDetailsList[__${rowStat.index}__].accountHolderName2}">Name
-											1</label></td>
-									<td><label
-										th:text="*{entityBankDetailsList[__${rowStat.index}__].accountHolderName3}">Name
-											1</label></td>
+										th:text="*{studentCurriculumRecordList[__${rowStat.index}__].grade}">A</label></td>
 									<td>
-										<button type="submit" name="editEntityBankDetails"
-											title="Edit Account Details"
-											th:value="*{entityBankDetailsList[__${rowStat.index}__].id}"
+										<button type="submit" name="editCurriculumRecord"
+											th:title="#{curriculumRecord.editRecord.row}"
+											th:value="*{studentCurriculumRecordList[__${rowStat.index}__].id}"
 											class="fa fa-pencil-square-o fa-lg iconButton"></button>
 									</td>
 									<td>
-										<button type="submit" name="removeEntityBankDetails"
-											title="Remove Account Details"
-											th:value="*{entityBankDetailsList[__${rowStat.index}__].id}"
+										<button type="submit" name="removeCurriculumRecord"
+											th:title="#{curriculumRecord.deleteRecord.row}"
+											th:value="*{studentCurriculumRecordList[__${rowStat.index}__].id}"
 											class="fa fa-trash-o fa-lg iconButton"></button>
 									</td>
 								</tr>
@@ -78,36 +78,55 @@
 
 							<div class="col-sm-6">
 								<label
-									th:if="${#fields.hasErrors('entityBankDetails.bankAccountNo')}"
-									th:errors="${entityBankDetails.bankAccountNo}"
+									th:if="${#fields.hasErrors('studentCurriculumRecord.studentCourseDetails.courseName')}"
+									th:errors="${studentCurriculumRecord.studentCourseDetails.courseName}"
 									class="validation-message"></label>
 							</div>
 
 							<div class="col-sm-6">
 								<label
-									th:if="${#fields.hasErrors('entityBankDetails.bankName')}"
-									th:errors="${entityBankDetails.bankName}"
+									th:if="${#fields.hasErrors('studentCurriculumRecord.studentCourseDetails.branch')}"
+									th:errors="${studentCurriculumRecord.studentCourseDetails.branch}"
 									class="validation-message"></label>
 							</div>
 						</div>
 						<div class="form-group row" id="firstRow">
 							<div class="col-sm-6">
 								<div class="row">
-									<div class="col-sm-11">
-										<input type="text"
-											th:field="${entityBankDetails.bankAccountNo}"
-											placeholder="Bank Account No" class="form-control"
-											maxlength="25" /> <input type="hidden"
-											th:field="${entityBankDetails.id}" />
+									<div class="col-sm-9 selectBorder-placeholder">
+										<label
+											th:text="#{curriculumRecord.studentCourseDetails.courseName.label}">Course
+											Name</label> <select class="form-control"
+											th:field="${studentCurriculumRecord.studentCourseDetails.courseName}">
+											<option value="NONE" th:text="#{default.dropdown.option}">---
+												Select ---</option>
+											<option
+												th:each="courseName : ${T(com.tripleS.enums.CourseNameEnum).values()}"
+												th:value="${{courseName}}"
+												th:selected="${courseName == T(com.tripleS.enums.CourseNameEnum)}"
+												th:text="${courseName.getDisplayName()}"></option>
+										</select> <input type="hidden" th:field="${studentCurriculumRecord.id}" />
+										<input type="hidden"
+											th:field="${studentCurriculumRecord.studentCourseDetails.id}" />
 									</div>
 									<label class="required-field"></label>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="row">
-									<div class="col-sm-11">
-										<input type="text" th:field="${entityBankDetails.bankName}"
-											placeholder="Bank Name" class="form-control" maxlength="100" />
+									<div class="col-sm-9 selectBorder-placeholder">
+										<label
+											th:text="#{curriculumRecord.studentCourseDetails.branch.label}">Branch</label>
+										<select class="form-control"
+											th:field="${studentCurriculumRecord.studentCourseDetails.branch}">
+											<option value="NONE" th:text="#{default.dropdown.option}">---
+												Select ---</option>
+											<option
+												th:each="branchName : ${T(com.tripleS.enums.BranchNameEnum).values()}"
+												th:value="${{branchName}}"
+												th:selected="${branchName == T(com.tripleS.enums.BranchNameEnum)}"
+												th:text="${branchName.getDisplayName()}"></option>
+										</select>
 									</div>
 									<label class="required-field"></label>
 								</div>
@@ -116,32 +135,39 @@
 
 						<div class="form-group row" id="secondRowLabel">
 							<div class="col-sm-6">
-								<label th:if="${#fields.hasErrors('entityBankDetails.branch')}"
-									th:errors="${entityBankDetails.branch}"
+								<label
+									th:if="${#fields.hasErrors('studentCurriculumRecord.studentCourseDetails.schoolCollegeInstituteName')}"
+									th:errors="${studentCurriculumRecord.studentCourseDetails.schoolCollegeInstituteName}"
 									class="validation-message"></label>
 							</div>
 
 							<div class="col-sm-6">
 								<label
-									th:if="${#fields.hasErrors('entityBankDetails.ifscCode')}"
-									th:errors="${entityBankDetails.ifscCode}"
+									th:if="${#fields.hasErrors('studentCurriculumRecord.courseYear')}"
+									th:errors="${studentCurriculumRecord.courseYear}"
 									class="validation-message"></label>
 							</div>
 						</div>
 						<div class="form-group row" id="secondRow">
 							<div class="col-sm-6">
 								<div class="row">
-									<div class="col-sm-11">
-										<input type="text" th:field="${entityBankDetails.branch}"
-											placeholder="Branch" class="form-control" maxlength="100" />
+									<div class="col-sm-9 inputBorder-placeholder">
+										<label
+											th:text="#{curriculumRecord.studentCourseDetails.schoolCollegeInstituteName.label}">School/College
+											Name</label> <input type="text"
+											th:field="${studentCurriculumRecord.studentCourseDetails.schoolCollegeInstituteName}"
+											class="form-control" maxlength="300" />
 									</div>
 								</div>
 							</div>
 							<div class="col-sm-6">
 								<div class="row">
-									<div class="col-sm-11">
-										<input type="text" th:field="${entityBankDetails.ifscCode}"
-											placeholder="IFSC Code" class="form-control" maxlength="25" />
+									<div class="col-sm-9 inputBorder-placeholder">
+										<label th:text="#{curriculumRecord.courseYear.label}">Course
+											Year</label> <input type="text"
+											th:field="${studentCurriculumRecord.courseYear}"
+											class="form-control" maxlength="100"
+											th:title="#{curriculumRecord.courseYear.title}" />
 									</div>
 									<label class="required-field"></label>
 								</div>
@@ -152,77 +178,72 @@
 
 							<div class="col-sm-4">
 								<label
-									th:if="${#fields.hasErrors('entityBankDetails.accountHolderName1')}"
-									th:errors="${entityBankDetails.accountHolderName1}"
+									th:if="${#fields.hasErrors('studentCurriculumRecord.academicYear')}"
+									th:errors="${studentCurriculumRecord.academicYear}"
 									class="validation-message"></label>
 							</div>
 
 							<div class="col-sm-4">
 								<label
-									th:if="${#fields.hasErrors('entityBankDetails.accountHolderName2')}"
-									th:errors="${entityBankDetails.accountHolderName2}"
+									th:if="${#fields.hasErrors('studentCurriculumRecord.percentageMarks')}"
+									th:errors="${studentCurriculumRecord.percentageMarks}"
 									class="validation-message"></label>
 							</div>
 
 							<div class="col-sm-4">
 								<label
-									th:if="${#fields.hasErrors('entityBankDetails.accountHolderName3')}"
-									th:errors="${entityBankDetails.accountHolderName3}"
+									th:if="${#fields.hasErrors('studentCurriculumRecord.grade')}"
+									th:errors="${studentCurriculumRecord.grade}"
 									class="validation-message"></label>
 							</div>
 						</div>
 						<div class="form-group row" id="thirdRow">
 							<div class="col-sm-4">
 								<div class="row">
-									<div class="col-sm-11">
-										<input type="text"
-											th:field="${entityBankDetails.accountHolderName1}"
-											placeholder="First Account Holder's Name"
-											class="form-control" maxlength="300" /> <input type="hidden"
-											th:field="${entityBankDetails.id}" />
+									<div class="col-sm-9 selectBorder-placeholder">
+										<label th:text="#{curriculumRecord.academicYear.label}">Academic
+											Year</label> <select class="form-control"
+											th:field="${studentCurriculumRecord.academicYear}">
+											<option value="NONE" th:text="#{default.dropdown.option}">---
+												Select ---</option>
+											<option
+												th:each="academicYear : ${T(com.tripleS.enums.AcademicYearEnum).values()}"
+												th:value="${{academicYear}}"
+												th:selected="${academicYear == T(com.tripleS.enums.AcademicYearEnum)}"
+												th:text="${academicYear.getDisplayName()}"></option>
+										</select>
 									</div>
 									<label class="required-field"></label>
 								</div>
 							</div>
 							<div class="col-sm-4">
 								<div class="row">
-									<div class="col-sm-11">
-										<input type="text"
-											th:field="${entityBankDetails.accountHolderName2}"
-											placeholder="Second Account Holder's Name"
-											class="form-control" maxlength="300" />
+									<div class="col-sm-9 inputBorder-placeholder">
+										<label th:text="#{curriculumRecord.percentageMarks.label}">%
+											Marks</label> <input type="text"
+											th:field="${studentCurriculumRecord.percentageMarks}"
+											class="form-control" maxlength="8" />
 									</div>
 								</div>
 							</div>
 							<div class="col-sm-4">
 								<div class="row">
-									<div class="col-sm-11">
-										<input type="text"
-											th:field="${entityBankDetails.accountHolderName3}"
-											placeholder="Third Account Holder's Name"
-											class="form-control" maxlength="300" />
+									<div class="col-sm-9 inputBorder-placeholder">
+										<label th:text="#{curriculumRecord.grade.label}">Grade</label>
+										<input type="text" th:field="${studentCurriculumRecord.grade}"
+											class="form-control" maxlength="25" />
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="form-group row" id="fourthRow">
 							<div class="col-sm-4">
-								<div class="row">
-									<div class="col-sm-11">
-										<label>Is this account to be used in the payments?</label>
-										<input type="checkbox"
-											th:field="${entityBankDetails.isCurrent}"
-											placeholder="Is this account to be used in the payments?"
-											class="form-control" />
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="form-group row" id="fifthRow">
-							<div class="col-sm-4">
-								<button type="submit" th:text="${bankAction}"
-									name="addUpdateBankAccountDetails">Add/Update Bank
-									Account Details</button>
+								<button type="submit"
+									name="addUpdateCurriculumRecord"
+									th:if="${studentCurriculumRecord.id <= 0}">Add New Record</button>
+								<button type="submit"
+									name="addUpdateCurriculumRecord"
+									th:if="${studentCurriculumRecord.id > 0}">Update Record</button>
 							</div>
 						</div>
 						<div class="form-group row" id="sixthRow">
@@ -231,8 +252,12 @@
 							<div class="col-sm-2"></div>
 							<div class="col-sm-2">
 								<button type="submit" id="btnContinue"
-									name="continueFromBankDetails"
+									name="continueFromCurriculumRecord"
+									th:text="#{curriculumRecord.continue.button}"
 									class="form-control btn btn-primary">Continue</button>
+								<button type="submit" id="btnCourseChange"
+									name="onChangeOfCourse"
+									class="form-control btn btn-primary hideElement">Course Change</button>
 							</div>
 						</div>
 					</form>

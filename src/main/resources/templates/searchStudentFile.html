@@ -200,7 +200,7 @@
 											th:href="*{studentFilesFound[__${rowStat.index}__].fileNo == null} ? '#' : @{/studentFile/basicDetails/} + *{studentFilesFound[__${rowStat.index}__].fileNo}"
 											th:text="*{studentFilesFound[__${rowStat.index}__].fileNo}">alphanumeric</a></td>
 										<td><label
-											th:text="*{studentFilesFound[__${rowStat.index}__].fileStatus}">Current
+											th:text="*{studentFilesFound[__${rowStat.index}__].fileStatus.getDisplayName()}">Current
 												case status</label></td>
 										<td><label
 											th:text="*{studentFilesFound[__${rowStat.index}__].entityDetails.firstName}">John</label></td>

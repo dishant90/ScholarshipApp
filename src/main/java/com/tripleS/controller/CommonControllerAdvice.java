@@ -24,15 +24,22 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.tripleS.enums.AcademicYearEnum;
+import com.tripleS.enums.BranchNameEnum;
 import com.tripleS.enums.CountryEnum;
+import com.tripleS.enums.CourseNameEnum;
 import com.tripleS.enums.FileStatusEnum;
 import com.tripleS.enums.GenderEnum;
 import com.tripleS.enums.ResidenceOwnershipEnum;
 import com.tripleS.enums.ResidenceTypeEnum;
 import com.tripleS.enums.StateEnum;
 import com.tripleS.exception.InvalidFileNumberException;
+import com.tripleS.exception.InvalidOldPasswordException;
 import com.tripleS.exception.NoFileFoundException;
+import com.tripleS.propertyEditor.AcademicYearEnumEditor;
+import com.tripleS.propertyEditor.BranchNameEnumEditor;
 import com.tripleS.propertyEditor.CountryEnumEditor;
+import com.tripleS.propertyEditor.CourseNameEnumEditor;
 import com.tripleS.propertyEditor.FileStatusEnumEditor;
 import com.tripleS.propertyEditor.GenderEnumEditor;
 import com.tripleS.propertyEditor.ResidenceOwnershipEnumEditor;
@@ -62,6 +69,9 @@ public class CommonControllerAdvice extends ResponseEntityExceptionHandler  {
 		dataBinder.registerCustomEditor(ResidenceOwnershipEnum.class, new ResidenceOwnershipEnumEditor());
 		dataBinder.registerCustomEditor(ResidenceTypeEnum.class, new ResidenceTypeEnumEditor());
 		dataBinder.registerCustomEditor(FileStatusEnum.class, new FileStatusEnumEditor());
+		dataBinder.registerCustomEditor(CourseNameEnum.class, new CourseNameEnumEditor());
+		dataBinder.registerCustomEditor(BranchNameEnum.class, new BranchNameEnumEditor());
+		dataBinder.registerCustomEditor(AcademicYearEnum.class, new AcademicYearEnumEditor());
 	}
 
 	@ExceptionHandler(InvalidFileNumberException.class)
@@ -71,6 +81,15 @@ public class CommonControllerAdvice extends ResponseEntityExceptionHandler  {
 		notifyService.addErrorMessage(ifne.getErrMsg());
 		ModelAndView modelAndView = new ModelAndView("fragments/home");
 		return modelAndView;
+	}
+	
+	// 406
+	@ExceptionHandler(InvalidOldPasswordException.class)
+	public ResponseEntity<Object> InvalidOldPasswordRedirection(final RuntimeException ex, final WebRequest request) {
+		logger.error("Invalid old password exception");
+		logger.error("406 Status Code", ex);
+        final GenericResponse bodyOfResponse = new GenericResponse(messages.getMessage("message.invalidOldPasswordMessage", null, request.getLocale()), "InvalidOldPassword");
+        return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.NOT_ACCEPTABLE, request);
 	}
 	
 	@ExceptionHandler(NoFileFoundException.class)

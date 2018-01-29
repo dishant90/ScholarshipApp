@@ -11,8 +11,8 @@ public class UserDTO {
 	@NotEmpty(message = "*Please provide your last name")
     private String lastName;
 	
-	@Email(message = "*Please provide a valid Email")
-	@NotEmpty(message = "*Please provide the email address")
+	@Email(message = "*Please provide a valid email address")
+	@NotEmpty(message = "*Please provide your email address")
     private String emailID;
 	
 	public String getFirstName() {

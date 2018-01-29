@@ -1,0 +1,22 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<title>Student Scholarship Application</title>
+		<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
+		<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-grid.min.css}" />
+		<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap-reboot.min.css}" />
+		<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
+		<link rel="stylesheet" type="text/css" th:href="@{/font-awesome-4.7.0/css/font-awesome.css}" />
+	</head>
+	<body>
+		<div class="col-sm-2 sidenav nav-fill" th:fragment="userProfileMenu">
+			<nav class="nav flex-column nav-pills nav-fill">
+				<a class="nav-link" id="userProfileLink" href="#" th:href="@{/user/updateProfile}" th:text="#{userProfileMenu.profile.label}">Profile</a>
+				<a class="nav-link" id="changePasswordLink" href="#" th:href="@{/user/changePassword}" th:text="#{userProfileMenu.changePassword.label}">Change Password</a>
+			</nav>
+		</div>
+		<script src="../js/jquery-3.1.1.min.js" th:src="@{/js/jquery-3.1.1.min.js}"></script>
+  		<script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
+  		<script src="../js/bootstrap-4.0.0.min.js" th:src="@{/js/bootstrap-4.0.0.min.js}"></script>
+	</body>
+</html>
