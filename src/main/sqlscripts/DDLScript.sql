@@ -311,5 +311,5 @@ ALTER TABLE student_curriculum_record DROP COLUMN entity_id;
 ALTER TABLE student_curriculum_record MODIFY COLUMN passing_year varchar(9);
 ALTER TABLE student_curriculum_record CHANGE COLUMN passing_year academic_year varchar(9);
 
--- 05th Deb 2018
+-- 05th Feb 2018
 ALTER TABLE student_course_details ADD COLUMN branch VARCHAR(100);
